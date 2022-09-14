@@ -234,10 +234,23 @@ vector<int> findAnagrams(string s, string p) {
 	return v;
 }
 //713. 乘积小于 K 的子数组
-
+int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+	int num = 0;
+	for (int i = 0; i < nums.size(); i++)
+	{
+		int curr = 1;
+		for (int j = i; j < nums.size(); j++)
+		{
+			curr *= nums[j];
+			if (curr >= k)break;
+			num++;
+		}
+	}
+	return num;
+}
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums = { -4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6 };
+	vector<int>nums = { 10,5,2,6 };
 	vector<vector<int>>a = { {3,5},{9,20} };
 	vector<vector<int>>b = { {4, 5}, { 7,10 }, { 11,12 }, { 14,15 }, { 16,20 } };
 	for (int x : nums) {
@@ -250,7 +263,7 @@ int main() {
 			temp = temp->next;
 		}
 	}
-	findAnagrams("aaaaaa", "aaa");
+	numSubarrayProductLessThanK(nums, 100);
 
 	return 0;
 }
