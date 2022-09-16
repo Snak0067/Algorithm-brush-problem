@@ -235,22 +235,41 @@ vector<int> findAnagrams(string s, string p) {
 }
 //713. 乘积小于 K 的子数组
 int numSubarrayProductLessThanK(vector<int>& nums, int k) {
-	int num = 0;
-	for (int i = 0; i < nums.size(); i++)
+	int i = 0, j = 0, mul = 1, cnt = 0;
+	for (; j < nums.size(); j++) {
+		mul *= nums[j];
+		while (i <= j && mul >= k) {
+			mul /= nums[i];
+			i++;
+		}
+		cnt += j - i + 1;
+	}
+	return cnt;
+}
+//209. 长度最小的子数组
+int minSubArrayLen(int target, vector<int>& nums) {
+	int i = 0, j = 0, sum = 0, cnt = 999;
+	for (; j < nums.size(); j++)
 	{
-		int curr = 1;
-		for (int j = i; j < nums.size(); j++)
-		{
-			curr *= nums[j];
-			if (curr >= k)break;
-			num++;
+		sum += nums[j];
+		while (i <= j && sum >= target) {
+			if (j - i + 1 < cnt)cnt = j - i + 1;
+			sum -= nums[i];
+			i++;
 		}
 	}
-	return num;
+	return cnt == 999 ? 0 : cnt;
 }
+//149. 直线上最多的点数
+int maxPoints(vector<vector<int>>& points) {
+
+}
+
+
+
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums = { 10,5,2,6 };
+	vector<int>nums = { 10,5,2,6,7,8,4,1 };
 	vector<vector<int>>a = { {3,5},{9,20} };
 	vector<vector<int>>b = { {4, 5}, { 7,10 }, { 11,12 }, { 14,15 }, { 16,20 } };
 	for (int x : nums) {
