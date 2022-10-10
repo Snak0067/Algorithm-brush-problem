@@ -697,9 +697,29 @@ int divide(int dividend, int divisor) {
 	return (int)result;
 }
 //30. 串联所有单词的子串
-//vector<int> findSubstring(string s, vector<string>& words) {
-//
-//}
+bool matchSubstring(string s, map<string, int>mmap, int len) {
+	map<string, int>mp;
+	for (int i = 0; i < s.length(); i += len)mp[s.substr(i, len)]++;
+	if (mp == mmap)return true;
+	return false;
+}
+vector<int> findSubstring(string s, vector<string>& words) {
+	vector<int>ans;
+	map<string, int>mmap;
+	if (words.size() == 0 || s.length() < words[0].size())return ans;
+	int len = words[0].length(), lens = len * words.size();
+	for (string word : words) {
+		mmap[word]++;
+	}
+	if (s.length() < lens)return ans;
+	for (int i = 0; i < s.length(); i++)
+	{
+		if (i + lens > s.length())break;
+		if (mmap.find(s.substr(i, len)) == mmap.end())continue;
+		if (matchSubstring(s.substr(i, lens), mmap, len))ans.push_back(i);
+	}
+	return ans;
+}
 //856. 括号的分数
 int scoreOfParentheses(string s) {
 	if (s.size() == 2)return 1;
@@ -717,12 +737,57 @@ int scoreOfParentheses(string s) {
 	}
 	else return scoreOfParentheses(s.substr(0, len)) + scoreOfParentheses(s.substr(len));
 }
+//801. 使序列递增的最小交换次数
+int minSwap(vector<int>& nums1, vector<int>& nums2) {
+	int len = nums1.size();
+	int a = 0, b = 1;
+	for (int i = 1; i < len; i++)
+	{
+		int at = a, bt = b;
+		a = b = len;
+		if (nums1[i] > nums1[i - 1] && nums2[i] > nums2[i - 1]) {
+			a = min(at, a);
+			b = min(bt + 1, b);
+		}
+		if (nums1[i] > nums2[i - 1] && nums2[i] > nums1[i - 1]) {
+			a = min(a, bt);
+			b = min(b, at + 1);
+		}
+	}
+	return min(a, b);
+}
+//31. 下一个排列
+void nextPermutation(vector<int>& nums) {
+	bool match = false;
+	for (int i = nums.size() - 1; i > 0; i--)
+	{
+		if (nums[i] > nums[i - 1]) {
+			int min = 999, index = 0;
+			for (int j = nums.size() - 1; j >= i; j--)
+			{
+				if (nums[j]<min && nums[j]>nums[i - 1]) {
+					min = nums[j];
+					index = j;
+				}
+			}
+			swap(nums[i - 1], nums[index]);
+			sort(nums.begin() + i, nums.end());
+			match = true;
+			break;
+		}
+	}
+	if (!match) {
+		reverse(nums.begin(), nums.end());
+	}
+}
+//32. 最长有效括号
+int longestValidParentheses(string s) {
 
-
-
+}
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums = { 0,1,2,2,3,0,4,2 };
+	vector<int>nums1 = { 2,3,1 };
+	vector<int>nums2 = { 1,7,4,6,8 };
 	vector<vector<int>>a = {
   {1,   4,  7, 11, 15},
   {2,   5,  8, 12, 19},
@@ -731,7 +796,7 @@ int main() {
   {18, 21, 23, 26, 30}
 	};
 	vector<int>preorder = { 3, 9, 20, 15, 7 }, inorder = { 9, 3, 15, 20, 7 };
-	for (int x : nums) {
+	for (int x : nums1) {
 		if (root == nullptr) {
 			root = new ListNode(x);
 			temp = root;
@@ -741,8 +806,8 @@ int main() {
 			temp = temp->next;
 		}
 	}
-
-	scoreOfParentheses("(()(()))");
+	vector<string>s = { "word","good","best","word" };
+	nextPermutation(nums1);
 
 	return 0;
 }
