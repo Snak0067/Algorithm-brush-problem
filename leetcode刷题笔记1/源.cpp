@@ -782,11 +782,195 @@ void nextPermutation(vector<int>& nums) {
 }
 //32. 最长有效括号
 int longestValidParentheses(string s) {
-
+	int max = 0;
+	stack<int>sta;
+	sta.push(-1);
+	for (int i = 0; i < s.length(); i++) {
+		if (s[i] == '(')sta.push(i);
+		else {
+			sta.pop();
+			if (sta.empty())sta.push(i);
+			else {
+				if (i - sta.top() > max)max = i - sta.top();
+			}
+		}
+	}
+	return max;
 }
+//35. 搜索插入位置
+int searchInsert(vector<int>& nums, int target) {
+	int i = 0, j = nums.size() - 1;
+	while (i < j) {
+		int mid = (i + j) >> 1;
+		if (nums[mid] > target)j = mid;
+		else if (nums[mid] < target)i = mid + 1;
+		else return mid;
+	}
+	if (i == nums.size() - 1)return nums.size();
+	return i;
+}
+//36. 有效的数独
+bool isValidSudoku(vector<vector<char>>& board) {
+	if (board.size() != 9)return false;
+	for (int i = 0; i < board.size(); i++)
+	{
+		unordered_map<char, int>mmap;
+		for (char ch : board[i]) {
+			if (ch > '0' && ch <= '9') {
+				if (mmap.find(ch) != mmap.end())return false;
+				mmap[ch] = 1;
+			}
+		}
+	}
+	for (int i = 0; i < board[0].size(); i++)
+	{
+		unordered_map<char, int>mmap;
+		for (int j = 0; j < board.size(); j++) {
+			if (board[j][i] > '0' && board[j][i] <= '9') {
+				if (mmap.find(board[j][i]) != mmap.end())return false;
+				mmap[board[j][i]] = 1;
+			}
+
+		}
+	}
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			unordered_map<char, int>mmap;
+			for (int v = 0; v < 3; v++) {
+				for (int n = 0; n < 3; n++) {
+					if (board[i * 3 + v][j * 3 + n] > '0' && board[i * 3 + v][j * 3 + n] <= '9') {
+						if (mmap.find(board[i * 3 + v][j * 3 + n]) != mmap.end())return false;
+						mmap[board[i * 3 + v][j * 3 + n]] = 1;
+					}
+				}
+			}
+		}
+	}
+	return true;
+}
+//1472. 设计浏览器历史记录
+class BrowserHistory {
+public:
+	string current;
+	stack<string>bac, fro;
+	BrowserHistory(string homepage) {
+		current = homepage;
+	}
+
+	void visit(string url) {
+		bac.push(current);
+		current = url;
+		while (!fro.empty())fro.pop();
+	}
+
+	string back(int steps) {
+		while (steps > 0 && !bac.empty()) {
+			fro.push(current);
+			current = bac.top();
+			steps--;
+			bac.pop();
+		}
+		return current;
+	}
+
+	string forward(int steps) {
+		while (steps > 0 && !fro.empty()) {
+			bac.push(current);
+			current = fro.top();
+			steps--;
+			fro.pop();
+		}
+		return current;
+	}
+};
+//58. 最后一个单词的长度
+int lengthOfLastWord(string s) {
+	int right = s.length() - 1;
+	while (right > 0 && s[right] == ' ')right--;
+	int left = right;
+	while (left > 0 && s[left] != ' ')left--;
+	if (s[left] == ' ')return right - left;
+	return right - left + 1;
+}
+//66. 加一
+vector<int> plusOne(vector<int>& digits) {
+	int flag = 0, len = digits.size();
+	digits[len - 1] = digits[len - 1] + 1;
+	for (int i = digits.size() - 1; i >= 0; i--)
+	{
+		digits[i] = digits[i] + flag;
+		if (digits[i] > 9) {
+			digits[i] = 0;
+			flag = 1;
+		}
+		else {
+			flag = 0;
+			break;
+		}
+	}
+	if (flag == 1) {
+		digits.push_back(1);
+		reverse(digits.begin(), digits.end());
+	}
+	return digits;
+}
+//67. 二进制求和
+string addBinary(string a, string b) {
+	string ans;
+	if (a == "0" || b == "0")return a == "0" ? b : a;
+	reverse(a.begin(), a.end());
+	reverse(b.begin(), b.end());
+	int flag = 0;
+	for (int i = 0; i < min(a.length(), b.length()) + 1; i++)
+	{
+		if (i < a.length() && i < b.length()) {
+			char temp = a[i] + b[i] - '0' + flag;
+			if (temp > '1') {
+				ans.push_back(temp - 2);
+				flag = 1;
+			}
+			else {
+				ans.push_back(temp);
+				flag = 0;
+			}
+		}
+		else if (i < a.length()) {
+			while (i < a.length()) {
+				char temp = a[i] + flag;
+				if (temp > '1') {
+					ans.push_back(temp - 2);
+					flag = 1;
+				}
+				else {
+					ans.push_back(temp);
+					flag = 0;
+				}
+				i++;
+			}
+		}
+		else if (i < b.length()) {
+			while (i < b.length()) {
+				char temp = b[i] + flag;
+				if (temp > '1') {
+					ans.push_back(temp - 2);
+					flag = 1;
+				}
+				else {
+					ans.push_back(temp);
+					flag = 0;
+				}
+				i++;
+			}
+		}
+	}
+	if (flag == 1)ans.push_back('1');
+	reverse(ans.begin(), ans.end());
+	return ans;
+}
+
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 2,3,1 };
+	vector<int>nums1 = { 9,9,9 };
 	vector<int>nums2 = { 1,7,4,6,8 };
 	vector<vector<int>>a = {
   {1,   4,  7, 11, 15},
@@ -806,8 +990,6 @@ int main() {
 			temp = temp->next;
 		}
 	}
-	vector<string>s = { "word","good","best","word" };
-	nextPermutation(nums1);
-
+	addBinary("11", "1");
 	return 0;
 }
