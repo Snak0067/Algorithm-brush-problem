@@ -274,7 +274,7 @@ bool pointSort(vector<int>v1, vector<int>v2) {
 	if (v1[0] != v2[0])return v1[0] < v2[0];
 	return v1[1] < v2[1];
 }
-int maxPoints(vector<vector<int>>& points) {
+int maxPoints_line(vector<vector<int>>& points) {
 	vector<vector<int>>v;
 	unordered_map<string, int>k;
 	unordered_map<string, vector<int>>same;
@@ -967,11 +967,178 @@ string addBinary(string a, string b) {
 	reverse(ans.begin(), ans.end());
 	return ans;
 }
+//1790. 仅执行一次字符串交换能否使两个字符串相等
+bool areAlmostEqual(string s1, string s2) {
+	int differ = 0;
+	map<char, int>map1, map2;
+	if (s1 == s2)return true;
+	if (s1.size() != s2.size())return false;
+	for (int i = 0; i < s1.size(); i++)
+	{
+		map1[s1[i]]++;
+		map2[s2[i]]++;
+		if (s1[i] != s2[i])differ++;
+	}
+	if (differ != 2 || map1 != map2)return false;
+	return true;
+}
+//870. 优势洗牌
+vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
+	int len = nums1.size();
+	unordered_map<int, vector<int>>mmap;
+	vector<int>ans(len, -1);
+	for (int i = 0; i < nums2.size(); i++)mmap[nums2[i]].push_back(i);
+	sort(nums1.begin(), nums1.end());
+	sort(nums2.begin(), nums2.end());
+	int left = 0, right = 0;
+	while (left < len && right < len) {
+		if (nums1[left] > nums2[right]) {
+			ans[mmap[nums2[right]][0]] = nums1[left];
+			mmap[nums2[right]].erase(mmap[nums2[right]].begin());
+			nums1[left] = -1;
+			right++;
+		}
+		left++;
+	}
+	left = 0, right = 0;
+	while (left < len && right < len) {
+		if (nums1[left] == -1) {
+			left++; continue;
+		}
+		if (ans[right] != -1) {
+			right++; continue;
+		}
+		ans[right] = nums1[left];
+		right++;
+		left++;
+	}
+	return ans;
+}
+//1190. 反转每对括号间的子串
+string reverseParentheses(string s) {
+	stack<char>stk, back;
+	string ans;
+	for (char ch : s) {
+		if (ch == ')') {
+			string temp;
+			while (stk.top() != '(') {
+				temp.push_back(stk.top());
+				stk.pop();
+			}
+			stk.pop();
+			for (char c : temp)stk.push(c);
+		}
+		else stk.push(ch);
+	}
+	while (!stk.empty()) {
+		ans.push_back(stk.top());
+		stk.pop();
+	}
+	reverse(ans.begin(), ans.end());
+	return ans;
+}
+//1191. K 次串联后最大子数组之和
+int kConcatenationMaxSum(vector<int>& arr, int k) {
+	int len = arr.size();
+	long sum = 0;
+	vector<int>v = arr;
+	bool allpositive = true;
+	for (int x : arr) {
+		if (x < 0)allpositive = false;
+		sum += x;
+		v.push_back(x);
+	}
+	if (allpositive)return (sum * k) % 1000000007;
+	if (sum > 0 && k >= 3) {
+		long mid = (sum * (k - 2)) % 1000000007;
+		int max1 = 0, max2 = 0, temp1 = 0, temp2 = 0;
+		for (int i = len - 1; i >= 0; i--) {
+			temp1 += arr[i];
+			temp2 += arr[len - i - 1];
+			if (temp1 > max1)max1 = temp1;
+			if (temp2 > max2)max2 = temp2;
+		}
+		return (max1 + max2 + mid) % 1000000007;
+	}
+	if (k >= 2) {
+		vector<vector<int>>dp(arr.size() * 2, vector<int>(2, 0));
+		if (arr.size() > 0 && arr[0] > 0)dp[0][0] = dp[0][1] = arr[0];
+		for (int i = 1; i < v.size(); i++) {
+			dp[i][0] = max(dp[i - 1][0], dp[i - 1][1]);
+			dp[i][1] = max(v[i], dp[i - 1][1] + v[i]);
+		}
+		return max(dp[len * 2 - 1][0], dp[len * 2 - 1][1]);
+	}
+	vector<vector<int>>dp(arr.size(), vector<int>(2, 0));
+	if (arr.size() > 0 && arr[0] > 0)dp[0][0] = dp[0][1] = arr[0];
+	for (int i = 1; i < dp.size(); i++) {
+		dp[i][0] = max(dp[i - 1][0], dp[i - 1][1]);
+		dp[i][1] = max(v[i], dp[i - 1][1] + v[i]);
+	}
+	return max(dp[len - 1][0], dp[len - 1][1]);
+}
+//1192. 查找集群内的「关键连接」未完成
+void dfs_critical(int current, int n, vector<vector<int>>road, vector<bool>& vis) {
+	vis[current] = true;
+	queue<int>q;
+	q.push(current);
+	while (!q.empty()) {
+		int top = q.front();
+		vis[top] = true;
+		q.pop();
+		for (int x : road[top]) {
+			if (vis[x])continue;
+			q.push(x);
+		}
+	}
+}
+vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+	vector<vector<int>>road(n), ans;
+	vector<bool>visit(n, false);
+	for (vector<int>v : connections) {
+		road[v[0]].push_back(v[1]);
+		road[v[1]].push_back(v[0]);
+	}
+	int circle = 0;
+	for (int i = 0; i < n; i++) {
+		if (visit[i])continue;
+		circle++;
+		dfs_critical(i, n, road, visit);
+	}
+	for (int i = 0; i < connections.size(); i++) {
+		vector<int>v = connections[i], a, b;
+		for (int x : road[v[0]]) { if (x != v[1])a.push_back(x); }
+		for (int x : road[v[1]]) { if (x != v[0])b.push_back(x); }
+		road[v[0]] = a;
+		road[v[1]] = b;
+		vector<bool>vis(n, false);
+		int temp = 0;
+		for (int i = 0; i < n; i++) {
+			if (vis[i])continue;
+			temp++;
+			dfs_critical(i, n, road, vis);
+		}
+		if (temp > circle)ans.push_back({ v[0],v[1] });
+		road[v[0]].push_back(v[1]);
+		road[v[1]].push_back(v[0]);
+	}
+	return ans;
+}
+//1937. 扣分后的最大得分
+long long maxPoints(vector<vector<int>>& points) {
+	vector<int>index(points.size());
+	for (int i = 0; i < points.size(); i++) {
+		int max = 0;
+		for (int j = 0; j < points[i].size(); j++) {
+			
+		}
+	}
+}
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 9,9,9 };
-	vector<int>nums2 = { 1,7,4,6,8 };
+	vector<int>nums1 = { -5,-2,0,0,3,9,-2,-5,4 };
+	vector<int>nums2 = { 1,3,0,0,2 };
 	vector<vector<int>>a = {
   {1,   4,  7, 11, 15},
   {2,   5,  8, 12, 19},
@@ -990,6 +1157,7 @@ int main() {
 			temp = temp->next;
 		}
 	}
-	addBinary("11", "1");
+	vector<vector<int>>v = { {0,1},{1,2},{2,0},{1,3},{3,4},{4,5},{5,3} };
+	criticalConnections(6, v);
 	return 0;
 }
