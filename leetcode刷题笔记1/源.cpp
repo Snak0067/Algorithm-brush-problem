@@ -256,7 +256,7 @@ int numSubarrayProductLessThanK(vector<int>& nums, int k) {
 	return cnt;
 }
 //209. 长度最小的子数组
-int minSubArrayLen(int target, vector<int>& nums) {
+int minSubArrayLen1(int target, vector<int>& nums) {
 	int i = 0, j = 0, sum = 0, cnt = 999;
 	for (; j < nums.size(); j++)
 	{
@@ -1125,20 +1125,251 @@ vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections)
 	return ans;
 }
 //1937. 扣分后的最大得分
-long long maxPoints(vector<vector<int>>& points) {
-	vector<int>index(points.size());
-	for (int i = 0; i < points.size(); i++) {
-		int max = 0;
-		for (int j = 0; j < points[i].size(); j++) {
-			
+//long long maxPoints(vector<vector<int>>& points) {
+//	vector<int>index(points.size());
+//	for (int i = 0; i < points.size(); i++) {
+//		int max = 0;
+//		for (int j = 0; j < points[i].size(); j++) {
+//			
+//		}
+//	}
+//}
+//817. 链表组件
+int numComponents(ListNode* head, vector<int>& nums) {
+	int index[10005];//应该放在外面
+	ListNode* ptr = head;
+	for (int x : nums)index[x] = 1;
+	int ans = 0, cnt = 0;
+	while (ptr != nullptr) {
+		if (index[ptr->val] != 1) {
+			if (cnt > 0) {
+				ans++;
+				cnt = 0;
+			}
+		}
+		else {
+			cnt++;
+		}
+		ptr = ptr->next;
+	}
+	if (cnt > 0)ans++;
+	return ans;
+}
+//73. 矩阵置零
+void setZeroes(vector<vector<int>>& matrix) {
+	vector<int>zerov[2];
+	zerov[0].resize(matrix.size());
+	zerov[1].resize(matrix[0].size());
+	for (int i = 0; i < matrix.size(); i++) {
+		for (int j = 0; j < matrix[i].size(); j++) {
+			if (matrix[i][j] == 0) {
+				zerov[0][i] = 1;
+				zerov[1][j] = 1;
+			}
 		}
 	}
+	vector<vector<int>>temp(matrix.size(), vector<int>(matrix[0].size(), 0));
+	for (int i = 0; i < matrix.size(); i++) {
+		if (zerov[0][i] == 1)continue;
+		for (int j = 0; j < matrix[i].size(); j++) {
+			if (zerov[1][j] == 1)continue;
+			temp[i][j] = matrix[i][j];
+		}
+	}
+	matrix = temp;
 }
+//剑指 Offer II 008. 和大于等于 target 的最短子数组
+int minSubArrayLen(int target, vector<int>& nums) {
+	int minl = 999999, left = 0, right = 1, sum = nums[0];
+	while (right < nums.size() || sum >= target) {
+		if (sum < target) {
+			sum += nums[right++];
+			continue;
+		}
+		while (sum >= target) {
+			if (right - left < minl) {
+				minl = right - left;
+			}
+			sum -= nums[left++];
+		}
+	}
+	return minl == 999999 ? 0 : minl;
+}
+//349. 两个数组的交集
+vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+	int index[1005];
+	fill(index, index + 1005, -1);
+	for (int x : nums1) {
+		if (index[x] == -1)index[x] = 0;
+	}
+	for (int x : nums2) {
+		if (index[x] == 0)index[x] = 1;
+	}
+	vector<int>ans;
+	for (int i = 0; i < 1005; i++)if (index[i] == 1)ans.push_back(i);
+	return ans;
+}
+class solveSudoku_Solution {
+private:
+	bool line[9][9];
+	bool column[9][9];
+	bool block[3][3][9];
+	bool valid;
+	vector<pair<int, int>>spaces;
+
+public:
+	void dfs(vector<vector<char>>& board, int pos) {
+		if (pos == spaces.size()) {
+			valid = true;
+			return;
+		}
+		pair<int, int>p = spaces[pos];
+		int i = p.first, j = p.second;
+		for (int digit = 0; digit < 9 && !valid; digit++) {
+			if (!line[i][digit] && !column[j][digit] && !block[i / 3][j / 3][digit]) {
+				line[i][digit] = column[j][digit] = block[i / 3][j / 3][digit] = true;
+				board[i][j] = digit + '0' + 1;
+				dfs(board, pos + 1);
+				line[i][digit] = column[j][digit] = block[i / 3][j / 3][digit] = false;
+			}
+		}
+	}
+	void solveSudoku(vector<vector<char>>& board) {
+		memset(line, false, sizeof(line));
+		memset(column, false, sizeof(column));
+		memset(block, false, sizeof(block));
+		valid = false;
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (board[i][j] == '.') {
+					spaces.emplace_back(i, j);
+				}
+				else {
+					int digit = board[i][j] - '0' - 1;
+					line[i][digit] = column[j][digit] = block[i / 3][j / 3][digit] = true;
+				}
+			}
+		}
+		dfs(board, 0);
+	}
+};
+//38. 外观数列
+string countAndSay(int n) {
+	string s = "1", ans;
+	while (--n > 0) {
+		int cnt = 0;
+		char temp = s[0];
+		ans = "";
+		for (char x : s) {
+			if (x == temp) {
+				cnt++;
+				continue;
+			}
+			else {
+				ans.push_back(cnt + '0');
+				ans.push_back(temp);
+				cnt = 1;
+				temp = x;
+			}
+		}
+		ans.push_back(cnt + '0');
+		ans.push_back(temp);
+		s = ans;
+	}
+	return s;
+}
+//39. 组合总和
+class combinationSum_Solution {
+private:
+	vector<vector<int>>ans;
+public:
+	void dfs(vector<int>& candidates, vector<int>v, int target) {
+		if (target == 0) {
+			ans.push_back(v);
+			return;
+		}
+		for (int x : candidates) {
+			if (target >= x && x >= v[v.size() - 1]) {
+				v.push_back(x);
+				dfs(candidates, v, target - x);
+				v.pop_back();
+			}
+		}
+	}
+	vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+		sort(candidates.begin(), candidates.end());
+		for (int x : candidates) {
+			vector<int>v;
+			v.push_back(x);
+			dfs(candidates, v, target - x);
+		}
+		return ans;
+	}
+};
+//40. 组合总和 II
+class combinationSum2_Solution {
+private:
+	vector<vector<int>>ans;
+public:
+	void dfs(vector<int>& candidates, vector<int>v, int target, int index) {
+		if (target == 0) {
+			ans.push_back(v);
+			return;
+		}
+		if (index >= candidates.size()) {
+			return;
+		}		
+		for (int i = index; i < candidates.size(); i++) {
+			int x = candidates[i];
+			if (target >= x && x >= v[v.size() - 1]) {
+				v.push_back(x);
+				dfs(candidates, v, target - x, i + 1);
+				v.pop_back();
+			}
+		}
+	}
+	bool samev(vector<int>a, vector<int>b) {
+		if (a.size() != b.size())return false;
+		for (int i = 0; i < a.size(); i++) {
+			if (a[i] != b[i])return false;
+		}
+		return true;
+	}
+public:
+	vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+		int sum = 0;
+		for (int x : candidates)sum += x;
+		if (sum < target)return ans;
+		sort(candidates.begin(), candidates.end());
+		for (int i = 0; i < candidates.size(); i++) {
+			if (candidates[i] > target)break;
+			vector<int>v;
+			v.push_back(candidates[i]);
+			dfs(candidates, v, target - candidates[i], i + 1);
+		}
+		vector<bool>vis(ans.size(), false);
+		vector<vector<int>>anss;
+		for (int i = 0; i < ans.size(); i++) {
+			if (vis[i])continue;
+			vis[i] = true;
+			anss.push_back(ans[i]);
+			for (int j = i + 1; j < ans.size(); j++) {
+				if (vis[j])continue;
+				if (samev(ans[i], ans[j])) {
+					vis[j] = true;
+				}
+			}
+		}
+		return anss;
+	}
+};
+
+
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { -5,-2,0,0,3,9,-2,-5,4 };
-	vector<int>nums2 = { 1,3,0,0,2 };
+	vector<int>nums1 = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+	vector<int>nums2 = { 2,2 };
 	vector<vector<int>>a = {
   {1,   4,  7, 11, 15},
   {2,   5,  8, 12, 19},
@@ -1157,7 +1388,14 @@ int main() {
 			temp = temp->next;
 		}
 	}
-	vector<vector<int>>v = { {0,1},{1,2},{2,0},{1,3},{3,4},{4,5},{5,3} };
-	criticalConnections(6, v);
+	vector<vector<char>>v = { {'5','3','.','.','7','.','.','.','.'},
+		{'6','.','.','1','9','5','.','.','.'},{'.','9','8','.','.','.','.','6','.'},
+		{'8','.','.','.','6','.','.','.','3'},{'4','.','.','8','.','3','.','.','1'},
+		{'7','.','.','.','2','.','.','.','6'},{'.','6','.','.','.','.','2','8','.'},
+		{'.','.','.','4','1','9','.','.','5'},{'.','.','.','.','8','.','.','7','9'} };
+	solveSudoku_Solution solve;
+	//solve.solveSudoku(v);
+	combinationSum2_Solution cs;
+	cs.combinationSum2(nums1, 27);
 	return 0;
 }
