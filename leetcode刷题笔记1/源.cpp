@@ -1311,64 +1311,116 @@ class combinationSum2_Solution {
 private:
 	vector<vector<int>>ans;
 public:
-	void dfs(vector<int>& candidates, vector<int>v, int target, int index) {
+	void dfs(vector<pair<int, int>>freq, int index, vector<pair<int, int>>v, int target) {
 		if (target == 0) {
-			ans.push_back(v);
+			vector<int>temp;
+			for (pair<int, int>p : v) {
+				for (int i = 0; i < p.second; i++)temp.push_back(p.first);
+			}
+			ans.push_back(temp);
 			return;
 		}
-		if (index >= candidates.size()) {
+		if (index >= freq.size()) {
 			return;
-		}		
-		for (int i = index; i < candidates.size(); i++) {
-			int x = candidates[i];
-			if (target >= x && x >= v[v.size() - 1]) {
-				v.push_back(x);
-				dfs(candidates, v, target - x, i + 1);
+		}
+		for (int i = 0; i <= freq[index].second; i++) {
+			int mul = i * freq[index].first;
+			if (target < mul || target < freq[index].first)return;
+			if (i == 0) {
+				dfs(freq, index + 1, v, target);
+			}
+			else {
+				v.emplace_back(freq[index].first, i);
+				dfs(freq, index + 1, v, target - mul);
 				v.pop_back();
 			}
 		}
 	}
-	bool samev(vector<int>a, vector<int>b) {
-		if (a.size() != b.size())return false;
-		for (int i = 0; i < a.size(); i++) {
-			if (a[i] != b[i])return false;
-		}
-		return true;
-	}
 public:
 	vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-		int sum = 0;
-		for (int x : candidates)sum += x;
-		if (sum < target)return ans;
-		sort(candidates.begin(), candidates.end());
-		for (int i = 0; i < candidates.size(); i++) {
-			if (candidates[i] > target)break;
-			vector<int>v;
-			v.push_back(candidates[i]);
-			dfs(candidates, v, target - candidates[i], i + 1);
+		map<int, int>mmap;
+		vector<pair<int, int>>freq, v;
+		for (int x : candidates)mmap[x]++;
+		auto it = mmap.begin();
+		while (it != mmap.end()) {
+			freq.emplace_back(it->first, it->second);
+			it++;
 		}
-		vector<bool>vis(ans.size(), false);
-		vector<vector<int>>anss;
-		for (int i = 0; i < ans.size(); i++) {
-			if (vis[i])continue;
-			vis[i] = true;
-			anss.push_back(ans[i]);
-			for (int j = i + 1; j < ans.size(); j++) {
-				if (vis[j])continue;
-				if (samev(ans[i], ans[j])) {
-					vis[j] = true;
-				}
-			}
-		}
-		return anss;
+		dfs(freq, 0, v, target);
+		return ans;
 	}
 };
-
+//769. 最多能完成排序的块
+int maxChunksToSorted(vector<int>& arr) {
+	int len = arr.size(), cnt = 0, right = len - 1, min = len + 1;
+	vector<int>po(len, 0);
+	for (int i = len - 1; i >= 0; i--) {
+		if (arr[i] < min)min = arr[i];
+		po[arr[i]] = 1;
+		int temp = right;
+		while (temp >= 0 && po[temp] != 0)temp--;
+		if (temp + 1 == min) {
+			right = temp;
+			cnt++;
+		}
+	}
+	return cnt;
+}
+//768. 最多能完成排序的块 II
+int maxChunksToSortedII(vector<int>& arr) {
+	int len = arr.size(), cnt = 0, right = len - 1, min = arr.size(), temp = right;
+	vector<int>array = arr;
+	vector<int>a(len, 0);
+	sort(array.begin(), array.end());
+	unordered_map<int, vector<int>>mmap;
+	for (int i = 0; i < array.size(); i++)mmap[array[i]].push_back(i);
+	for (int i = len - 1; i >= 0; i--) {
+		if (mmap[arr[i]].back() < min)min = mmap[arr[i]].back();
+		a[mmap[arr[i]].back()] = 1;
+		mmap[arr[i]].pop_back();
+		while (temp >= 0 && a[temp] == 1)temp--;
+		if (temp + 1 == min) {
+			right = temp;
+			cnt++;
+		}
+	}
+	return cnt;
+}
+//41. 缺失的第一个正数
+int firstMissingPositive(vector<int>& nums) {
+	int minn = 1;
+	unordered_map<int, int>mmap;
+	for (int x : nums) {
+		if (x == minn) {
+			do {
+				minn++;
+			} while (mmap.find(minn) != mmap.end());
+		}
+		else mmap[x] = 1;
+	}
+	return minn;
+}
+//42. 接雨水 
+int trap(vector<int>& height) {
+	int len = height.size(), ans = 0;
+	vector<int>maxl(len), maxr(len);
+	int maxleft = 0, maxright = 0;
+	for (int i = 0; i < len; i++) {
+		if (height[i] > maxleft)maxleft = height[i];
+		if (height[len - 1 - i] > maxright)maxright = height[len - 1 - i];
+		maxl[i] = maxleft;
+		maxr[len - 1 - i] = maxright;
+	}
+	for (int i = 0; i < len; i++) {
+		ans += max(min(maxl[i], maxr[i]) - height[i], 0);
+	}
+	return ans;
+}
 
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+	vector<int>nums1 = { 0,1,0,2,1,0,1,3,2,1,2,1 };
 	vector<int>nums2 = { 2,2 };
 	vector<vector<int>>a = {
   {1,   4,  7, 11, 15},
@@ -1393,9 +1445,6 @@ int main() {
 		{'8','.','.','.','6','.','.','.','3'},{'4','.','.','8','.','3','.','.','1'},
 		{'7','.','.','.','2','.','.','.','6'},{'.','6','.','.','.','.','2','8','.'},
 		{'.','.','.','4','1','9','.','.','5'},{'.','.','.','.','8','.','.','7','9'} };
-	solveSudoku_Solution solve;
-	//solve.solveSudoku(v);
-	combinationSum2_Solution cs;
-	cs.combinationSum2(nums1, 27);
+	trap(nums1);
 	return 0;
 }
