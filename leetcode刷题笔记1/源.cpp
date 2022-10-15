@@ -1416,11 +1416,197 @@ int trap(vector<int>& height) {
 	}
 	return ans;
 }
+//43. 字符串相乘
+//44. 通配符匹配
+bool isMatch(string s, string p) {
+	int m = s.size(), n = p.size();
+	vector<vector<int>>dp(m + 1, vector<int>(n + 1));
+	dp[0][0] = true;
+	for (int i = 1; i <= n; i++) {
+		if (p[i - 1] == '*')dp[0][i] = true;
+		else break;
+	}
+	for (int i = 1; i <= m; i++) {
+		for (int j = 1; j <= n; j++) {
+			if (p[j - 1] == '*') {
+				dp[i][j] = dp[i][j - 1] | dp[i - 1][j];
+			}
+			else if (p[j - 1] == s[i - 1] || p[j - 1] == '?') {
+				dp[i][j] = dp[i - 1][j - 1];
+			}
+		}
+	}
+	return dp[m][n];
+}
+//45. 跳跃游戏 II
+int jump(vector<int>& nums) {
+	vector<int>dp(nums.size(), nums.size() + 1);
+	dp[0] = 0;
+	for (int i = 0; i < nums.size(); i++) {
+		for (int j = 1; j <= nums[i] && i + j < nums.size(); j++) {
+			dp[i + j] = min(dp[i + j], dp[i] + 1);
+		}
+	}
+	return dp[nums.size() - 1];
+}
+//46. 全排列
+class permute_Solution {
+private:
+	vector<vector<int>>ans;
+public:
+	void premute_dfs(vector<int>nums, vector<bool>vis, vector<int>temp, int index) {
+		if (index >= nums.size()) {
+			ans.push_back(temp);
+			return;
+		}
+		for (int i = 0; i < vis.size(); i++) {
+			if (vis[i])continue;
+			vis[i] = true;
+			temp.push_back(nums[i]);
+			premute_dfs(nums, vis, temp, index + 1);
+			temp.pop_back();
+			vis[i] = false;
+		}
+	}
+	vector<vector<int>> permute(vector<int>& nums) {
+		vector<bool>vis(nums.size(), false);
+		vector<int>temp;
+		premute_dfs(nums, vis, temp, 0);
+		return ans;
+	}
+};
 
+///940. 不同的子序列 II
+int distinctSubseqII(string s) {
+	vector<int> last(26, -1);
+	int n = s.size();
+	vector<int> f(n, 1);
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j < 26; ++j) {
+			if (last[j] != -1) {
+				f[i] = (f[i] + f[last[j]]) % 1000000007;
+			}
+		}
+		last[s[i] - 'a'] = i;
+	}
+
+	int ans = 0;
+	for (int i = 0; i < 26; ++i) {
+		if (last[i] != -1) {
+			ans = (ans + f[last[i]]) % 1000000007;
+		}
+	}
+	return ans;
+}
+
+//1441. 用栈操作构建数组
+vector<string> buildArray(vector<int>& target, int n) {
+	int cnt = 1;
+	vector<string>ans;
+	for (int i = 0; i < target.size(); i++) {
+		ans.push_back("Push");
+		while (target[i] > cnt) {
+			ans.push_back("Pop");
+			ans.push_back("Push");
+			cnt++;
+		}
+		cnt++;
+	}
+	return ans;
+}
+//47. 全排列 II
+class permuteUnique_Solution {
+private:
+	vector<vector<int>>ans;
+public:
+	void premute_dfs(vector<int>nums, vector<bool>vis, vector<int>temp, int index) {
+		if (index >= nums.size()) {
+			ans.push_back(temp);
+			return;
+		}
+		unordered_map<int, int>mmap;
+		for (int i = 0; i < vis.size(); i++) {
+			if (vis[i] || mmap.find(nums[i]) != mmap.end())continue;
+			vis[i] = true;
+			mmap[nums[i]] = 1;
+			temp.push_back(nums[i]);
+			premute_dfs(nums, vis, temp, index + 1);
+			temp.pop_back();
+			vis[i] = false;
+		}
+	}
+	vector<vector<int>> permuteUnique(vector<int>& nums) {
+		vector<bool>vis(nums.size(), false);
+		vector<int>temp;
+		premute_dfs(nums, vis, temp, 0);
+		return ans;
+	}
+};
+//48. 旋转图像
+void rotate(vector<vector<int>>& matrix) {
+	int n = matrix.size(), cnt = n / 2 - 1;
+	for (int i = 0; i <= cnt; i++) {
+		for (int j = i; j < n - 2 * i - 1 + i; j++) {
+			int old = matrix[i][j], current, temp, newi = j, newj = n - i - 1;
+			for (int u = 0; u < 4; u++) {
+				current = matrix[newi][newj];
+				matrix[newi][newj] = old;
+				old = current;
+				temp = newj;
+				newj = n - newi - 1;
+				newi = temp;
+			}
+		}
+	}
+}
+//49. 字母异位词分组
+vector<vector<string>> groupAnagrams(vector<string>& strs) {
+	vector<vector<string>>ans;
+	unordered_map<string, vector<string>>mmap;
+	for (int i = 0; i < strs.size(); i++) {
+		string s = strs[i];
+		vector<int>ch(26, 0);
+		for (int v = 0; v < s.length(); v++)ch[s[v] - 'a']++;
+		string tab;
+		for (int v = 0; v < 26; v++)tab.push_back('0' + ch[v]);
+		mmap[tab].push_back(s);
+	}
+	auto it = mmap.begin();
+	while (it != mmap.end()) {
+		ans.push_back(it->second);
+		it++;
+	}
+	return ans;
+}
+//50. Pow(x, n)
+double quickMul(double x, long long n) {
+	if (n == 0) return 1.0;
+	double y = quickMul(x, n / 2);
+	return n % 2 == 0 ? y * y : y * y * x;
+}
+double myPow(double x, int n) {
+	long long N = n;
+	return N >= 0 ? quickMul(x, n) : 1.0 / quickMul(x, -n);
+}
+//51. N 皇后
+class NQueensSolution {
+private:
+	vector<bool>line, column, left, right;
+	vector<vector<string>>ans;
+public:
+	vector<vector<string>> solveNQueens(int n) {
+
+		line.resize(n);
+		column.resize(n);
+		left.resize(2 * n - 1);
+		right.resize(2 * n - 1);
+		return ans;                    
+	}
+};
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 0,1,0,2,1,0,1,3,2,1,2,1 };
+	vector<int>nums1 = { 1,2,3 };
 	vector<int>nums2 = { 2,2 };
 	vector<vector<int>>a = {
   {1,   4,  7, 11, 15},
@@ -1440,11 +1626,8 @@ int main() {
 			temp = temp->next;
 		}
 	}
-	vector<vector<char>>v = { {'5','3','.','.','7','.','.','.','.'},
-		{'6','.','.','1','9','5','.','.','.'},{'.','9','8','.','.','.','.','6','.'},
-		{'8','.','.','.','6','.','.','.','3'},{'4','.','.','8','.','3','.','.','1'},
-		{'7','.','.','.','2','.','.','.','6'},{'.','6','.','.','.','.','2','8','.'},
-		{'.','.','.','4','1','9','.','.','5'},{'.','.','.','.','8','.','.','7','9'} };
-	trap(nums1);
+	vector<vector<int>>v = { {5,1,9,11},{2,4,8,10},{13,3,6,7},{15,14,12,16} };
+	NQueensSolution ns;
+	ns.solveNQueens(4);
 	return 0;
 }
