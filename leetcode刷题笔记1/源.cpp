@@ -1591,23 +1591,301 @@ double myPow(double x, int n) {
 //51. N 皇后
 class NQueensSolution {
 private:
-	vector<bool>line, column, left, right;
 	vector<vector<string>>ans;
+	void allTrueOrFalse(int i, int j, vector<vector<int>>& vis, int flag) {
+		int left = j - 1, right = j + 1, len = vis.size();
+		vis[i][j] += flag;
+		i++;
+		while (i < len && (left >= 0 || right < len)) {
+			if (left >= 0)vis[i][left] += flag;
+			if (right < len)vis[i][right] += flag;
+			i++;
+			left--;
+			right++;
+		}
+	}
 public:
+	void NQueens_dfs(int index, int n, vector<int>v, vector<bool>line, vector<bool>column, vector<vector<int>>vis) {
+		if (index == n) {
+			vector<string>an;
+			for (int i = 0; i < n; i++) {
+				string temp;
+				for (int j = 0; j < n; j++) {
+					if (v[i] != j)temp.push_back('.');
+					else temp.push_back('Q');
+				}
+				an.push_back(temp);
+			}
+			ans.push_back(an);
+			return;
+		}
+		for (int i = 0; i < n; i++) {
+			if (column[i] || vis[index][i] >= 1)continue;
+			v.push_back(i);
+			column[i] = true;
+			line[index] = true;
+			allTrueOrFalse(index, i, vis, 1);
+			NQueens_dfs(index + 1, n, v, line, column, vis);
+			column[i] = false;
+			line[index] = false;
+			allTrueOrFalse(index, i, vis, -1);
+			v.pop_back();
+		}
+	}
 	vector<vector<string>> solveNQueens(int n) {
-
-		line.resize(n);
-		column.resize(n);
-		left.resize(2 * n - 1);
-		right.resize(2 * n - 1);
-		return ans;                    
+		vector<bool>line(n), column(n);
+		vector<vector<int>>vis(n, vector<int>(n));
+		vector<int>v;
+		NQueens_dfs(0, n, v, line, column, vis);
+		return ans;
 	}
 };
+//902. 最大为 N 的数字组合
+int atMostNGivenDigitSet(vector<string>& digits, int n) {
+	int len = to_string(n).length(), dlen = digits.size();
+	vector<char>digit;
+	for (int i = 0; i < digits.size(); i++)digit.push_back(stoi(digits[i].c_str()) + '0');
+	string bound = "";
+	string target = to_string(n);
+	for (int i = 0; i < len; i++)bound += digits[0];
+	if (bound > target) {
+		bound = "";
+		int cnt = 0, local = 1;
+		while (local < len) {
+			cnt += pow(digits.size(), local);
+			local++;
+		}
+		return cnt;
+	}
+	else {
+		for (int i = 0; i < len; i++) {
+			string temp = bound;
+			for (int j = 1; j < digit.size(); j++) {
+				temp[i] = digit[j];
+				if (temp > target)break;
+				bound = temp;
+			}
+		}
+		int cnt = 0, local = 1;
+		while (local < len) {
+			cnt += pow(digits.size(), local);
+			local++;
+		}
+		for (int i = 0; i < bound.length(); i++) {
+			for (int j = 1; j < digit.size(); j++) {
+				if (digit[j] == bound[i]) {
+					cnt += pow(digit.size(), bound.length() - i - 1) * (j);
+					break;
+				}
+			}
+		}
+		cnt++;
+		return cnt;
+	}
+}
+//53. 最大子数组和
+int maxSubArray(vector<int>& nums) {
+	int len = nums.size();
+	vector<vector<int>>dp(2, vector<int>(len));
+	dp[0][0] = dp[1][0] = nums[0];
+	for (int i = 1; i < len; i++) {
+		dp[0][i] = max(dp[0][i - 1], dp[1][i - 1]);
+		dp[1][i] = max(nums[i], dp[1][i - 1] + nums[i]);
+	}
+	return max(dp[0][len - 1], dp[1][len - 1]);
+}
+//56. 合并区间
+bool mergeCmp(vector<int>a, vector<int>b) { return a[0] < b[0]; }
+vector<vector<int>> merge(vector<vector<int>>& intervals) {
+	sort(intervals.begin(), intervals.end());
+	vector<vector<int>>ans;
+	vector<int>curr = intervals[0];
+	for (int i = 1; i < intervals.size(); i++) {
+		if (curr[1] >= intervals[i][0] && curr[1] <= intervals[i][1]) {
+			curr[1] = intervals[i][1];
+		}
+		else if (curr[1] < intervals[i][0]) {
+			ans.push_back(curr);
+			curr = intervals[i];
+		}
+	}
+	ans.push_back(curr);
+	return ans;
+}
+//57. 插入区间
+vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+	vector<vector<int>>ans;
+	if (intervals.size() == 0) {
+		ans.push_back(newInterval);
+		return ans;
+	}
+	else if (intervals[0][0] > newInterval[1]) {
+		ans.push_back(newInterval);
+		for (vector<int>x : intervals)ans.push_back(x);
+		return ans;
+	}
+	int len = intervals.size();
+	int left = 0, right = len - 1, mid = 0;
+	while (left < right) {
+		mid = (left + right) >> 1;
+		if (intervals[mid][0] > newInterval[0])right = mid;
+		else if (intervals[mid][0] < newInterval[0])left = mid + 1;
+		else {
+			left = mid; break;
+		}
+	}
+	while (left >= 0 && intervals[left][1] >= newInterval[0])left--;
+	for (int i = 0; i <= left; i++)ans.push_back(intervals[i]);
+	vector<int>curr = newInterval;
+	int idx = left + 1;
+	bool change = false;
+	for (; idx < intervals.size(); idx++) {
+		if (curr[1] >= intervals[idx][0]) {
+			curr[1] = max(intervals[idx][1], curr[1]);
+			curr[0] = min(intervals[idx][0], curr[0]);
+		}
+		else {
+			change = true;
+			ans.push_back(curr);
+			curr = intervals[idx];
+			break;
+		}
+	}
+	if (!change)ans.push_back(curr);
+	for (; idx < intervals.size(); idx++)ans.push_back(intervals[idx]);
+	return ans;
+}
+//59. 螺旋矩阵 II
+vector<vector<int>> generateMatrix(int n) {
+	vector<vector<int>>v(n, vector<int>(n, -1));
+	bool change = true;
+	int i = 0, j = 0, num = 1;
+	while (change) {
+		change = false;
+		while (j < n && v[i][j] == -1) {
+			v[i][j] = num++; j++; change = true;
+		}
+		j--; i++;
+		while (i < n && v[i][j] == -1) {
+			v[i][j] = num++; i++; change = true;
+		}
+		i--; j--;
+		while (j >= 0 && v[i][j] == -1) {
+			v[i][j] = num++; j--; change = true;
+		}
+		j++; i--;
+		while (i >= 0 && v[i][j] == -1) {
+			v[i][j] = num++; i--; change = true;
+		}
+		i++; j++;
+	}
+	return v;
+}
+//1700. 无法吃午餐的学生数量
+int countStudents(vector<int>& students, vector<int>& sandwiches) {
+	queue<int>stu, sand;
+	for (int i = 0; i < students.size(); i++)stu.push(students[i]);
+	for (int i = 0; i < sandwiches.size(); i++)sand.push(sandwiches[i]);
+	bool eat = true;
+	while (eat) {
+		eat = false;
+		int cnt = 0;
+		while (cnt < stu.size()) {
+			if (stu.front() != sand.front()) {
+				cnt++;
+				stu.push(stu.front());
+				stu.pop();
+			}
+			else {
+				stu.pop();
+				sand.pop();
+				eat = true;
+				break;
+			}
+		}
+	}
+	return stu.size();
+}
+//904. 水果成篮
+int totalFruit(vector<int>& fruits) {
+	if (fruits.size() <= 2)return fruits.size();
+	int maxn = 0, k1, k2, sum = 0, idx;
+	for (int i = 2; i < fruits.size(); i++) {
+		if (fruits.size() - i + 2 < maxn)break;
+		k1 = fruits[i - 2];
+		k2 = fruits[i - 1];
+		sum = 2;
+		idx = i;
+		while (idx < fruits.size() && (fruits[idx] == k1 || fruits[idx] == k2 || k1 == k2)) {
+			if (k1 == k2 && fruits[idx] != k1)k2 = fruits[idx];
+			sum++; idx++;
+		}
+		maxn = max(sum, maxn);
+	}
+	return maxn;
+}
+//60. 排列序列
+string getPermutation(int n, int k) {
+	string result;
+	vector<int>fac(n + 1), vis(n + 1, -1);
+	fac[1] = 1;
+	for (int i = 2; i <= n; i++)fac[i] = fac[i - 1] * i;
+	int total = 1;
+	for (int i = 0; i < n; i++) {
+		int  num = 0, j = 1;
+		while (total <= k && (n - i - 1) >= 1) {
+			if (total + fac[n - i - 1] <= k) {
+				num++;
+				total += fac[n - i - 1];
+			}
+			else {
+				break;
+			}
+		}
+		while (vis[j] != -1)j++;
+		while (num > 0 || vis[j] != -1) {
+			if (vis[j] != -1) {
+				j++; continue;
+			}
+			num--;
+			j++;
+		}
+		vis[j] = 1;
+		result.push_back(j + '0');
+	}
+	return result;
+}
+//61. 旋转链表
+ListNode* rotateRight(ListNode* head, int k) {
+	if (k == 0 || head == nullptr || head->next == nullptr) {
+		return head;
+	}
+	int n = 1;
+	ListNode* root = head;
+	while (head->next != nullptr) {
+		head = head->next;
+		n++;
+	}
+	if (k % n == 0)return root;
+	k = k % n;
+	head->next = root;
+	int cnt = 1;
+	while (cnt < n - k) {
+		root = root->next;
+		cnt++;
+	}
+	head = root->next;
+	root->next = nullptr;
+	return head;
+}
+//65. 有效数字
+bool isNumber(string s) {
+
+}
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 1,2,3 };
-	vector<int>nums2 = { 2,2 };
+	vector<string>strs = { "1","4","9" };
 	vector<vector<int>>a = {
   {1,   4,  7, 11, 15},
   {2,   5,  8, 12, 19},
@@ -1616,6 +1894,8 @@ int main() {
   {18, 21, 23, 26, 30}
 	};
 	vector<int>preorder = { 3, 9, 20, 15, 7 }, inorder = { 9, 3, 15, 20, 7 };
+	vector<int>nums1 = { 49,74,32,17,52,78,35,1,41,24 };
+	vector<int>nums2 = { 0,1,0,1 };
 	for (int x : nums1) {
 		if (root == nullptr) {
 			root = new ListNode(x);
@@ -1626,8 +1906,7 @@ int main() {
 			temp = temp->next;
 		}
 	}
-	vector<vector<int>>v = { {5,1,9,11},{2,4,8,10},{13,3,6,7},{15,14,12,16} };
-	NQueensSolution ns;
-	ns.solveNQueens(4);
+	vector<vector<int>>v = { {1,5} };
+	rotateRight(root, 2);
 	return 0;
 }
