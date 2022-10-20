@@ -1988,16 +1988,40 @@ int minDistance(string word1, string word2) {
 	}
 	return dp[n][m];
 }
+//75. 颜色分类
+void sortColors(vector<int>& nums) {
+	int p0 = 0, p1 = 0, idx = 0, len = nums.size();
+	for (int i = 0; i < len; i++) {
+		if (nums[i] == 0) {
+			swap(nums[i], nums[p0]);
+			if (p0 < p1) {
+				swap(nums[i], nums[p1]);
+			}
+			p0++;
+			p1++;
+		}
+		else if (nums[i] == 1) {
+			swap(nums[i], nums[p1]);
+			p1++;
+		}
+	}
+}
+//77. 组合
+
+
+
+
+
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 49,74,32,17,52,78,35,1,41,24 };
+	vector<int>nums1 = { 2,0,2,1,1,0 };
 	vector<int>nums2 = { 0,1,0,1 };
 	for (int x : nums1) {
-		if (root == nullptr) { root = new ListNode(x);	temp = root; }
-		else { temp->next = new ListNode(x);		temp = temp->next; }
+		if (root == nullptr) { root = new ListNode(x); temp = root; }
+		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
 	vector<vector<int>>v = { {1,5} };
 	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	minDistance("sea", "ate");
+	sortColors(nums1);
 	return 0;
 }
