@@ -1971,32 +1971,33 @@ string simplifyPath(string path) {
 	return res;
 }
 //72. ±‡º≠æ‡¿Î
-
+int minDistance(string word1, string word2) {
+	int n = word1.size(), m = word2.size();
+	if (n * m == 0)return n + m;
+	vector<vector<int>>dp(n + 1, vector<int>(m + 1));
+	for (int i = 0; i < n + 1; i++)dp[i][0] = i;
+	for (int i = 0; i < m + 1; i++)dp[0][i] = i;
+	for (int i = 1; i < n + 1; i++) {
+		for (int j = 1; j < m + 1; j++) {
+			int left = dp[i - 1][j] + 1;
+			int down = dp[i][j - 1] + 1;
+			int left_down = dp[i - 1][j - 1];
+			if (word1[i - 1] != word2[j - 1])left_down += 1;
+			dp[i][j] = min(left, min(down, left_down));
+		}
+	}
+	return dp[n][m];
+}
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<string>strs = { "1","4","9" };
-	vector<vector<int>>a = {
-  {1,   4,  7, 11, 15},
-  {2,   5,  8, 12, 19},
-  {3,   6,  9, 16, 22},
-  {10, 13, 14, 17, 24},
-  {18, 21, 23, 26, 30}
-	};
-	vector<int>preorder = { 3, 9, 20, 15, 7 }, inorder = { 9, 3, 15, 20, 7 };
 	vector<int>nums1 = { 49,74,32,17,52,78,35,1,41,24 };
 	vector<int>nums2 = { 0,1,0,1 };
 	for (int x : nums1) {
-		if (root == nullptr) {
-			root = new ListNode(x);
-			temp = root;
-		}
-		else {
-			temp->next = new ListNode(x);
-			temp = temp->next;
-		}
+		if (root == nullptr) { root = new ListNode(x);	temp = root; }
+		else { temp->next = new ListNode(x);		temp = temp->next; }
 	}
 	vector<vector<int>>v = { {1,5} };
 	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	simplifyPath("/a/./b/../../c");
+	minDistance("sea", "ate");
 	return 0;
 }
