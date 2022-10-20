@@ -1878,10 +1878,99 @@ ListNode* rotateRight(ListNode* head, int k) {
 	root->next = nullptr;
 	return head;
 }
-//65. 有效数字
-bool isNumber(string s) {
-
+//68. 文本左右对齐
+vector<string> fullJustify(vector<string>& words, int maxWidth) {
+	vector<string>ans;
+	vector<string>temp;
+	int wordWidth = 0, wordn = 0;
+	for (int i = 0; i < words.size(); i++) {
+		if (temp.size() + wordWidth + words[i].length() <= maxWidth) {
+			wordWidth += words[i].length();
+			temp.push_back(words[i]);
+		}
+		else {
+			if (temp.size() == 1) {
+				string last = "";
+				for (int i = 0; i < temp.size(); i++) {
+					if (i != 0)last.push_back(' ');
+					last += temp[i];
+				}
+				while (last.size() < maxWidth)last.push_back(' ');
+				ans.push_back(last);
+			}
+			else {
+				int keng = (maxWidth - wordWidth) % (temp.size() - 1);
+				int space = (maxWidth - wordWidth) / (temp.size() - 1);
+				string spa = "";
+				for (int j = 0; j < space; j++)spa.push_back(' ');
+				string curr;
+				for (int j = 0; j < temp.size(); j++) {
+					if (j != 0) {
+						curr += spa;
+						if (keng > 0) {
+							curr.push_back(' ');
+							keng--;
+						}
+					}
+					curr += temp[j];
+				}
+				ans.push_back(curr);
+			}
+			temp.clear();
+			temp.push_back(words[i]);
+			wordWidth = words[i].length();
+			wordn = 1;
+		}
+	}
+	string last = "";
+	for (int i = 0; i < temp.size(); i++) {
+		if (i != 0)last.push_back(' ');
+		last += temp[i];
+	}
+	while (last.size() < maxWidth)last.push_back(' ');
+	ans.push_back(last);
+	return ans;
 }
+//779. 第K个语法符号
+int kthGrammar(int n, int k) {
+	if (n == 1)return 0;
+	return kthGrammar(n - 1, (k + 1) >> 1) ^ 1 ^ (1 & k);
+}
+//71. 简化路径
+string simplifyPath(string path) {
+	vector<string> ans;
+	stack<char>s;
+	for (int i = 0; i < path.size() || !s.empty(); i++) {
+		if (i >= path.size() && !s.empty() || i != 0 && path[i] == '/') {
+			if (i >= path.size() && s.top() == '/')break;
+			if (s.size() > 0 && s.top() == '/') continue;
+			string temp;
+			while (!s.empty() && s.top() != '/') {
+				temp.push_back(s.top());
+				s.pop();
+			}
+			if (temp == ".")continue;
+			else if (temp == "..") {
+				if (ans.size() > 0)ans.pop_back();
+			}
+			else {
+				reverse(temp.begin(), temp.end());
+				ans.push_back(temp);
+			}
+		}
+		else {
+			s.push(path[i]);
+		}
+	}
+	string res;
+	for (string x : ans) {
+		res.push_back('/');
+		res += x;
+	}
+	if (res.length() == 0)res.push_back('/');
+	return res;
+}
+//72. 编辑距离
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
@@ -1907,6 +1996,7 @@ int main() {
 		}
 	}
 	vector<vector<int>>v = { {1,5} };
-	rotateRight(root, 2);
+	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
+	simplifyPath("/a/./b/../../c");
 	return 0;
 }
