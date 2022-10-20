@@ -1475,7 +1475,6 @@ public:
 		return ans;
 	}
 };
-
 ///940. 不同的子序列 II
 int distinctSubseqII(string s) {
 	vector<int> last(26, -1);
@@ -2007,14 +2006,94 @@ void sortColors(vector<int>& nums) {
 	}
 }
 //77. 组合
-
-
-
+class combineSolution {
+private:
+	vector<int>temp;
+	vector<vector<int>>ans;
+public:
+	void combine_dfs(int i, int n, int k) {
+		if (temp.size() + (n - i + 1) < k)return;
+		if (temp.size() == k) {
+			ans.push_back(temp);
+			return;
+		}
+		temp.push_back(i);
+		combine_dfs(i + 1, n, k);
+		temp.pop_back();
+		combine_dfs(i + 1, n, k);
+	}
+	vector<vector<int>> combine(int n, int k) {
+		combine_dfs(1, n, k);
+		return ans;
+	}
+};
+//78. 子集
+class subsetsSolution {
+private:
+	vector<int>temp;
+	vector<vector<int>>ans;
+public:
+	void dfs(vector<int>& nums, int i) {
+		if (i == nums.size()) {
+			ans.push_back(temp);
+			return;
+		}
+		temp.push_back(nums[i]);
+		dfs(nums, i + 1);
+		temp.pop_back();
+		dfs(nums, i + 1);
+	}
+	vector<vector<int>> subsets(vector<int>& nums) {
+		dfs(nums, 0);
+		return ans;
+	}
+};
+//78. 子集  1,0  10来查重有误
+class subsetsSolution1 {
+private:
+	string s;
+	vector<int>temp;
+	vector<vector<int>>ans;
+	unordered_map<string, int>mmap;
+public:
+	void dfs(vector<int>& nums, int i) {
+		if (mmap.find(s) == mmap.end()) {
+			ans.push_back(temp);
+			mmap[s] = 1;
+		}
+		if (i == nums.size())return;
+		string sn = to_string(nums[i]);
+		temp.push_back(nums[i]);
+		s += sn;
+		dfs(nums, i + 1);
+		temp.pop_back();
+		for (int i = 0; i < sn.size(); i++)s.pop_back();
+		dfs(nums, i + 1);
+	}
+	vector<vector<int>> subsets(vector<int>& nums) {
+		sort(nums.begin(), nums.end());
+		dfs(nums, 0);
+		return ans;
+	}
+};
+//80. 删除有序数组中的重复项 II
+int removeDuplicates1(vector<int>& nums) {
+	if (nums.size() <= 2)return nums.size();
+	int slow = 2, fast = 2;
+	while (fast < nums.size()) {
+		if (nums[slow - 2] != nums[fast]) {
+			nums[slow] = nums[fast];
+			slow++;
+		}
+		fast++;
+	}
+	return slow;
+}
 
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 2,0,2,1,1,0 };
+	vector<int>nums1 = { 3,3 ,3 };
 	vector<int>nums2 = { 0,1,0,1 };
 	for (int x : nums1) {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
@@ -2022,6 +2101,6 @@ int main() {
 	}
 	vector<vector<int>>v = { {1,5} };
 	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	sortColors(nums1);
+	removeDuplicates1(nums1);
 	return 0;
 }
