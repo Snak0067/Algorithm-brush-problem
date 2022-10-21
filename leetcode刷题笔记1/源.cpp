@@ -2233,10 +2233,102 @@ int maximalRectangle(vector<vector<char>>& matrix) {
 	}
 	return maxn;
 }
+//86. 分隔链表
+ListNode* partition(ListNode* head, int x) {
+	ListNode* small = new ListNode(0);
+	ListNode* smallhead = small;
+	ListNode* large = new ListNode(0);
+	ListNode* largehead = large;
+	while (head != nullptr) {
+		if (head->val < x) {
+			small->next = head;
+			small = small->next;
+		}
+		else {
+			large->next = head;
+			large = large->next;
+		}
+		head = head->next;
+	}
+	large->next = nullptr;
+	small->next = largehead->next;
+	return smallhead->next;
+}
+//90. 子集 II
+class subsetsWithDupSolution {
+private:
+	vector<vector<int>>ans;
+	unordered_map<string, int>mmap;
+	vector<int>v;
+	string s;
+public:
+	void dfs(vector<int>nums, int i) {
+		if (i == nums.size()) {
+			if (mmap.find(s) == mmap.end()) {
+				ans.push_back(v);
+				mmap[s] = 1;
+			}
+			return;
+		}
+		string cur = to_string(nums[i]);
+		v.push_back(nums[i]);
+		s = s + cur + "_";
+		dfs(nums, i + 1);
+		v.pop_back();
+		for (int i = 0; i <= cur.size(); i++)s.pop_back();
+		dfs(nums, i + 1);
+	}
+	vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+		sort(nums.begin(), nums.end());
+		dfs(nums, 0);
+		return ans;
+	}
+};
+//91. 解码方法
+int numDecodings(string s) {
+	int len = s.length();
+	vector<int>dp(len + 1);
+	dp[0] = 1;
+	for (int i = 1; i <= len; i++) {
+		if (s[i - 1] != '0')dp[i] += dp[i - 1];
+		if (i > 1 && s[i - 2] != '0' && ((s[i - 2] - '0') * 10 + s[i - 1] - '0') <= 26) {
+			dp[i] += dp[i - 2];
+		}
+	}
+	return dp[len];
+}
+//92. 反转链表 II
+ListNode* reverseBetween(ListNode* head, int left, int right) {
+	int mid = right - left;
+	ListNode* root = new ListNode(0), * tail1 = head;
+	if (left == 1)tail1 = root;
+	root->next = head;
+	while (left > 1) {
+		tail1 = head;
+		head = head->next;
+		left--;
+	}
+	ListNode* tail2 = head, * midhead = tail2, * cur = tail2;
+	head = head->next;
+	while (mid > 0) {
+		midhead = new ListNode(head->val);
+		midhead->next = cur;
+		cur = midhead;
+		head = head->next;
+		mid--;
+	}
+	tail1->next = midhead;
+	tail2->next = head;
+	return root->next;
+}
+//104. 二叉树的最大深度
+
+
+
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 6,7,5,2,4,5,9,3 };
+	vector<int>nums1 = { 3,5 };
 	vector<int>nums2 = { 0,1,0,1 };
 	for (int x : nums1) {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
@@ -2246,6 +2338,6 @@ int main() {
 		{'0','1','1','1','1','1','1','0','1','0'},{'0','0','1','1','1','1','1','1','1','0'},{'1','1','0','1','0','1','1','1','1','0'},
 		{'0','0','0','1','1','0','0','0','1','0'},{'1','1','0','1','1','0','0','1','1','1'},{'0','1','0','1','1','0','1','0','1','1'} };
 	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	maximalRectangle(v);
+	reverseBetween(root, 1, 2);
 	return 0;
 }
