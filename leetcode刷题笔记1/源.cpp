@@ -2166,13 +2166,52 @@ bool search(vector<int>& nums, int target) {
 }
 //84. 柱状图中最大的矩形
 int largestRectangleArea(vector<int>& heights) {
-
+	int len = heights.size();
+	if (len == 0)return 0;
+	if (len == 1)return heights[0];
+	vector<int>left(len), right(len);
+	stack<pair<int, int>>stk, sta;
+	for (int i = 0; i < len; i++) {
+		if (stk.empty()) {
+			left[i] = -1;
+		}
+		else {
+			while (!stk.empty() && stk.top().first >= heights[i])stk.pop();
+			if (stk.empty()) {
+				left[i] = -1;
+			}
+			else {
+				left[i] = stk.top().second;
+			}
+		}
+		stk.emplace(heights[i], i);
+	}
+	for (int i = len - 1; i >= 0; i--) {
+		if (sta.empty()) {
+			right[i] = len;
+		}
+		else {
+			while (!sta.empty() && sta.top().first >= heights[i])sta.pop();
+			if (sta.empty()) {
+				right[i] = len;
+			}
+			else {
+				right[i] = sta.top().second;
+			}
+		}
+		sta.emplace(heights[i], i);
+	}
+	int maxn = 0;
+	for (int i = 0; i < len; i++) {
+		maxn = max(maxn, (right[i] - left[i] - 1) * heights[i]);
+	}
+	return maxn;
 }
 
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 1,3 };
+	vector<int>nums1 = { 6,7,5,2,4,5,9,3 };
 	vector<int>nums2 = { 0,1,0,1 };
 	for (int x : nums1) {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
@@ -2180,11 +2219,6 @@ int main() {
 	}
 	vector<vector<int>>v = { {1,5} };
 	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	cout << search(nums1, 3) << endl;
-	cout << search(nums1, 4) << endl;
-	cout << search(nums1, 5) << endl;
-	cout << search(nums1, 6) << endl;
-	cout << search(nums1, 1) << endl;
-	cout << search(nums1, 8) << endl;
+	largestRectangleArea(nums1);
 	return 0;
 }
