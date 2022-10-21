@@ -2089,6 +2089,46 @@ int removeDuplicates1(vector<int>& nums) {
 	}
 	return slow;
 }
+//81. 搜索旋转排序数组 II
+
+//83. 删除排序链表中的重复元素
+ListNode* deleteDuplicates(ListNode* head) {
+	ListNode* ptr = head;
+	while (ptr != nullptr && ptr->next != nullptr) {
+		if (ptr->next->val == ptr->val) {
+			ptr->next = ptr->next->next;
+		}
+		else {
+			ptr = ptr->next;
+		}
+	}
+	return head;
+}
+//901. 股票价格跨度
+class StockSpanner {
+	vector<int>stocks;
+	vector<int>dp;
+	int len = -1;
+public:
+	StockSpanner() {
+
+	}
+
+	int next(int price) {
+		stocks.push_back(price);
+		int last = len, width = 1;
+		while (last >= 0 && stocks[last] <= price) {
+			width += dp[last];
+			last -= dp[last];
+		}
+		dp.push_back(width);
+		len++;
+		return width;
+	}
+};
+//81. 搜索旋转排序数组 II
+
+
 
 
 int main() {
