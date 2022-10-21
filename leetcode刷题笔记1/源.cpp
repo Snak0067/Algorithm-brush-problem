@@ -45,7 +45,7 @@ bool checkPowersOfThree(int n) {
 	return true;
 }
 //33. 搜索旋转排序数组
-int search(vector<int>& nums, int target) {
+int searchI(vector<int>& nums, int target) {
 	int len = nums.size();
 	if (len == 0)return -1;
 	if (len == 1 && nums[0] != target) return -1;
@@ -116,7 +116,7 @@ int findPeakElement(vector<int>& nums) {
 	return i;
 }
 //82. 删除排序链表中的重复元素 II
-ListNode* deleteDuplicates(ListNode* head) {
+ListNode* deleteDuplicatesII(ListNode* head) {
 	ListNode* ptr = head;
 	ListNode* ans = nullptr, * temp = nullptr, * second = nullptr;
 	bool same = false;
@@ -2127,13 +2127,52 @@ public:
 	}
 };
 //81. 搜索旋转排序数组 II
+bool search(vector<int>& nums, int target) {
+	if (nums.size() == 0)return false;
+	else if (nums.size() == 1)return nums[0] == target;
+	int left = 0, right = nums.size() - 1, minx, maxx;
+	while (left < right) {
+		while (right > 0 && nums[right] == nums[right - 1])right--;
+		int mid = (left + right) >> 1;
+		if (nums[mid] == target)return true;
+		if (target <= nums[right]) {
+			if (nums[mid] < nums[right]) {
+				if (nums[mid] < target) {
+					left = mid + 1;
+				}
+				else {
+					right = mid;
+				}
+			}
+			else {
+				left = mid + 1;
+			}
+		}
+		else {
+			if (nums[mid] < nums[right]) {
+				right = mid;
+			}
+			else {
+				if (nums[mid] > target) {
+					right = mid;
+				}
+				else {
+					left = mid + 1;
+				}
+			}
+		}
+	}
+	return nums[left] == target;
+}
+//84. 柱状图中最大的矩形
+int largestRectangleArea(vector<int>& heights) {
 
-
+}
 
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 3,3 ,3 };
+	vector<int>nums1 = { 1,3 };
 	vector<int>nums2 = { 0,1,0,1 };
 	for (int x : nums1) {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
@@ -2141,6 +2180,11 @@ int main() {
 	}
 	vector<vector<int>>v = { {1,5} };
 	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	removeDuplicates1(nums1);
+	cout << search(nums1, 3) << endl;
+	cout << search(nums1, 4) << endl;
+	cout << search(nums1, 5) << endl;
+	cout << search(nums1, 6) << endl;
+	cout << search(nums1, 1) << endl;
+	cout << search(nums1, 8) << endl;
 	return 0;
 }
