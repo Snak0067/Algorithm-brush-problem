@@ -2169,37 +2169,15 @@ int largestRectangleArea(vector<int>& heights) {
 	int len = heights.size();
 	if (len == 0)return 0;
 	if (len == 1)return heights[0];
-	vector<int>left(len), right(len);
-	stack<pair<int, int>>stk, sta;
+	vector<int>left(len), right(len, len);
+	stack<pair<int, int>>stk;
 	for (int i = 0; i < len; i++) {
-		if (stk.empty()) {
-			left[i] = -1;
+		while (!stk.empty() && stk.top().first >= heights[i]) {
+			right[stk.top().second] = i;
+			stk.pop();
 		}
-		else {
-			while (!stk.empty() && stk.top().first >= heights[i])stk.pop();
-			if (stk.empty()) {
-				left[i] = -1;
-			}
-			else {
-				left[i] = stk.top().second;
-			}
-		}
+		left[i] = (stk.empty() ? -1 : stk.top().second);
 		stk.emplace(heights[i], i);
-	}
-	for (int i = len - 1; i >= 0; i--) {
-		if (sta.empty()) {
-			right[i] = len;
-		}
-		else {
-			while (!sta.empty() && sta.top().first >= heights[i])sta.pop();
-			if (sta.empty()) {
-				right[i] = len;
-			}
-			else {
-				right[i] = sta.top().second;
-			}
-		}
-		sta.emplace(heights[i], i);
 	}
 	int maxn = 0;
 	for (int i = 0; i < len; i++) {
