@@ -2322,8 +2322,27 @@ ListNode* reverseBetween(ListNode* head, int left, int right) {
 	return root->next;
 }
 //104. 二叉树的最大深度
-
-
+class maxDepthSolution {
+public:
+	int maxDepth(TreeNode* root) {
+		if (root == nullptr)return 0;
+		return 1 + max(maxDepth(root->left), maxDepth(root->right));
+	}
+};
+//111. 二叉树的最小深度
+int minDepth(TreeNode* root) {
+	if (root == nullptr)return 0;
+	if (root->left != nullptr && root->right != nullptr) {
+		return 1 + min(minDepth(root->left), minDepth(root->right));
+	}
+	else if (root->left != nullptr) {
+		return 1 + minDepth(root->left);
+	}
+	else {
+		return 1 + minDepth(root->right);
+	}
+	return 1;
+}
 
 
 int main() {
