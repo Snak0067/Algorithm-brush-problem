@@ -2185,7 +2185,54 @@ int largestRectangleArea(vector<int>& heights) {
 	}
 	return maxn;
 }
-
+//85. ×î´ó¾ØÐÎ
+int maximalRectangle(vector<vector<char>>& matrix) {
+	if (matrix.size() == 0 || matrix[0].size() == 0)return 0;
+	int n = matrix.size(), m = matrix[0].size();
+	vector<vector<int>>right(n, vector<int>(m, m));
+	vector<vector<int>>up(n, vector<int>(m, -1));
+	vector<vector<int>>down(n, vector<int>(m, n));
+	for (int i = 0; i < n; i++) {
+		stack<pair<int, int>>stk, sta;
+		for (int j = 0; j < m; j++) {
+			while (!sta.empty() && sta.top().first >= matrix[i][m - j - 1]) {
+				sta.pop();
+			}
+			right[i][m - j - 1] = (sta.empty() ? m : sta.top().second);
+			sta.emplace(matrix[i][m - j - 1], m - j - 1);
+		}
+	}
+	for (int j = 0; j < m; j++) {
+		stack<pair<int, int>>stk, sta;
+		for (int i = 0; i < n; i++) {
+			while (!stk.empty() && stk.top().first >= matrix[i][j]) {
+				stk.pop();
+			}
+			while (!sta.empty() && sta.top().first >= matrix[n - i - 1][j]) {
+				sta.pop();
+			}
+			up[i][j] = (stk.empty() ? -1 : stk.top().second);
+			down[n - i - 1][j] = (sta.empty() ? n : sta.top().second);
+			stk.emplace(matrix[i][j], i);
+			sta.emplace(matrix[n - i - 1][j], n - i - 1);
+		}
+	}
+	int maxn = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (matrix[i][j] == '0')continue;
+			int width = right[i][j] - j;
+			int maxu = -1, mind = n;
+			for (int u = j; u < right[i][j]; u++) {
+				maxu = max(maxu, up[i][u]);
+				mind = min(mind, down[i][u]);
+				if (mind - maxu - 1 == 1)break;
+			}
+			maxn = max(maxn, width * (mind - maxu - 1));
+		}
+	}
+	return maxn;
+}
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
@@ -2195,8 +2242,10 @@ int main() {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
-	vector<vector<int>>v = { {1,5} };
+	vector<vector<char>>v = { {'0','1','1','0','0','1','0','1','0','1'},{'0','0','1','0','1','0','1','0','1','0'},{'1','0','0','0','0','1','0','1','1','0'},
+		{'0','1','1','1','1','1','1','0','1','0'},{'0','0','1','1','1','1','1','1','1','0'},{'1','1','0','1','0','1','1','1','1','0'},
+		{'0','0','0','1','1','0','0','0','1','0'},{'1','1','0','1','1','0','0','1','1','1'},{'0','1','0','1','1','0','1','0','1','1'} };
 	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	largestRectangleArea(nums1);
+	maximalRectangle(v);
 	return 0;
 }
