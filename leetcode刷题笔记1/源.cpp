@@ -2463,6 +2463,91 @@ public:
 		return dp[n];
 	}
 };
+//93. 复原 IP 地址
+class restoreIpAddressesSolution {
+private:
+	vector<string>ans;
+public:
+	void dfs(string s, string cur, int i, int n) {
+		if (n == 4 || i == s.size()) {
+			if (i == s.size() && n == 4) {
+				cur.pop_back();
+				ans.push_back(cur);
+			}
+			return;
+		}
+		if (s[i] == '0') {
+			cur.push_back(s[i]);
+			cur.push_back('.');
+			dfs(s, cur, i + 1, n + 1);
+		}
+		else {
+			int num = s[i] - '0', idx = i + 1;
+			cur.push_back(s[i]);
+			while (num < 255 && idx <= s.size()) {
+				dfs(s, cur + ".", idx, n + 1);
+				if (idx >= s.size())break;
+				num = num * 10 + s[idx] - '0';
+				cur.push_back(s[idx]);
+				idx++;
+			}
+		}
+
+	}
+	vector<string> restoreIpAddresses(string s) {
+		dfs(s, "", 0, 0);
+		return ans;
+	}
+};
+//95. 不同的二叉搜索树 II
+class generateTreesSolution {
+public:
+	vector<TreeNode*>generate(int start, int end) {
+		if (start > end) {
+			return { nullptr };
+		}
+		vector<TreeNode*>ans;
+		for (int i = start; i <= end; i++) {
+			vector<TreeNode*>left = generate(start, i - 1);
+			vector<TreeNode*>right = generate(i + 1, end);
+			for (TreeNode* ln : left) {
+				for (TreeNode* rn : right) {
+					TreeNode* root = new TreeNode(i);
+					root->left = ln;
+					root->right = rn;
+					ans.push_back(root);
+				}
+			}
+		}
+		return ans;
+	}
+	vector<TreeNode*> generateTrees(int n) {
+		return generate(1, n);
+	}
+};
+
+//96. 不同的二叉搜索树
+class numTreesSolution {
+public:
+	int numTrees(int n) {
+		vector<int>g(n + 1);
+		g[0] = 1;
+		g[1] = 1;
+		//G(n)表示不同的n个数能表示多少个不同的二叉树
+		//F(i,n)表示以i为二叉树根，节点个数为n个的不同的二叉树的个数
+		//G(n) = F(1 , n) + F(2,n) +.....+ F(n-1,n) + F(n,n);
+		//F(i,n) = G(i - 1) * G(n - i - 1);
+		for (int i = 2; i <= n; i++) {
+			for (int j = 1; j <= i; j++) {
+				g[i] += g[j - 1] * g[i - j];
+			}
+		}
+		return g[n];
+	}
+};
+//97. 交错字符串
+
+
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
 	vector<int>nums1 = { 1,2,3,4,6 };
@@ -2476,7 +2561,7 @@ int main() {
 		{'0','1','1','1','1','1','1','0','1','0'},{'0','0','1','1','1','1','1','1','1','0'},{'1','1','0','1','0','1','1','1','1','0'},
 		{'0','0','0','1','1','0','0','0','1','0'},{'1','1','0','1','1','0','0','1','1','1'},{'0','1','0','1','1','0','1','0','1','1'} };
 	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	jobSchedulingSolution js;
-	js.jobScheduling(nums1, nums2, nums3);
+	numTreesSolution gs;
+	gs.numTrees(3);
 	return 0;
 }
