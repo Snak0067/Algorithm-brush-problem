@@ -2130,7 +2130,7 @@ public:
 bool search(vector<int>& nums, int target) {
 	if (nums.size() == 0)return false;
 	else if (nums.size() == 1)return nums[0] == target;
-	int left = 0, right = nums.size() - 1, minx, maxx;
+	int left = 0, right = nums.size() - 1;
 	while (left < right) {
 		while (right > 0 && nums[right] == nums[right - 1])right--;
 		int mid = (left + right) >> 1;
@@ -2433,11 +2433,41 @@ public:
 		return false;
 	}
 };
-
+//1235. 规划兼职工作
+struct job
+{
+	int start, end, profit;
+};
+bool jobcmp(job a, job b) {
+	return a.end < b.end;
+}
+class jobSchedulingSolution {
+private:
+public:
+	int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+		int n = startTime.size();
+		vector<job>jobs;
+		for (int i = 0; i < n; i++) {
+			jobs.push_back({ startTime[i], endTime[i], profit[i] });
+		}
+		sort(jobs.begin(), jobs.end(), jobcmp);
+		sort(endTime.begin(), endTime.end());
+		vector<int>dp(n + 1);
+		dp[0] = 0;
+		for (int i = 1; i <= n; i++) {
+			int target = jobs[i - 1].start;
+			//查找大于x的第一个元素
+			int k = upper_bound(endTime.begin(), endTime.end(), target) - endTime.begin();
+			dp[i] = max(dp[i - 1], dp[k] + jobs[i - 1].profit);
+		}
+		return dp[n];
+	}
+};
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 3,5 };
-	vector<int>nums2 = { 0,1,0,1 };
+	vector<int>nums1 = { 1,2,3,4,6 };
+	vector<int>nums2 = { 3,5,10,6,9 };
+	vector<int>nums3 = { 20,20,100,70,60 };
 	for (int x : nums1) {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
@@ -2446,7 +2476,7 @@ int main() {
 		{'0','1','1','1','1','1','1','0','1','0'},{'0','0','1','1','1','1','1','1','1','0'},{'1','1','0','1','0','1','1','1','1','0'},
 		{'0','0','0','1','1','0','0','0','1','0'},{'1','1','0','1','1','0','0','1','1','1'},{'0','1','0','1','1','0','1','0','1','1'} };
 	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	isScrambleSolution is;
-	is.isScramble("great", "rgeat");
+	jobSchedulingSolution js;
+	js.jobScheduling(nums1, nums2, nums3);
 	return 0;
 }
