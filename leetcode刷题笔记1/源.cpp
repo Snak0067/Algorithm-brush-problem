@@ -2546,7 +2546,44 @@ public:
 	}
 };
 //97. ½»´í×Ö·û´®
+bool isInterleave(string s1, string s2, string s3) {
+	int n1 = s1.length(), n2 = s2.length(), n3 = s3.length();
+	if (n1 + n2 != n3)return false;
+	if (s3 == s1 + s2 || s3 == s2 + s1)return true;
+	int m[256] = { 0 };
+	for (int i = 0; i < s1.size(); i++)m[s1[i]]++;
+	for (int i = 0; i < s2.size(); i++)m[s2[i]]++;
+	for (int i = 0; i < s3.size(); i++)m[s3[i]]--;
+	for (int i = 0; i < 256; i++) {
+		if (m[i] != 0)return false;
+	}
+	vector<vector<int>>dp(n1 + 1, vector<int>(n2 + 1));
+	dp[0][0] = 1;
+	for (int i = 0; i <= n1; i++) {
+		for (int j = 0; j <= n2; j++) {
+			if (i > 0) {
+				dp[i][j] |= dp[i - 1][j] && s1[i - 1] == s3[i + j - 1];
+			}
+			if (j > 0) {
+				dp[i][j] |= dp[i][j - 1] && s2[j - 1] == s3[i + j - 1];
+			}
 
+		}
+	}
+	return dp[n1][n2];
+
+}
+//1768. ½»ÌæºÏ²¢×Ö·û´®
+string mergeAlternately(string word1, string word2) {
+	int n1 = word1.length(), n2 = word2.length();
+	string ans;
+	for (int i = 0; i < n1 || i < n2; i++) {
+		if (i < n1)ans.push_back(word1[i]);
+		if (i < n2)ans.push_back(word2[i]);
+	}
+	return ans;
+}
+//98. ÑéÖ¤¶þ²æËÑË÷Ê÷
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
@@ -2561,7 +2598,6 @@ int main() {
 		{'0','1','1','1','1','1','1','0','1','0'},{'0','0','1','1','1','1','1','1','1','0'},{'1','1','0','1','0','1','1','1','1','0'},
 		{'0','0','0','1','1','0','0','0','1','0'},{'1','1','0','1','1','0','0','1','1','1'},{'0','1','0','1','1','0','1','0','1','1'} };
 	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	numTreesSolution gs;
-	gs.numTrees(3);
+	isInterleave("a", "", "a");
 	return 0;
 }
