@@ -2638,7 +2638,7 @@ vector<vector<int>> levelOrder(TreeNode* root) {
 	int remain = 1, child = 0;
 	queue<TreeNode*>q;
 	vector<int>cur;
-	if(root!=nullptr)q.push(root);
+	if (root != nullptr)q.push(root);
 	while (!q.empty()) {
 		TreeNode* top = q.front();
 		cur.push_back(top->val);
@@ -2662,7 +2662,39 @@ vector<vector<int>> levelOrder(TreeNode* root) {
 	return ans;
 }
 //103. 二叉树的锯齿形层序遍历
-
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+	vector<vector<int>>ans;
+	int remain = 1, child = 0, cnt = 0;
+	queue<TreeNode*>q;
+	vector<int>cur;
+	if (root != nullptr)q.push(root);
+	while (!q.empty()) {
+		TreeNode* top = q.front();
+		cur.push_back(top->val);
+		remain--;
+		q.pop();
+		if (top->left != nullptr) {
+			q.push(top->left);
+			child++;
+		}
+		if (top->right != nullptr) {
+			q.push(top->right);
+			child++;
+		}
+		if (remain == 0) {
+			remain = child;
+			child = 0;
+			if (cnt % 2 == 1) {
+				reverse(cur.begin(), cur.end());
+			}
+			cnt++;
+			ans.push_back(cur);
+			cur.clear();
+		}
+	}
+	return ans;
+}
+//105. 从前序与中序遍历序列构造二叉树
 
 TreeNode* buildTree(int i, vector<int>v) {
 	if (i >= v.size() || v[i] == -1)return nullptr;
