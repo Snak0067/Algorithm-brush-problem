@@ -2695,6 +2695,118 @@ vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
 	return ans;
 }
 //105. 从前序与中序遍历序列构造二叉树
+class buildTreeSolution {
+private:
+	vector<int> pre, in;
+public:
+	TreeNode* build(int ini, int inj, int prei, int prej) {
+		TreeNode* root = new TreeNode(pre[prei]);
+		int idx = ini;
+		while (idx <= inj && in[idx] != pre[prei])idx++;
+		int left = idx - ini, right = inj - idx;
+		if (left > 0)root->left = build(ini, idx - 1, prei + 1, prei + left);
+		if (right > 0)root->right = build(idx + 1, inj, prei + left + 1, prej);
+		return root;
+	}
+	TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+		this->pre = preorder;
+		this->in = inorder;
+		return build(0, pre.size() - 1, 0, pre.size() - 1);
+	}
+};
+//106. 从中序与后序遍历序列构造二叉树
+class buildTreeSolution1 {
+private:
+	vector<int> in, post;
+public:
+	TreeNode* build(int ini, int inj, int pi, int pj) {
+		TreeNode* root = new TreeNode(post[pj]);
+		int idx = ini;
+		while (idx <= inj && in[idx] != post[pj])idx++;
+		int left = idx - ini, right = inj - idx;
+		if (left > 0)root->left = build(ini, idx - 1, pi, pi + left - 1);
+		if (right > 0)root->right = build(idx + 1, inj, pi + left, pj - 1);
+		return root;
+	}
+	TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+		this->post = postorder;
+		this->in = inorder;
+		return build(0, in.size() - 1, 0, in.size() - 1);
+	}
+};
+//107. 二叉树的层序遍历 II
+vector<vector<int>> levelOrderBottom(TreeNode* root) {
+	vector<vector<int>>ans;
+	int remain = 1, child = 0;
+	queue<TreeNode*>q;
+	vector<int>cur;
+	if (root != nullptr)q.push(root);
+	while (!q.empty()) {
+		TreeNode* top = q.front();
+		cur.push_back(top->val);
+		remain--;
+		q.pop();
+		if (top->left != nullptr) {
+			q.push(top->left);
+			child++;
+		}
+		if (top->right != nullptr) {
+			q.push(top->right);
+			child++;
+		}
+		if (remain == 0) {
+			remain = child;
+			child = 0;
+			ans.push_back(cur);
+			cur.clear();
+		}
+	}
+	reverse(ans.begin(), ans.end());
+	return ans;
+}
+//109. 有序链表转换二叉搜索树
+class sortedListToBSTSolution {
+public:
+	TreeNode* insert(TreeNode* root, int val) {
+		if (root == nullptr)return new TreeNode(val);
+		if (root->val > val) {
+			root->left = insert(root->left, val);
+		}
+		else {
+			root->right = insert(root->right, val);
+		}
+		return root;
+	}
+	TreeNode* leftRotate(TreeNode* root) {
+		TreeNode* rnode = root->right;
+		root->right = rnode->left;
+		rnode->left = root;
+		return root;
+	}
+	TreeNode* rightRotate(TreeNode* root) {
+		TreeNode* lnode = root->left;
+		root->left = lnode->right;
+		lnode->right = root;
+		return root;
+	}
+	TreeNode* rightLeftRotate(TreeNode* root) {
+		root->right = rightRotate(root->right);
+		return leftRotate(root);
+	}
+	TreeNode* leftRightRotate(TreeNode* root) {
+		root->left = leftRotate(root->left);
+		return rightRotate(root);
+	}
+	TreeNode* sortedListToBST(ListNode* head) {
+		TreeNode* root = nullptr;
+		while (head != nullptr) {
+			insert(root, head->val);
+
+		}
+	}
+};
+
+
 
 TreeNode* buildTree(int i, vector<int>v) {
 	if (i >= v.size() || v[i] == -1)return nullptr;
@@ -2705,14 +2817,13 @@ TreeNode* buildTree(int i, vector<int>v) {
 }
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 3,9,20,-1,-1,15,7 };
-	vector<int>nums2 = { 3,5,10,6,9 };
+	vector<int>nums1 = { 9,3,15,20,7 };
+	vector<int>nums2 = { 9,15,7,20,3 };
 	vector<int>nums3 = { 20,20,100,70,60 };
 	for (int x : nums1) {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
-	TreeNode* node = buildTree(0, nums1);
-	levelOrder(node);
+	//TreeNode* node = buildTree(0, nums1);
 	return 0;
 }
