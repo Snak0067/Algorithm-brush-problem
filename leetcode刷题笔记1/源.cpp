@@ -2592,21 +2592,95 @@ bool helper(TreeNode* root, long lowwer, long upper) {
 bool isValidBST(TreeNode* root) {
 	return helper(root, LONG_MIN, LONG_MAX);
 }
-//99. »Ö¸´¶þ²æËÑË÷Ê÷
+//99. »Ö¸´¶þ²æËÑË÷Ê÷ 
+class recoverTreeSolution {
+private:
+	vector<TreeNode*>ans;
+	unordered_map<int, TreeNode*>mmap;
+public:
+	bool checkVaildBST(TreeNode* root, long low, long up) {
+		if (root == nullptr)return true;
+		if (root->val > up || root->val < low) {
+			return false;
+		}
+		return checkVaildBST(root->left, low, root->val) && checkVaildBST(root->right, root->val, up);
+	}
+	void dfs(TreeNode* root, long low, long up) {
+		if (root == nullptr)return;
+		mmap[root->val] = root;
+		if (root->val > up || root->val < low) {
+			ans.push_back(root);
+			if (root->val > up)ans.push_back(mmap[up]);
+			else ans.push_back(mmap[low]);
+		}
+		dfs(root->left, low, root->val);
+		dfs(root->right, root->val, up);
+	}
+	void recoverTree(TreeNode* root) {
+		dfs(root, LONG_MIN, LONG_MAX);
+		for (int i = 0; i < ans.size(); i++) {
+			for (int j = 1; j < ans.size(); j++) {
+				if (ans[i]->val == ans[j]->val)continue;
+				long temp = ans[i]->val;
+				ans[i]->val = ans[j]->val;
+				ans[j]->val = temp;
+				if (checkVaildBST(root, LONG_MIN, LONG_MAX))return;
+				ans[j]->val = ans[i]->val;
+				ans[i]->val = temp;
+			}
+		}
 
+	}
+};
+//102. ¶þ²æÊ÷µÄ²ãÐò±éÀú
+vector<vector<int>> levelOrder(TreeNode* root) {
+	vector<vector<int>>ans;
+	int remain = 1, child = 0;
+	queue<TreeNode*>q;
+	vector<int>cur;
+	if(root!=nullptr)q.push(root);
+	while (!q.empty()) {
+		TreeNode* top = q.front();
+		cur.push_back(top->val);
+		remain--;
+		q.pop();
+		if (top->left != nullptr) {
+			q.push(top->left);
+			child++;
+		}
+		if (top->right != nullptr) {
+			q.push(top->right);
+			child++;
+		}
+		if (remain == 0) {
+			remain = child;
+			child = 0;
+			ans.push_back(cur);
+			cur.clear();
+		}
+	}
+	return ans;
+}
+//103. ¶þ²æÊ÷µÄ¾â³ÝÐÎ²ãÐò±éÀú
+
+
+TreeNode* buildTree(int i, vector<int>v) {
+	if (i >= v.size() || v[i] == -1)return nullptr;
+	TreeNode* root = new TreeNode(v[i]);
+	root->left = buildTree(i * 2 + 1, v);
+	root->right = buildTree(i * 2 + 2, v);
+	return root;
+}
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 1,2,3,4,6 };
+	vector<int>nums1 = { 3,9,20,-1,-1,15,7 };
 	vector<int>nums2 = { 3,5,10,6,9 };
 	vector<int>nums3 = { 20,20,100,70,60 };
 	for (int x : nums1) {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
-	vector<vector<char>>v = { {'0','1','1','0','0','1','0','1','0','1'},{'0','0','1','0','1','0','1','0','1','0'},{'1','0','0','0','0','1','0','1','1','0'},
-		{'0','1','1','1','1','1','1','0','1','0'},{'0','0','1','1','1','1','1','1','1','0'},{'1','1','0','1','0','1','1','1','1','0'},
-		{'0','0','0','1','1','0','0','0','1','0'},{'1','1','0','1','1','0','0','1','1','1'},{'0','1','0','1','1','0','1','0','1','1'} };
-	vector<string>s = { "This", "is", "an", "example", "of", "text", "justification." };
-	isInterleave("a", "", "a");
+	TreeNode* node = buildTree(0, nums1);
+	levelOrder(node);
 	return 0;
 }
