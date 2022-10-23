@@ -2584,6 +2584,15 @@ string mergeAlternately(string word1, string word2) {
 	return ans;
 }
 //98. ÑéÖ¤¶þ²æËÑË÷Ê÷
+bool helper(TreeNode* root, long lowwer, long upper) {
+	if (root == nullptr)return true;
+	if (root->val <= lowwer || root->val >= upper)return false;
+	return helper(root->left, lowwer, root->val) && helper(root->right, root->val, upper);
+}
+bool isValidBST(TreeNode* root) {
+	return helper(root, LONG_MIN, LONG_MAX);
+}
+//99. »Ö¸´¶þ²æËÑË÷Ê÷
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
