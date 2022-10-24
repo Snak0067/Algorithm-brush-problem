@@ -2871,8 +2871,65 @@ public:
 	}
 };
 //915. 分割数组
-
-
+int partitionDisjoint(vector<int>& nums) {
+	int n = nums.size();
+	vector<int>minv(n, nums[n - 1]);
+	vector<int>maxv(n, nums[0]);
+	for (int i = 1; i < nums.size(); i++) {
+		maxv[i] = max(maxv[i - 1], nums[i]);
+	}
+	for (int i = n - 2; i >= 0; i--) {
+		minv[i] = min(minv[i + 1], nums[i]);
+	}
+	int idx;
+	for (int i = 0; i < n - 1; i++) {
+		if (maxv[i] <= minv[i + 1])return i + 1;
+	}
+	return 1;
+}
+//112. 路径总和
+class hasPathSumSolution {
+public:
+	bool help(TreeNode* root, int targetSum, int cur) {
+		if (root == nullptr)return false;
+		cur += root->val;
+		if (root->left == nullptr && root->right == nullptr) {
+			if (cur == targetSum)return true;
+			else return false;
+		}
+		else {
+			return help(root->left, targetSum, cur) || help(root->right, targetSum, cur);
+		}
+	}
+	bool hasPathSum(TreeNode* root, int targetSum) {
+		return help(root, targetSum, 0);
+	}
+};
+//113. 路径总和 II
+class Solution {
+private:
+	vector<vector<int>>ans;
+public:
+	void dfs(TreeNode* root, vector<int>v, int targetSum, int cur) {
+		if (root == nullptr)return;
+		cur += root->val;
+		v.push_back(root->val);
+		if (root->left == nullptr && root->right == nullptr) {
+			if (cur == targetSum) {
+				ans.push_back(v);
+			}
+			return;
+		}
+		else {
+			dfs(root->left, v, targetSum, cur);
+			dfs(root->right, v, targetSum, cur);
+		}
+	}
+	vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+		dfs(root, {}, targetSum, 0);
+		return ans;
+	}
+};
 TreeNode* buildTree(int i, vector<int>v) {
 	if (i >= v.size() || v[i] == -1)return nullptr;
 	TreeNode* root = new TreeNode(v[i]);
@@ -2882,7 +2939,7 @@ TreeNode* buildTree(int i, vector<int>v) {
 }
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 0,1,2,3,4,5,6,7 };
+	vector<int>nums1 = { 5,0,3,8,6 };
 	vector<int>nums2 = { 9,15,7,20,3 };
 	vector<int>nums3 = { 20,20,100,70,60 };
 	for (int x : nums1) {
@@ -2890,7 +2947,6 @@ int main() {
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
 	//TreeNode* node = buildTree(0, nums1);
-	sortedListToBST_Solution ss;
-	ss.sortedListToBST(root);
+	partitionDisjoint(nums1);
 	return 0;
 }
