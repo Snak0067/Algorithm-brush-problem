@@ -2847,7 +2847,30 @@ public:
 		return build(v, 0, v.size() - 1);
 	}
 };
-
+class sortedListToBST__Solution {
+public:
+	ListNode* getMedium(ListNode* left, ListNode* right) {
+		ListNode* fast = left, * slow = left;
+		while (fast != right && fast->next != right) {
+			fast = fast->next;
+			fast = fast->next;
+			slow = slow->next;
+		}
+		return slow;
+	}
+	TreeNode* build(ListNode* left, ListNode* right) {
+		if (left == right)return nullptr;
+		ListNode* mid = getMedium(left, right);
+		TreeNode* root = new TreeNode(mid->val);
+		root->left = build(left, mid);
+		root->right = build(mid->next, right);
+		return root;
+	}
+	TreeNode* sortedListToBST(ListNode* head) {
+		return build(head, nullptr);
+	}
+};
+//915. ·Ö¸îÊý×é
 
 
 TreeNode* buildTree(int i, vector<int>v) {
