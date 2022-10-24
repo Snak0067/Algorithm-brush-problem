@@ -2828,10 +2828,23 @@ public:
 		return root;
 	}
 };
-//class Solution {
+class sortedListToBST_Solution {
 public:
+	TreeNode* build(vector<int>v, int i, int j) {
+		if (i > j)return nullptr;
+		int mid = (i + j) >> 1;
+		TreeNode* root = new TreeNode(v[mid]);
+		root->left = build(v, i, mid - 1);
+		root->right = build(v, mid + 1, j);
+		return root;
+	}
 	TreeNode* sortedListToBST(ListNode* head) {
-
+		vector<int>v;
+		while (head != nullptr) {
+			v.push_back(head->val);
+			head = head->next;
+		}
+		return build(v, 0, v.size() - 1);
 	}
 };
 
@@ -2854,7 +2867,7 @@ int main() {
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
 	//TreeNode* node = buildTree(0, nums1);
-	sortedListToBSTSolution ss;
+	sortedListToBST_Solution ss;
 	ss.sortedListToBST(root);
 	return 0;
 }
