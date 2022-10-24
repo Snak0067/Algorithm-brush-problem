@@ -2771,23 +2771,45 @@ public:
 		if (root == nullptr)return new TreeNode(val);
 		if (root->val > val) {
 			root->left = insert(root->left, val);
+			int l = height(root->left), r = height(root->right);
+			if (l - r >= 2) {
+				if (val < root->left->val) {
+					root = rightRotate(root);
+				}
+				else {
+					root = leftRightRotate(root);
+				}
+			}
 		}
 		else {
 			root->right = insert(root->right, val);
+			int l = height(root->left), r = height(root->right);
+			if (l - r <= -2) {
+				if (val > root->right->val) {
+					root = leftRotate(root);
+				}
+				else {
+					root = rightLeftRotate(root);
+				}
+			}
 		}
 		return root;
+	}
+	int height(TreeNode* root) {
+		if (root == nullptr)return 0;
+		return max(height(root->left), height(root->right)) + 1;
 	}
 	TreeNode* leftRotate(TreeNode* root) {
 		TreeNode* rnode = root->right;
 		root->right = rnode->left;
 		rnode->left = root;
-		return root;
+		return rnode;
 	}
 	TreeNode* rightRotate(TreeNode* root) {
 		TreeNode* lnode = root->left;
 		root->left = lnode->right;
 		lnode->right = root;
-		return root;
+		return lnode;
 	}
 	TreeNode* rightLeftRotate(TreeNode* root) {
 		root->right = rightRotate(root->right);
@@ -2800,9 +2822,16 @@ public:
 	TreeNode* sortedListToBST(ListNode* head) {
 		TreeNode* root = nullptr;
 		while (head != nullptr) {
-			insert(root, head->val);
-
+			root = insert(root, head->val);
+			head = head->next;
 		}
+		return root;
+	}
+};
+//class Solution {
+public:
+	TreeNode* sortedListToBST(ListNode* head) {
+
 	}
 };
 
@@ -2817,7 +2846,7 @@ TreeNode* buildTree(int i, vector<int>v) {
 }
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 9,3,15,20,7 };
+	vector<int>nums1 = { 0,1,2,3,4,5,6,7 };
 	vector<int>nums2 = { 9,15,7,20,3 };
 	vector<int>nums3 = { 20,20,100,70,60 };
 	for (int x : nums1) {
@@ -2825,5 +2854,7 @@ int main() {
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
 	//TreeNode* node = buildTree(0, nums1);
+	sortedListToBSTSolution ss;
+	ss.sortedListToBST(root);
 	return 0;
 }
