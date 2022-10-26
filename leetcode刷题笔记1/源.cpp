@@ -3087,6 +3087,71 @@ public:
 		return len == INT_MAX ? -1 : len;
 	}
 };
+//115. 不同的子序列
+int numDistinct(string s, string t) {
+	int n = s.length(), m = t.length();
+	if (n < m)return 0;
+	vector<vector<long long>>dp(n + 1, vector<long long>(m + 1, 0));
+	for (int i = 0; i < n + 1; i++)dp[i][m] = 1;
+	for (int i = n - 1; i >= 0; i--) {
+		for (int j = m - 1; j >= 0; j--) {
+			if (n - i < m - j)break;
+			if (s[i] == t[j]) {
+				dp[i][j] = dp[i + 1][j + 1] + dp[i + 1][j];
+			}
+			else {
+				dp[i][j] = dp[i + 1][j];
+			}
+		}
+	}
+	return dp[0][0];
+}
+//117. 填充每个节点的下一个右侧节点指针 II
+class connect_Solution {
+public:
+	Node* connect(Node* root) {
+		if (root == nullptr)return root;
+		root->next = nullptr;
+		int remain = 1, kid = 0;
+		queue<Node*>q;
+		q.push(root);
+		vector<Node*>v;
+		while (!q.empty()) {
+			remain--;
+			Node* top = q.front();
+			q.pop();
+			v.push_back(top);
+			if (top->left != nullptr) {
+				q.push(top->left); kid++;
+			}
+			if (top->right != nullptr) {
+				q.push(top->right); kid++;
+			}
+			if (remain == 0) {
+				remain = kid;
+				kid = 0;
+				for (int i = 0; i < v.size(); i++) {
+					if (i == v.size() - 1)v[i]->next = nullptr;
+					else v[i]->next = v[i + 1];
+				}
+				v.clear();
+			}
+		}
+		return root;
+	}
+};
+//121. 买卖股票的最佳时机
+int maxProfit(vector<int>& prices) {
+	int n = prices.size(), profit = 0;
+	vector<int>maxp(n + 1, 0);
+	for (int i = n - 1; i >= 0; i--) {
+		maxp[i] = max(prices[i], maxp[i + 1]);
+		profit = max(profit, maxp[i + 1] - prices[i]);
+	}
+	return profit;
+}
+//122. 买卖股票的最佳时机 II
+
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
 	vector<int>nums1 = { -34,37,51,3,-12,-50,51,100,-47,99,34,14,-13,89,31,-14,-44,23,-38,6 };
