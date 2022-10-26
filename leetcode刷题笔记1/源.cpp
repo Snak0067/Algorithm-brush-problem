@@ -3151,10 +3151,41 @@ int maxProfit(vector<int>& prices) {
 	return profit;
 }
 //122. 买卖股票的最佳时机 II
+class maxProfitSolution {
+public:
+	int maxProfit(vector<int>& prices) {
+		int n = prices.size();
+		vector<vector<int>>dp(n, vector<int>(2, 0));
+		dp[0][0] = 0;
+		dp[0][1] = 0 - prices[0];
+		for (int i = 1; i < n; i++) {
+			dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+			dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+		}
+		return dp[n - 1][0];
+	}
+};
+//123. 买卖股票的最佳时机 III
+class maxProfit_Solution {
+public:
+	int maxProfit(vector<int>& prices) {
+		int n = prices.size();
+		int sell1 = 0, sell2 = 0;
+		int buy1 = -prices[0], buy2 = -prices[0];
+		for (int i = 1; i < n; i++) {
+			buy1 = max(buy1, -prices[i]);
+			sell1 = max(sell1, buy1 + prices[i]);
+			buy2 = max(buy2, sell1 - prices[i]);
+			sell2 = max(sell2, buy2 + prices[i]);
+		}
+		return sell2;
+	}
+};
+//124. 二叉树中的最大路径和
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { -34,37,51,3,-12,-50,51,100,-47,99,34,14,-13,89,31,-14,-44,23,-38,6 };
+	vector<int>nums1 = { 3,3,5,0,0,3,1,4 };
 	vector<int>nums2 = { 9,15,7,20,3 };
 	vector<int>nums3 = { 20,20,100,70,60 };
 	for (int x : nums1) {
@@ -3162,8 +3193,8 @@ int main() {
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
 	vector<vector<int>>v = { {1,1,1,1,1},{1,0,0,0,1},{1,0,1,0,1},{1,0,0,0,1},{1,1,1,1,1} };
-	shortestSubarraySolution ss;
-	ss.shortestSubarray(nums1, 151);
+	maxProfit_Solution ss;
+	ss.maxProfit(nums1);
 
 	return 0;
 }
