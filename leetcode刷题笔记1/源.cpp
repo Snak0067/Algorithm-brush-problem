@@ -16,6 +16,17 @@ struct TreeNode {
 	TreeNode* right;
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
+class Node {
+public:
+	int val;
+	Node* left;
+	Node* right;
+	Node* next;
+	Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+	Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+	Node(int _val, Node* _left, Node* _right, Node* _next)
+		: val(_val), left(_left), right(_right), next(_next) {}
+};
 struct ListNode {
 	int val;
 	ListNode* next;
@@ -2906,7 +2917,7 @@ public:
 	}
 };
 //113. 路径总和 II
-class Solution {
+class pathSumSolution {
 private:
 	vector<vector<int>>ans;
 public:
@@ -2930,6 +2941,24 @@ public:
 		return ans;
 	}
 };
+class flattenSolution {
+public:
+	void dfs(TreeNode* root, vector<TreeNode*>& v) {
+		if (root != nullptr) {
+			v.push_back(root);
+			dfs(root->left, v);
+			dfs(root->right, v);
+		}
+	}
+	void flatten(TreeNode* root) {
+		vector<TreeNode*>v;
+		dfs(root, v);
+		for (int i = 0; i < v.size() - 1; i++) {
+			v[i]->left = nullptr;
+			v[i]->right = v[i + 1];
+		}
+	}
+};
 TreeNode* buildTree(int i, vector<int>v) {
 	if (i >= v.size() || v[i] == -1)return nullptr;
 	TreeNode* root = new TreeNode(v[i]);
@@ -2937,16 +2966,139 @@ TreeNode* buildTree(int i, vector<int>v) {
 	root->right = buildTree(i * 2 + 2, v);
 	return root;
 }
+//118. 杨辉三角
+vector<vector<int>> generate(int numRows) {
+	vector<vector<int>>ans(numRows);
+	for (int i = 1; i <= numRows; i++)ans[i - 1].resize(i);
+	for (int i = 0; i < numRows; i++) {
+		for (int j = 0; j < ans[i].size(); j++) {
+			if (j == 0 || j == ans[i].size() - 1)ans[i][j] = 1;
+			else ans[i][j] = ans[i - 1][j - 1] + ans[i - 1][j];
+		}
+	}
+	return ans;
+}
+//934. 最短的桥
+class shortestBridgeSolution {
+private:
+	int n, m;
+	vector<vector<int>>dir = { {0,1},{0,-1},{1,0},{-1,0} };
+	queue<pair<int, int>>q;
+public:
+	void dfs(vector<vector<int>>& v, vector<vector<int>>& vis, int i, int j) {
+		v[i][j] = -1;
+		vis[i][j] = 1;
+		q.emplace(i, j);
+		for (int u = 0; u < dir.size(); u++) {
+			int x = dir[u][0] + i;
+			int y = dir[u][1] + j;
+			if (x < 0 || y < 0 || x >= n || y >= m || v[x][y] != 1 || vis[x][y] != -1)continue;
+			dfs(v, vis, x, y);
+		}
+	}
+	int shortestBridge(vector<vector<int>>& grid) {
+		this->n = grid.size(), this->m = grid[0].size();
+		vector<vector<int>>vis(n, vector<int>(m, -1));
+		bool findIsland = false;
+		for (int i = 0; i < n && !findIsland; i++) {
+			for (int j = 0; j < m && !findIsland; j++) {
+				if (grid[i][j] == 0)continue;
+				dfs(grid, vis, i, j);
+				findIsland = true;
+			}
+		}
+		int cnt = 0, remain = q.size();
+		while (!q.empty()) {
+			pair<int, int>p = q.front();
+			q.pop();
+			remain--;
+			for (int u = 0; u < dir.size(); u++) {
+				int x = dir[u][0] + p.first;
+				int y = dir[u][1] + p.second;
+				if (x < 0 || y < 0 || x >= n || y >= m)continue;
+				if (vis[x][y] == -1) {
+					if (grid[x][y] == 1)return cnt;
+					q.emplace(x, y);
+					vis[x][y] = 1;
+				};
+			}
+			if (remain == 0) {
+				remain = q.size();
+				cnt++;
+			}
+		}
+		return 0;
+	}
+};
+//116. 填充每个节点的下一个右侧节点指针
+class connectSolution {
+public:
+	Node* connect(Node* root) {
+		if (root == nullptr)return root;
+		root->next = nullptr;
+		int remain = 1, kid = 0;
+		queue<Node*>q;
+		q.push(root);
+		vector<Node*>v;
+		while (!q.empty()) {
+			remain--;
+			kid++;
+			Node* top = q.front();
+			q.pop();
+			v.push_back(top);
+			if (top->left != nullptr)q.push(top->left);
+			if (top->right != nullptr)q.push(top->right);
+			if (remain == 0) {
+				remain = kid;
+				kid = 0;
+				for (int i = 0; i < v.size(); i++) {
+					if (i == v.size() - 1)v[i]->next = nullptr;
+					else v[i]->next = v[i + 1];
+				}
+				v.clear();
+			}
+		}
+		return root;
+	}
+};
+//862. 和至少为 K 的最短子数组
+class shortestSubarraySolution {
+public:
+	int shortestSubarray(vector<int>& nums, int k) {
+		int n = nums.size(), len = INT_MAX;
+		if (n == 0)return -1;
+		vector<int>sum(n + 1);
+		sum[0] = 0;
+		for (int i = 1; i <= n; i++) {
+			sum[i] = sum[i - 1] + nums[i - 1];
+		}
+		deque<int>q;
+		for (int i = 0; i <= n; i++) {
+			long cur = sum[i];
+			while (!q.empty() && cur - sum[q.front()] >= k) {
+				len = min(len, i - q.front());
+				q.pop_front();
+			}
+			while (!q.empty() && sum[q.back()] >= cur) {
+				q.pop_back();
+			}
+			q.push_back(i);
+		}
+		return len == INT_MAX ? -1 : len;
+	}
+};
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 5,0,3,8,6 };
+	vector<int>nums1 = { -34,37,51,3,-12,-50,51,100,-47,99,34,14,-13,89,31,-14,-44,23,-38,6 };
 	vector<int>nums2 = { 9,15,7,20,3 };
 	vector<int>nums3 = { 20,20,100,70,60 };
 	for (int x : nums1) {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
-	//TreeNode* node = buildTree(0, nums1);
-	partitionDisjoint(nums1);
+	vector<vector<int>>v = { {1,1,1,1,1},{1,0,0,0,1},{1,0,1,0,1},{1,0,0,0,1},{1,1,1,1,1} };
+	shortestSubarraySolution ss;
+	ss.shortestSubarray(nums1, 151);
+
 	return 0;
 }
