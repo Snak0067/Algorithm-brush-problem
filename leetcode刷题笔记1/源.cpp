@@ -3182,6 +3182,179 @@ public:
 	}
 };
 //124. 二叉树中的最大路径和
+class maxPathSumSolution {
+private:
+	int maxSum = INT_MIN;
+public:
+	int nodeGain(TreeNode* root) {
+		if (root == nullptr)return 0;
+		int leftGain = max(nodeGain(root->left), 0);
+		int rightGain = max(nodeGain(root->right), 0);
+		int gainNode = leftGain + rightGain + root->val;
+		maxSum = max(maxSum, gainNode);
+		return root->val + max(leftGain, rightGain);
+	}
+	int maxPathSum(TreeNode* root) {
+		vector<vector<int>>dp(1, vector<int>(2, 0));
+		nodeGain(root);
+		return maxSum;
+	}
+};
+bool isPalindrome(string s) {
+	transform(s.begin(), s.end(), s.begin(), ::tolower);
+	string ans;
+	for (char ch : s) {
+		if (ch >= 'a' && ch <= 'z' || ch >= '0' && ch <= '9')ans.push_back(ch);
+	}
+	string copy = ans;
+	reverse(copy.begin(), copy.end());
+	return copy == ans;
+}
+//128. 最长连续序列
+int longestConsecutive(vector<int>& nums) {
+	if (nums.size() == 0)return 0;
+	sort(nums.begin(), nums.end());
+	int maxn = 1, n = nums[0], temp = 1;
+	for (int i = 1; i < nums.size(); i++) {
+		if (nums[i] == n)continue;
+		if (nums[i] == n + 1) {
+			temp++;
+			n++;
+		}
+		else {
+			maxn = max(maxn, temp);
+			temp = 1;
+			n = nums[i];
+		}
+	}
+	maxn = max(maxn, temp);
+	return maxn;
+}
+//1822. 数组元素积的符号
+int arraySign(vector<int>& nums) {
+	int minus = 0;
+	for (int x : nums) {
+		if (x == 0)return 0;
+		if (x < 0)minus++;
+	}
+	return minus % 2 == 0 ? 1 : -1;
+}
+//126. 单词接龙 II
+class findLaddersSolution {
+private:
+	int minl = INT_MAX;
+	vector<int>valid[505];
+	vector<vector<string>>ans;
+public:
+	bool validWord(string a, string b) {
+		int cnt = 0;
+		for (int i = 0; i < a.length(); i++) {
+			if (a[i] != b[i]) {
+				cnt++;
+				if (cnt == 2)return false;
+			}
+		}
+		return true;
+	}
+	void dfs(int begin, string endWord, vector<string>temp, vector<string>list, vector<int>vis) {
+		temp.push_back(list[begin]);
+		if (list[begin] == endWord) {
+			if (temp.size() < minl) {
+				minl = temp.size();
+				ans.clear();
+				ans.push_back(temp);
+			}
+			else if (temp.size() == minl) {
+				ans.push_back(temp);
+			}
+			return;
+		}
+		for (int i = 0; i < valid[begin].size(); i++) {
+			int next = valid[begin][i];
+			if (vis[next] != -1)continue;
+			vis[next] = 1;
+			dfs(next, endWord, temp, list, vis);
+			vis[next] = -1;
+		}
+	}
+	vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+		int n = wordList.size() + 1;
+		wordList.push_back(beginWord);
+		vector<int>vis(n, -1);
+		bool find = false;
+		for (int i = 0; i < n - 1; i++) {
+			if (endWord == wordList[i])find = true;
+			for (int j = i + 1; j < n; j++) {
+				if (validWord(wordList[i], wordList[j])) {
+					valid[i].push_back(j);
+					valid[j].push_back(i);
+				}
+			}
+		}
+		if (!find)return ans;
+		vis[n - 1] = 1;
+		dfs(n - 1, endWord, {}, wordList, vis);
+		return ans;
+	}
+};
+class ladderLengthSolution {
+private:
+	int minl = INT_MAX;
+	vector<int>valid[505];
+public:
+	bool validWord(string a, string b) {
+		int cnt = 0;
+		for (int i = 0; i < a.length(); i++) {
+			if (a[i] != b[i]) {
+				cnt++;
+				if (cnt == 2)return false;
+			}
+		}
+		return true;
+	}
+public:
+	int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+		int n = wordList.size() + 1;
+		wordList.push_back(beginWord);
+		vector<int>vis(n, -1);
+		bool find = false;
+		for (int i = 0; i < n - 1; i++) {
+			if (endWord == wordList[i])find = true;
+			for (int j = i + 1; j < n; j++) {
+				if (validWord(wordList[i], wordList[j])) {
+					valid[i].push_back(j);
+					valid[j].push_back(i);
+				}
+			}
+		}
+		if (!find)return 0;
+		int cnt = 1, remain = 1, kid = 0;
+		queue<int>q;
+		q.push(n - 1);
+		vis[n - 1] = 1;
+		while (!q.empty()) {
+			int top = q.front();
+			q.pop();
+			remain--;
+			if (wordList[top] == endWord)return cnt;
+			for (int i = 0; i < valid[top].size(); i++) {
+				int next = valid[top][i];
+				if (wordList[next] == endWord)return cnt + 1;
+				if (vis[next] == -1) {
+					vis[next] = 1;
+					q.push(next);
+					kid++;
+				}
+			}
+			if (remain == 0) {
+				remain = kid;
+				kid = 0;
+				cnt++;
+			}
+		}
+	}
+};
+
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
@@ -3192,9 +3365,19 @@ int main() {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
-	vector<vector<int>>v = { {1,1,1,1,1},{1,0,0,0,1},{1,0,1,0,1},{1,0,0,0,1},{1,1,1,1,1} };
-	maxProfit_Solution ss;
-	ss.maxProfit(nums1);
+	vector<vector<int>>v;
+	//TreeNode* nod = new TreeNode(5);
+	//nod->left = new TreeNode(4);
+	//nod->right = new TreeNode(8);
+	//nod->right->left = new TreeNode(13);
+	//nod->right->left->left = new TreeNode(11);
+	//nod->right->left->left->left = new TreeNode(7);
+	//nod->right->left->left->right = new TreeNode(2);
+	//nod->right->right = new TreeNode(4);
+	//nod->right->right->right = new TreeNode(1);
+	ladderLengthSolution ss;
+	vector<string>sss = { "hot", "dot", "dog", "lot", "log", "cog" };
+	ss.ladderLength("hit", "cog", sss);
 
 	return 0;
 }
