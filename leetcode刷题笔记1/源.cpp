@@ -7,6 +7,7 @@
 #include<algorithm>
 #include<map>
 #include<stack>
+#include<unordered_set>
 #include<queue>
 using namespace std;
 const int INF = 999999999;
@@ -3242,58 +3243,63 @@ int arraySign(vector<int>& nums) {
 //126. 单词接龙 II
 class findLaddersSolution {
 private:
-	int minl = INT_MAX;
-	vector<int>valid[505];
 	vector<vector<string>>ans;
 public:
-	bool validWord(string a, string b) {
-		int cnt = 0;
-		for (int i = 0; i < a.length(); i++) {
-			if (a[i] != b[i]) {
-				cnt++;
-				if (cnt == 2)return false;
-			}
-		}
-		return true;
-	}
-	void dfs(int begin, string endWord, vector<string>temp, vector<string>list, vector<int>vis) {
-		temp.push_back(list[begin]);
-		if (list[begin] == endWord) {
-			if (temp.size() < minl) {
-				minl = temp.size();
-				ans.clear();
-				ans.push_back(temp);
-			}
-			else if (temp.size() == minl) {
-				ans.push_back(temp);
-			}
+	void backtrack(unordered_map<string, set<string>> from, string cur, vector<string>v) {
+		v.push_back(cur);
+		if (from[cur].size() == 0) {
+			reverse(v.begin(), v.end());
+			ans.push_back(v);
 			return;
 		}
-		for (int i = 0; i < valid[begin].size(); i++) {
-			int next = valid[begin][i];
-			if (vis[next] != -1)continue;
-			vis[next] = 1;
-			dfs(next, endWord, temp, list, vis);
-			vis[next] = -1;
+		for (string next : from[cur]) {
+			backtrack(from, next, v);
 		}
 	}
 	vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
-		int n = wordList.size() + 1;
-		wordList.push_back(beginWord);
-		vector<int>vis(n, -1);
+		//因为需要快速判断扩展出的单词是否在 wordList 里，因此需要将 wordList 存入哈希表，这里命名为「字典」
+		unordered_set<string>dict = { wordList.begin(),wordList.end() };
+		if (dict.find(endWord) == dict.end())return ans;
+		dict.erase(beginWord);
+		// 第 1 步：广度优先搜索建图
+		// 记录扩展出的单词是在第几次扩展的时候得到的，key：单词，value：在广度优先搜索的第几层
+		unordered_map<string, int>steps = { {beginWord,0} };
+		// 记录了单词是从哪些单词扩展而来，key：单词，value：单词列表，这些单词可以变换到 key ，它们是一对多关系
+		unordered_map<string, set<string>> from = { {beginWord, {}} };
+		int step = 0;
+		bool bound = false;
+		queue<string>q;
+		q.push(beginWord);
 		bool find = false;
-		for (int i = 0; i < n - 1; i++) {
-			if (endWord == wordList[i])find = true;
-			for (int j = i + 1; j < n; j++) {
-				if (validWord(wordList[i], wordList[j])) {
-					valid[i].push_back(j);
-					valid[j].push_back(i);
+		int wordlen = beginWord.length();
+		while (!q.empty()) {
+			step++;
+			int qn = q.size();
+			for (int i = 0; i < qn; i++) {
+				string cur = q.front();
+				q.pop();
+				string next = cur;
+				for (int i = 0; i < wordlen; i++) {
+					if (i != 0)next[i - 1] = cur[i - 1];
+					for (char c = 'a'; c <= 'z'; c++) {
+						next[i] = c;
+						if (steps[next] == step) {
+							from[next].insert(cur);
+						}
+						if (dict.find(next) == dict.end()) continue;
+						dict.erase(next);
+						q.push(next);
+						steps[next] = step;
+						from[next].insert(cur);
+						if (next == endWord)find = true;
+					}
 				}
 			}
+			if (find)break;
 		}
-		if (!find)return ans;
-		vis[n - 1] = 1;
-		dfs(n - 1, endWord, {}, wordList, vis);
+		if (find) {
+			backtrack(from, endWord, {});
+		}
 		return ans;
 	}
 };
@@ -3354,8 +3360,145 @@ public:
 		}
 	}
 };
-
-
+//129. 求根节点到叶节点数字之和
+class sumNumbersSolution {
+private:
+	int sum = 0;
+public:
+	void dfs(TreeNode* root, string num) {
+		if (root == nullptr) {
+			return;
+		}
+		num.push_back(root->val + '0');
+		if (root->left == nullptr && root->right == nullptr) {
+			int start = 0;
+			while (num[start] == '0')start++;
+			string re = num.substr(start);
+			if (re.length() > 0)sum += stoi(re);
+			return;
+		}
+		else {
+			dfs(root->left, num);
+			dfs(root->right, num);
+		}
+	}
+	int sumNumbers(TreeNode* root) {
+		dfs(root, "");
+		return sum;
+	}
+};
+//130. 被围绕的区域
+class solve_surround_Solution {
+private:
+	vector<vector<int>>dir = { {-1,0},{1,0},{0,1},{0,-1} };
+public:
+	void solve(vector<vector<char>>& board) {
+		int n = board.size();
+		if (n <= 1)return;
+		int m = board[0].size();
+		vector<vector<int>>vis(n, vector<int>(m, -1));
+		for (int i = 1; i < n - 1; i++) {
+			for (int j = 1; j < m - 1; j++) {
+				if (vis[i][j] == 1 || board[i][j] == 'X')continue;
+				vis[i][j] = 1;
+				vector<pair<int, int>>v;
+				queue<pair<int, int>>q;
+				q.emplace(i, j);
+				bool edge = false;
+				while (!q.empty()) {
+					pair<int, int>p = q.front();
+					v.emplace_back(p.first, p.second);
+					vis[p.first][p.second] = 1;
+					q.pop();
+					for (int u = 0; u < 4; u++) {
+						int x = p.first + dir[u][0];
+						int y = p.second + dir[u][1];
+						if (x < 0 || y < 0 || x >= n || y >= m || vis[x][y] != -1 || board[x][y] != 'O')continue;
+						if (x == 0 || x == n - 1 || y == 0 || y == m - 1)edge = true;
+						q.emplace(x, y);
+						vis[x][y] = 1;
+					}
+				}
+				if (!edge) {
+					for (int u = 0; u < v.size(); u++) {
+						board[v[u].first][v[u].second] = 'X';
+					}
+				}
+			}
+		}
+	}
+};
+//131. 分割回文串
+class partitionSolution {
+private:
+	vector<string>ans;
+	vector<vector<string>>res;
+	vector<vector<int>>f;
+	int n;
+public:
+	void dfs(string s, int i) {
+		if (i == n) {
+			res.push_back(ans);
+			return;
+		}
+		for (int u = i; u < n; u++) {
+			if (f[i][u]) {
+				ans.push_back(s.substr(i, u - i + 1));
+				dfs(s, i + 1);
+				ans.pop_back();
+			}
+		}
+	}
+	vector<vector<string>> partition(string s) {
+		n = s.length();
+		f.assign(n, vector<int>(n, true));
+		for (int i = n - 1; i >= 0; i--) {
+			for (int j = i + 1; j < n; j++) {
+				f[i][j] = (s[i] == s[j] && f[i + 1][j - 1]);
+			}
+		}
+		dfs(s, 0);
+		return res;
+	}
+};
+//132. 分割回文串 II
+class minCutSolution {
+private:
+	vector<vector<int>>f;
+	int n;
+public:
+	int minCut(string s) {
+		n = s.length();
+		f.assign(n, vector<int>(n, 1));
+		for (int i = n - 1; i >= 0; i--) {
+			for (int j = i + 1; j < n; j++) {
+				f[i][j] = (s[i] == s[j] && f[i + 1][j - 1]);
+			}
+		}
+		vector<int>dp(n, INT_MAX);
+		for (int i = 0; i < n; i++) {
+			if (f[0][i])dp[i] = 0;
+			else {
+				for (int j = 0; j < i; j++) {
+					if (f[j + 1][i]) {
+						dp[i] = min(dp[i], dp[j] + 1);
+					}
+				}
+			}
+		}
+		return dp[n - 1];
+	}
+};
+////138. 复制带随机指针的链表
+//Node* copyRandomList(Node* head) {
+//	Node* ptr = head;
+//	Node* root;
+//	while (ptr != nullptr) {
+//		root = new Node(ptr->val);
+//		ptr = ptr->next;
+//	}
+//
+//}
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
 	vector<int>nums1 = { 3,3,5,0,0,3,1,4 };
@@ -3365,19 +3508,9 @@ int main() {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
-	vector<vector<int>>v;
-	//TreeNode* nod = new TreeNode(5);
-	//nod->left = new TreeNode(4);
-	//nod->right = new TreeNode(8);
-	//nod->right->left = new TreeNode(13);
-	//nod->right->left->left = new TreeNode(11);
-	//nod->right->left->left->left = new TreeNode(7);
-	//nod->right->left->left->right = new TreeNode(2);
-	//nod->right->right = new TreeNode(4);
-	//nod->right->right->right = new TreeNode(1);
-	ladderLengthSolution ss;
-	vector<string>sss = { "hot", "dot", "dog", "lot", "log", "cog" };
-	ss.ladderLength("hit", "cog", sss);
+	vector<vector<char>>v = { {'X','X','X','X'},{'X','O','O','X'},{'X','X','O','X'},{'X','O','X','X'} };
+	minCutSolution ss;
+	ss.minCut("aab");
 
 	return 0;
 }
