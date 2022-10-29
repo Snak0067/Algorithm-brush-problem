@@ -80,6 +80,18 @@ public:
 		return mmap[1];
 	}
 };
+//1773. 统计匹配检索规则的物品数量
+int countMatches(vector<vector<string>>& items, string ruleKey, string ruleValue) {
+	int cnt = 0, idx;
+	if (ruleKey == "type")idx = 0;
+	else if (ruleKey == "color")idx = 1;
+	else if (ruleKey == "name")idx = 2;
+	for (vector<string>v : items) {
+		if (v[idx] == ruleValue)cnt++;
+	}
+	return cnt;
+}
+//134. 加油站
 
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
@@ -90,19 +102,6 @@ int main() {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
-	Node* nod1 = new Node(1);
-	Node* nod2 = new Node(2);
-	Node* nod3 = new Node(3);
-	Node* nod4 = new Node(4);
-	nod1->neighbors.push_back(nod2);
-	nod1->neighbors.push_back(nod4);
-	nod2->neighbors.push_back(nod1);
-	nod2->neighbors.push_back(nod3);
-	nod3->neighbors.push_back(nod2);
-	nod3->neighbors.push_back(nod4);
-	nod4->neighbors.push_back(nod1);
-	nod4->neighbors.push_back(nod3);
-	cloneGraphSolution cs;
-	cs.cloneGraph(nod1);
+
 	return 0;
 }
