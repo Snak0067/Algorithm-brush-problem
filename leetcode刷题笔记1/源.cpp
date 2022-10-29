@@ -3499,18 +3499,18 @@ public:
 //	}
 //
 //}
-int main() {
-	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 3,3,5,0,0,3,1,4 };
-	vector<int>nums2 = { 9,15,7,20,3 };
-	vector<int>nums3 = { 20,20,100,70,60 };
-	for (int x : nums1) {
-		if (root == nullptr) { root = new ListNode(x); temp = root; }
-		else { temp->next = new ListNode(x); temp = temp->next; }
-	}
-	vector<vector<char>>v = { {'X','X','X','X'},{'X','O','O','X'},{'X','X','O','X'},{'X','O','X','X'} };
-	minCutSolution ss;
-	ss.minCut("aab");
-
-	return 0;
-}
+//int main() {
+//	ListNode* root = nullptr, * temp = nullptr;
+//	vector<int>nums1 = { 3,3,5,0,0,3,1,4 };
+//	vector<int>nums2 = { 9,15,7,20,3 };
+//	vector<int>nums3 = { 20,20,100,70,60 };
+//	for (int x : nums1) {
+//		if (root == nullptr) { root = new ListNode(x); temp = root; }
+//		else { temp->next = new ListNode(x); temp = temp->next; }
+//	}
+//	vector<vector<char>>v = { {'X','X','X','X'},{'X','O','O','X'},{'X','X','O','X'},{'X','O','X','X'} };
+//	minCutSolution ss;
+//	ss.minCut("aab");
+//
+//	return 0;
+//}
