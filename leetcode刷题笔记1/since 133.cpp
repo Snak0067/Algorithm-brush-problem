@@ -115,16 +115,94 @@ public:
 		return -1;
 	}
 };
+//135. 分发糖果
+class candySolution {
+public:
+	int candy(vector<int>& ratings) {
+		int  n = ratings.size(), cnt = 0;
+		vector<int>candy_up(n, 1);
+		vector<int>candy_down(n, 1);
+		for (int i = 0; i < n - 1; i++) {
+			if (ratings[i + 1] > ratings[i]) {
+				candy_up[i + 1] = candy_up[i] + 1;
+			}
+		}
+		for (int i = n - 1; i >= 0; i--) {
+			if (i > 0 && ratings[i] < ratings[i - 1]) {
+				candy_down[i - 1] = candy_down[i] + 1;
+			}
+			cnt += max(candy_down[i], candy_up[i]);
+		}
+		return cnt;
+	}
+};
+//139. 单词拆分
+class wordBreakSolution {
+public:
+	bool wordBreak(string s, vector<string>& wordDict) {
+		int n = s.length(), minl = INT_MAX;
+		for (int j = 0; j < wordDict.size(); j++) {
+			if (minl > wordDict[j].length())minl = wordDict[j].length();
+		}
+		vector<int>dp(n + 1, -1);
+		dp[n] = 1;
+		for (int i = n - minl; i >= 0; i--) {
+			int len = n - i;
+			for (int j = 0; j < wordDict.size(); j++) {
+				int wordlen = wordDict[j].length();
+				if (wordlen > len)continue;
+				if (s.substr(i, wordlen) == wordDict[j]) {
+					dp[i] &= dp[i + wordlen];
+					if (dp[i] == 1)break;
+				}
+			}
+		}
+		return dp[0] == 1;
+	}
+};
+//140. 单词拆分 II
+class wordBreak_Solution {
+private:
+	vector<string>res;
+	string ans;
+public:
+	void dfs(string s, vector<string>& wordDict, vector<int>dp, int begin) {
+
+	}
+	vector<string> wordBreak(string s, vector<string>& wordDict) {
+		int n = s.length(), minl = INT_MAX;
+		for (int j = 0; j < wordDict.size(); j++) {
+			if (minl > wordDict[j].length())minl = wordDict[j].length();
+		}
+		vector<int>dp(n + 1, -1);
+		dp[n] = 1;
+		for (int i = n - minl; i >= 0; i--) {
+			int len = n - i;
+			for (int j = 0; j < wordDict.size(); j++) {
+				int wordlen = wordDict[j].length();
+				if (wordlen > len)continue;
+				if (s.substr(i, wordlen) == wordDict[j]) {
+					dp[i] &= dp[i + wordlen];
+					if (dp[i] == 1)break;
+				}
+			}
+		}
+		if (dp[0] != 1)return res;
+		dfs(s, wordDict, dp, 0);
+		return res;
+	}
+};
+
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
 	vector<int>nums1 = { 1,2,3,4,5 };
 	vector<int>nums2 = { 3,4,5,1,2 };
-	vector<int>nums3 = { 20,20,100,70,60 };
+	vector<string>str = { "apple","pen","applepen","pine","pineapple" };
 	for (int x : nums1) {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
-	canCompleteCircuitSolution cs;
-	cs.canCompleteCircuit(nums1, nums2);
+	wordBreakSolution ws;
+	ws.wordBreak("pineapplepenapple", str);
 	return 0;
 }
