@@ -92,16 +92,39 @@ int countMatches(vector<vector<string>>& items, string ruleKey, string ruleValue
 	return cnt;
 }
 //134. ╪ссму╬
-
+class canCompleteCircuitSolution {
+public:
+	int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+		int n = gas.size();
+		int i = 0;
+		while (i < n) {
+			int sumOfGas = 0, sumOfCost = 0;
+			int cnt = 0;
+			while (cnt < n) {
+				int j = (i + cnt) % n;
+				sumOfGas += gas[j];
+				sumOfCost += cost[j];
+				if (sumOfGas < sumOfCost) {
+					i += (cnt + 1);
+					break;
+				}
+				cnt++;
+			}
+			if (cnt == n)return i;
+		}
+		return -1;
+	}
+};
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 3,3,5,0,0,3,1,4 };
-	vector<int>nums2 = { 9,15,7,20,3 };
+	vector<int>nums1 = { 1,2,3,4,5 };
+	vector<int>nums2 = { 3,4,5,1,2 };
 	vector<int>nums3 = { 20,20,100,70,60 };
 	for (int x : nums1) {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
-
+	canCompleteCircuitSolution cs;
+	cs.canCompleteCircuit(nums1, nums2);
 	return 0;
 }
