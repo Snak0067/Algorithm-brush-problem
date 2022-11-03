@@ -650,20 +650,109 @@ public:
 		return (tower[0] - coordinate[0]) * (tower[0] - coordinate[0]) + (tower[1] - coordinate[1]) * (tower[1] - coordinate[1]);
 	}
 };
+//165. 比较版本号
+class compareVersionSolution {
+public:
+	int compareVersion(string version1, string version2) {
+		string temp1 = "", temp2 = "";
+		int index1 = 0, index2 = 0;
+		while (index1 < version1.size() && index2 < version2.size()) {
+			while (index1 < version1.size() && version1[index1] != '.') {
+				temp1.push_back(version1[index1]);
+				index1++;
+			}
+			while (index2 < version2.size() && version2[index2] != '.') {
+				temp2.push_back(version2[index2]);
+				index2++;
+			}
+			int num1 = stoi(temp1);
+			int num2 = stoi(temp2);
+			if (num1 < num2) {
+				return -1;
+			}
+			else if (num1 > num2) {
+				return 1;
+			}
+			temp1.clear();
+			temp2.clear();
+			index1++;
+			index2++;
+		}
+		while (index1 < version1.size()) {
+			while (index1 < version1.size() && version1[index1] != '.') {
+				temp1.push_back(version1[index1]);
+				index1++;
+			}
+			if (stoi(temp1) != 0) {
+				return 1;
+			}
+			temp1.clear();
+			index1++;
+		}
+		while (index2 < version2.size()) {
+			while (index2 < version2.size() && version2[index2] != '.') {
+				temp2.push_back(version2[index2]);
+				index2++;
+			}
+			if (stoi(temp2) != 0) {
+				return -1;
+			}
+			temp2.clear();
+			index2++;
+		}
+		return 0;
+	}
+};
+//166. 分数到小数
+class fractionToDecimalSolution {
+public:
+	string fractionToDecimal(int numerator, int denominator) {
+		string ans;
+		unordered_set<long>numerators;
+		unordered_map<long, int>mmap;
+		long numeratorLong = numerator;
+		long denominatorLong = denominator;
+		if (numeratorLong % denominatorLong == 0) {
+			return to_string(numeratorLong / denominatorLong);
+		}
 
-
-//int main() {
-//	ListNode* root = nullptr, * temp = nullptr;
-//	vector<int>nums1 = { 1,2,3,4,5 };
-//	vector<int>nums2 = { 3,4,5,1,2 };
-//	vector<string>str1 = { "abc", "d", "defg" };
-//	vector<string>str2 = { "abcddefg" };
-//	for (int x : nums1) {
-//		if (root == nullptr) { root = new ListNode(x); temp = root; }
-//		else { temp->next = new ListNode(x); temp = temp->next; }
-//	}
-//	vector<vector<int>>v = { {46,48,17},{12,38,14} };
-//	bestCoordinateSolution bs;
-//	bs.bestCoordinate(v, 38);
-//	return 0;
-//}
+		if (numeratorLong < 0 ^ denominatorLong < 0) {
+			ans.push_back('-');
+		}
+		//整数部分
+		numeratorLong = abs(numeratorLong);
+		denominatorLong = abs(denominatorLong);
+		long  integralPart = numeratorLong / denominatorLong;
+		numeratorLong -= integralPart * denominatorLong;
+		ans = ans + to_string(integralPart) + ".";
+		while (numeratorLong != 0 && numeratorLong % denominatorLong != 0) {
+			numeratorLong *= 10;
+			if (numerators.count(numeratorLong)) {
+				string circle = ans.substr(mmap[numeratorLong]);
+				string pre = ans.substr(0, mmap[numeratorLong]);
+				string re = pre + "(" + circle + ")";
+				return re;
+			}
+			numerators.insert(numeratorLong);
+			ans += to_string(numeratorLong / denominatorLong);
+			mmap[numeratorLong] = ans.length() - 1;
+			numeratorLong %= denominatorLong;
+		}
+		return ans;
+	}
+};
+int main() {
+	ListNode* root = nullptr, * temp = nullptr;
+	vector<int>nums1 = { 1,2,3,4,5 };
+	vector<int>nums2 = { 3,4,5,1,2 };
+	vector<string>str1 = { "abc", "d", "defg" };
+	vector<string>str2 = { "abcddefg" };
+	for (int x : nums1) {
+		if (root == nullptr) { root = new ListNode(x); temp = root; }
+		else { temp->next = new ListNode(x); temp = temp->next; }
+	}
+	vector<vector<int>>v = { {46,48,17},{12,38,14} };
+	fractionToDecimalSolution bs;
+	bs.fractionToDecimal(1, 90);
+	return 0;
+}

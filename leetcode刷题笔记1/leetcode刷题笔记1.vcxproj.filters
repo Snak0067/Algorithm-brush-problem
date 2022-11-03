@@ -39,5 +39,11 @@
     <ClCompile Include="P1003 [NOIP2011 提高组] 铺地毯.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1004 [NOIP2000 提高组] 方格取数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1005 [NOIP2007 提高组] 矩阵取数游戏.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
