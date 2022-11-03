@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="P1000 超级玛丽游戏.cpp" />
     <ClCompile Include="P1002 [NOIP2002 普及组] 过河卒.cpp" />
+    <ClCompile Include="P1003 [NOIP2011 提高组] 铺地毯.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />
     <ClCompile Include="since 133.cpp" />

@@ -599,6 +599,57 @@ public:
 
 	}
 };
+//1668. 最大重复子字符串
+class maxRepeatingSolution {
+public:
+	int maxRepeating(string sequence, string word) {
+		string cur = word;
+		int key = 1;
+		while (sequence.find(cur) != string::npos) {
+			key++;
+			cur += word;
+		}
+		return key - 1;
+	}
+};
+
+//1620. 网络信号最好的坐标
+class bestCoordinateSolution {
+public:
+	vector<int> bestCoordinate(vector<vector<int>>& towers, int radius) {
+		int xMax = INT_MIN, yMax = INT_MIN;
+		for (auto&& tower : towers) {
+			int x = tower[0], y = tower[1];
+			xMax = max(xMax, x);
+			yMax = max(yMax, y);
+		}
+		int cx = 0, cy = 0;
+		int maxQuality = 0;
+		for (int x = 0; x <= xMax; x++) {
+			for (int y = 0; y <= yMax; y++) {
+				vector<int> coordinate = { x, y };
+				int quality = 0;
+				for (auto&& tower : towers) {
+					int squaredDistance = getSquaredDistance(coordinate, tower);
+					if (squaredDistance <= radius * radius) {
+						double distance = sqrt((double)squaredDistance);
+						quality += floor((double)tower[2] / (1 + distance));
+					}
+				}
+				if (quality > maxQuality) {
+					cx = x;
+					cy = y;
+					maxQuality = quality;
+				}
+			}
+		}
+		return { cx, cy };
+	}
+
+	int getSquaredDistance(const vector<int>& coordinate, const vector<int>& tower) {
+		return (tower[0] - coordinate[0]) * (tower[0] - coordinate[0]) + (tower[1] - coordinate[1]) * (tower[1] - coordinate[1]);
+	}
+};
 
 
 //int main() {
@@ -611,6 +662,8 @@ public:
 //		if (root == nullptr) { root = new ListNode(x); temp = root; }
 //		else { temp->next = new ListNode(x); temp = temp->next; }
 //	}
-//	arrayStringsAreEqual(str1, str2);
+//	vector<vector<int>>v = { {46,48,17},{12,38,14} };
+//	bestCoordinateSolution bs;
+//	bs.bestCoordinate(v, 38);
 //	return 0;
 //}

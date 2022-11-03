@@ -36,5 +36,8 @@
     <ClCompile Include="P1002 [NOIP2002 普及组] 过河卒.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1003 [NOIP2011 提高组] 铺地毯.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
