@@ -33,5 +33,8 @@
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1002 [NOIP2002 普及组] 过河卒.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
