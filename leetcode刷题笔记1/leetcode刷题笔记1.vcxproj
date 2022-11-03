@@ -139,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="P1000 超级玛丽游戏.cpp" />
+    <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
+    <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />
     <ClCompile Include="since 133.cpp" />
+    <ClCompile Include="模板.cpp" />
     <ClCompile Include="源.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -163,15 +163,32 @@ public:
 //140. 单词拆分 II
 class wordBreak_Solution {
 private:
+	unordered_map<string, int>mmap;
 	vector<string>res;
 	string ans;
 public:
-	void dfs(string s, vector<string>& wordDict, vector<int>dp, int begin) {
-
+	void dfs(string s, vector<int>dp, int begin) {
+		int len = ans.length(), cnt = 0;
+		for (int i = begin + 1; i < s.size(); i++) {
+			if (dp[i] == -1)continue;
+			if (mmap.find(s.substr(begin, i - begin)) != mmap.end()) {
+				ans = ans + s.substr(begin, i - begin) + " ";
+				dfs(s, dp, i);
+				ans = ans.substr(0, len);
+				cnt++;
+			}
+			else if (cnt >= 1) {
+				return;
+			}
+		}
+		string cur = s.substr(begin);
+		if (mmap.find(cur) != mmap.end())res.push_back(ans + cur);
+		return;
 	}
 	vector<string> wordBreak(string s, vector<string>& wordDict) {
 		int n = s.length(), minl = INT_MAX;
 		for (int j = 0; j < wordDict.size(); j++) {
+			mmap[wordDict[j]] = 1;
 			if (minl > wordDict[j].length())minl = wordDict[j].length();
 		}
 		vector<int>dp(n + 1, -1);
@@ -188,21 +205,412 @@ public:
 			}
 		}
 		if (dp[0] != 1)return res;
-		dfs(s, wordDict, dp, 0);
+		dfs(s, dp, 0);
 		return res;
 	}
 };
-
-int main() {
-	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 1,2,3,4,5 };
-	vector<int>nums2 = { 3,4,5,1,2 };
-	vector<string>str = { "apple","pen","applepen","pine","pineapple" };
-	for (int x : nums1) {
-		if (root == nullptr) { root = new ListNode(x); temp = root; }
-		else { temp->next = new ListNode(x); temp = temp->next; }
+//141. 环形链表
+class hasCycleSolution {
+public:
+	bool hasCycle(ListNode* head) {
+		unordered_map<ListNode*, int>mmap;
+		while (head != nullptr) {
+			if (mmap.find(head) == mmap.end()) {
+				mmap[head] = 1;
+			}
+			else return true;
+			head = head->next;
+		}
+		return false;
 	}
-	wordBreakSolution ws;
-	ws.wordBreak("pineapplepenapple", str);
-	return 0;
+};
+class detectCycleSolution {
+public:
+	ListNode* detectCycle(ListNode* head) {
+		unordered_map<ListNode*, int>mmap;
+		while (head != nullptr) {
+			if (mmap.find(head) == mmap.end()) {
+				mmap[head] = 1;
+			}
+			else return head;
+			head = head->next;
+		}
+		return nullptr;
+	}
+};
+
+//143. 重排链表
+class reorderListSolution {
+public:
+	ListNode* reverseList(ListNode* head) {
+		ListNode* pre = nullptr, * cur = head;
+		while (cur != nullptr) {
+			ListNode* temp = cur->next;
+			cur->next = pre;
+			pre = cur;
+			cur = temp;
+		}
+		return pre;
+	}
+	ListNode* middleNode(ListNode* head) {
+		ListNode* slow = head, * fast = head;
+		while (fast != nullptr && fast->next != nullptr) {
+			slow = slow->next;
+			fast = fast->next;
+			fast = fast->next;
+		}
+		return slow;
+	}
+	void mergeList(ListNode* l1, ListNode* l2) {
+		ListNode* left, * right;
+		while (l1 != nullptr && l2 != nullptr) {
+			left = l1->next;
+			right = l2->next;
+
+			l1->next = l2;
+			l1 = left;
+
+			l2->next = l1;
+			l2 = right;
+		}
+	}
+	void reorderList(ListNode* head) {
+		if (head == nullptr)return;
+		ListNode* mid = middleNode(head);
+		ListNode* l1 = head;
+		ListNode* l2 = mid->next;
+		mid->next = nullptr;
+		l2 = reverseList(l2);
+		mergeList(l1, l2);
+	}
+};
+//784. 字母大小写全排列
+class letterCasePermutation_Solution {
+private:
+	vector<string>ans;
+public:
+	vector<string> letterCasePermutation(string s) {
+		int len = s.length();
+		if (len == 0)return ans;
+		ans.push_back(s.substr(0, 1));
+		if (!(s[0] <= '9' && s[0] >= '0')) {
+			string temp = "";
+			char ch = s[0];
+			if (islower(ch)) {
+				ch = toupper(ch);
+			}
+			else {
+				ch = tolower(ch);
+			}
+			temp.push_back(ch);
+			ans.push_back(temp);
+		}
+		for (int i = 1; i < len; i++) {
+			vector<string>temp = ans;
+			if (s[i] <= '9' && s[i] >= '0') {
+				for (int u = 0; u < ans.size(); u++) {
+					ans[u].push_back(s[i]);
+				}
+			}
+			else {
+				int n = ans.size();
+				ans.insert(ans.end(), temp.begin(), temp.end());
+				char other = (islower(s[i]) ? toupper(s[i]) : tolower(s[i]));
+				for (int u = 0; u < n; u++) {
+					ans[u].push_back(s[i]);
+				}
+				for (int u = n; u < 2 * n; u++) {
+					ans[u].push_back(other);
+				}
+			}
+		}
+		return ans;
+	}
+};
+//144. 二叉树的前序遍历
+class preorderTraversalSolution {
+private:
+	vector<int>ans;
+public:
+	void dfs(TreeNode* root) {
+		if (root == nullptr)return;
+		ans.push_back(root->val);
+		dfs(root->left);
+		dfs(root->right);
+	}
+	vector<int> preorderTraversal(TreeNode* root) {
+		dfs(root);
+		return ans;
+	}
+};
+//145. 二叉树的后序遍历
+class postorderTraversalSolution {
+private:
+	vector<int>ans;
+public:
+	void dfs(TreeNode* root) {
+		if (root == nullptr)return;
+		dfs(root->left);
+		dfs(root->right);
+		ans.push_back(root->val);
+	}
+	vector<int> postorderTraversal(TreeNode* root) {
+		dfs(root);
+		return ans;
+	}
+};
+//146. LRU 缓存
+class LRUCache {
+private:
+	int index = 0;
+	int cap;
+	unordered_map<int, int>keys;
+	unordered_map<int, int>idx;
+	vector<int>v;
+public:
+	LRUCache(int capacity) {
+		this->cap = capacity;
+	}
+
+	int get(int key) {
+		if (keys.find(key) == keys.end()) {
+			return -1;
+		}
+		else {
+			v[idx[key]] = -1;
+			v.push_back(key);
+			idx[key] = v.size() - 1;
+			return keys[key];
+		}
+	}
+	void put(int key, int value) {
+		if (keys.find(key) != keys.end()) {
+			v[idx[key]] = -1;
+		}
+		else {
+			if (cap > 0) {
+				cap--;
+			}
+			else {
+				while (v[index] == -1)index++;
+				int cur_key = v[index];
+				v[index] = -1;
+				keys.erase(cur_key);
+				idx.erase(cur_key);
+			}
+		}
+		v.push_back(key);
+		keys[key] = value;
+		idx[key] = v.size() - 1;
+	}
+};
+//147. 对链表进行插入排序
+class insertionSortListSolution {
+public:
+	ListNode* insertionSortList(ListNode* head) {
+		if (head == nullptr)return head;
+		ListNode* dummyhead = new ListNode(0);
+		dummyhead->next = head;
+		ListNode* lastSorted = head, * cur = head->next;
+		while (cur != nullptr) {
+			if (cur->val > lastSorted->val) {
+				lastSorted->next = cur;
+				lastSorted = lastSorted->next;
+			}
+			else {
+				ListNode* pre = dummyhead;
+				while (pre->next->val < cur->val)pre = pre->next;
+				lastSorted->next = cur->next;
+				cur->next = pre->next;
+				pre->next = cur;
+			}
+			cur = lastSorted->next;
+		}
+		return dummyhead->next;
+	}
+};
+//481. 神奇字符串
+class magicalStringSolution {
+public:
+	int magicalString(int n) {
+		if (n == 1)return 1;
+		else if (n <= 4)return 2;
+		else if (n <= 6)return 3;
+		int num_index = 0, str_index = 0, insert_num = 2;
+		string str = "122112";
+		while (str.length() < n) {
+			int num = str[num_index++] - '0';
+			insert_num = 3 - insert_num;
+			while (num > 0) {
+				num--;
+				if (str_index == str.length()) {
+					str.push_back('0' + insert_num);
+				}
+				str_index++;
+			}
+		}
+		vector<int>v(2);
+		for (int i = 0; i < n; i++)
+		{
+			v[str[i] - '1']++;
+		}
+		return v[0];
+	}
+};
+//150. 逆波兰表达式求值
+int evalRPN(vector<string>& tokens) {
+	stack<string>stk;
+	for (string s : tokens) {
+		if (s == "+" || s == "-" || s == "*" || s == "/") {
+			long num1 = stoi(stk.top());
+			stk.pop();
+			long num2 = stoi(stk.top());
+			stk.pop();
+			long re;
+			if (s == "+") {
+				re = num1 + num2;
+			}
+			else if (s == "-") {
+				re = num2 - num1;
+			}
+			else if (s == "*") {
+				re = num1 * num2;
+			}
+			else if (s == "/") {
+				re = num2 / num1;
+			}
+			stk.push(to_string(re));
+		}
+		else {
+			stk.push(s);
+		}
+	}
+	return stoi(stk.top());
 }
+//151. 反转字符串中的单词
+string reverseWords(string s) {
+	vector<string>ans;
+	string temp = "";
+	for (char ch : s) {
+		if (ch == ' ') {
+			if (temp.size() > 0) {
+				ans.push_back(temp);
+				temp = "";
+			}
+		}
+		else {
+			temp.push_back(ch);
+		}
+	}
+	if (temp.size() > 0) {
+		ans.push_back(temp);
+	}
+	reverse(ans.begin(), ans.end());
+	string res;
+	for (int i = 0; i < ans.size(); i++) {
+		if (i != 0)res.push_back(' ');
+		res += ans[i];
+	}
+	return res;
+}
+//155. 最小栈
+class MinStack {
+private:
+	stack<int>stk, minstk;
+public:
+	MinStack() {
+
+	}
+
+	void push(int val) {
+		stk.push(val);
+		minstk.push(min(minstk.top(), val));
+	}
+
+	void pop() {
+		minstk.pop();
+		stk.pop();
+	}
+
+	int top() {
+		return stk.top();
+	}
+
+	int getMin() {
+		return minstk.top();
+	}
+};
+//160. 相交链表
+ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+	unordered_set<ListNode*>visit;
+	ListNode* ptr = headA;
+	while (ptr != nullptr) {
+		visit.insert(ptr);
+		ptr = ptr->next;
+	}
+	ptr = headB;
+	while (ptr != nullptr) {
+		if (visit.count(ptr)) {
+			return ptr;
+		}
+		ptr = ptr->next;
+	}
+	return nullptr;
+}
+//Maximum Gap
+int maximumGap(vector<int>& nums) {
+	sort(nums.begin(), nums.end());
+	int maxGap = 0;
+	for (int i = 1; i < nums.size(); i++) {
+		if (nums[i] - nums[i - 1] > maxGap)maxGap = nums[i] - nums[i - 1];
+	}
+	return maxGap;
+}
+//1662. 检查两个字符串数组是否相等
+bool arrayStringsAreEqual(vector<string>& word1, vector<string>& word2) {
+	int n = word1.size(), m = word2.size();
+	int elementId1 = 0, elementId2 = 0, charId1 = 0, charId2 = 0;
+	while (elementId1 < word1.size() && elementId2 < word2.size()) {
+		while (charId1 < word1[elementId1].size() && charId2 < word2[elementId2].size()) {
+			if (word1[elementId1][charId1] != word2[elementId2][charId2]) {
+				return false;
+			}
+			charId1++;
+			charId2++;
+		}
+		if (charId1 >= word1[elementId1].size()) {
+			charId1 = 0;
+			elementId1++;
+		}
+		if (charId2 >= word2[elementId2].size()) {
+			charId2 = 0;
+			elementId2++;
+		}
+	}
+	if (elementId1 != n || elementId2 != m || charId1 != 0 || charId2 != 0)return false;
+	return true;
+}
+class maxPointsSolution {
+public:
+	int gcd(int a, int b) {
+		return b ? gcd(b, a % b) : a;
+	}
+	int maxPoints(vector<vector<int>>& points) {
+
+	}
+};
+
+
+//int main() {
+//	ListNode* root = nullptr, * temp = nullptr;
+//	vector<int>nums1 = { 1,2,3,4,5 };
+//	vector<int>nums2 = { 3,4,5,1,2 };
+//	vector<string>str1 = { "abc", "d", "defg" };
+//	vector<string>str2 = { "abcddefg" };
+//	for (int x : nums1) {
+//		if (root == nullptr) { root = new ListNode(x); temp = root; }
+//		else { temp->next = new ListNode(x); temp = temp->next; }
+//	}
+//	arrayStringsAreEqual(str1, str2);
+//	return 0;
+//}

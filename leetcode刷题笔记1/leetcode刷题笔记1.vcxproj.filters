@@ -21,5 +21,17 @@
     <ClCompile Include="since 133.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1000 超级玛丽游戏.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="模板.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
