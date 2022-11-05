@@ -741,6 +741,158 @@ public:
 		return ans;
 	}
 };
+//754. 到达终点数字
+class reachNumberSolution {
+public:
+	int sumOfThem(int x) {
+		return (1 + x) * x / 2;
+	}
+	int reachNumber(int target) {
+		target = abs(target);
+		int left = 1;
+		int right = 1;
+		int sum = sumOfThem(right);
+		while (sum < target) {
+			right = right << 1;
+			sum = sumOfThem(right);
+		}
+		if (sum == target)return right;
+		int bound = 0;
+		left = right >> 1;
+		bool match = false;
+		while (left < right) {
+			int mid = (left + right) >> 1;
+			int sumOfMid = sumOfThem(mid);
+			int sumOfLeft = sumOfThem(left);
+			int sumOfRight = sumOfThem(right);
+			if (sumOfMid < target) {
+				left = mid + 1;
+			}
+			else {
+				right = mid;
+			}
+		}
+		bound = left - 1;
+		int rightBound = sumOfThem(bound);
+		return (target - rightBound) * 2 + bound;
+	}
+	//正解
+	int reachNumber_realAns(int target) {
+		target = abs(target);
+		int k = 0;
+		while (target > 0) {
+			k++;
+			target -= k;
+		}
+		return target % 2 == 0 ? k : k + 1 + k % 2;
+	}
+};
+//1106. 解析布尔表达式
+class parseBoolExprSolution {
+public:
+	bool parseBoolExpr(string expression) {
+		stack<char>stk;
+		for (char ch : expression) {
+			if (ch == ',')continue;
+			if (ch == ')') {
+				vector<bool>temp;
+				while (stk.top() != '(') {
+					temp.push_back(stk.top() == 'f' ? false : true);
+					stk.pop();
+				}
+				stk.pop();
+				char operator_ = stk.top();
+				stk.pop();
+				if (operator_ == '!') {
+					stk.push(temp[0] == true ? 'f' : 't');
+				}
+				else {
+					bool temp_result = true;
+					if (temp.size() == 1) {
+						temp_result = temp[0];
+					}
+					else {
+						for (int i = 1; i < temp.size(); i++) {
+							if (operator_ == '&') {
+								if (!temp[i - 1] || !temp[i]) {
+									temp_result = false;
+									break;
+								}
+								else {
+									temp_result = true;
+								}
+							}
+							else if (operator_ == '|') {
+								if (temp[i - 1] || temp[i]) {
+									temp_result = true;
+									break;
+								}
+								else {
+									temp_result = false;
+								}
+							}
+						}
+					}
+					stk.push(temp_result == true ? 't' : 'f');
+				}
+			}
+			else {
+				stk.push(ch);
+			}
+		}
+		bool ans = (stk.top() == 't' ? true : false);
+		return ans;
+	}
+};
+//149.直线上最多的点数
+class maxPointsSolution {
+public:
+	int gcd(int a, int b) {
+		return b ? gcd(b, a % b) : a;
+	}
+	int maxPoints(vector<vector<int>>& points) {
+		int n = points.size();
+		if (n <= 2) {
+			return n;
+		}
+		int ret = 0;
+		for (int i = 0; i < n; i++) {
+			if (ret >= n - i || ret > n / 2) {
+				break;
+			}
+			unordered_map<int, int>mmap;
+			for (int j = i + 1; j < n; j++) {
+				int x = points[i][0] - points[j][0];
+				int y = points[i][1] - points[j][1];
+				if (x == 0) {
+					y = 1;
+				}
+				else if (y == 0) {
+					x = 1;
+				}
+				else {
+					if (y < 0) {
+						x = -x;
+						y = -y;
+					}
+					int gcdxy = gcd(abs(x), abs(y));
+					x /= gcdxy;
+					y /= gcdxy;
+				}
+				mmap[x * 20001 + y]++;
+			}
+			int maxn = 0;
+			for (auto it = mmap.begin(); it != mmap.end(); it++) {
+				maxn = max(maxn, it->second);
+			}
+			ret = max(maxn, ret);
+		}
+		return ret + 1;
+	}
+};
+//167. 两数之和 II - 输入有序数组
+
+
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
 	vector<int>nums1 = { 1,2,3,4,5 };
@@ -752,7 +904,7 @@ int main() {
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
 	vector<vector<int>>v = { {46,48,17},{12,38,14} };
-	fractionToDecimalSolution bs;
-	bs.fractionToDecimal(1, 90);
+	parseBoolExprSolution bs;
+	bs.parseBoolExpr("&(|(f))");
 	return 0;
 }
