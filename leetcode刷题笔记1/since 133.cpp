@@ -1066,6 +1066,33 @@ public:
 		return dp[0][0];
 	}
 };
+//179. ×î´óÊý
+class largestNumberSolution {
+public:
+	bool static cmp(int a, int b) {
+		string astr = to_string(a);
+		string bstr = to_string(b);
+		return astr + bstr > bstr + astr;
+	}
+	string largestNumber(vector<int>& nums) {
+		sort(nums.begin(), nums.end(), cmp);
+		string ans;
+		for (int x : nums) {
+			ans += to_string(x);
+		}
+		int zeroIndex = 0;
+		if (ans[zeroIndex] == '0' && ans.size() > 0) {
+			while (ans[zeroIndex] == '0' && ans.size() > 0) {
+				zeroIndex++;
+			}
+			return ans.substr(zeroIndex - 1);
+		}
+		else {
+			return ans;
+		}
+	}
+}
+};
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
 	vector<int>nums1 = { 1,2,3,4,5 };
