@@ -845,7 +845,7 @@ public:
 	}
 };
 //149.直线上最多的点数
-class maxPointsSolution {
+class maxPoints_Solution {
 public:
 	int gcd(int a, int b) {
 		return b ? gcd(b, a % b) : a;
@@ -891,8 +891,181 @@ public:
 	}
 };
 //167. 两数之和 II - 输入有序数组
+class twoSumSolution {
+public:
+	vector<int> twoSum(vector<int>& numbers, int target) {
+		int n = numbers.size();
+		int left = 0, right = n - 1;
+		while (true) {
+			int cur = numbers[left] + numbers[right];
+			if (cur == target) {
+				vector<int>ans = { left + 1,right + 1 };
+				return ans;
+			}
+			else if (cur < target) {
+				while (numbers[left + 1] == numbers[left])left++;
+				left += 1;
+			}
+			else {
+				while (numbers[right - 1] == numbers[right])right--;
+				right -= 1;
+			}
+		}
+	}
+};
+//168. Excel表列名称
+class convertToTitleSolution {
+public:
+	string convertToTitle(int columnNumber) {
+		string ans;
+		while (columnNumber > 0) {
+			int cur = columnNumber % 26;
+			if (cur == 0) {
+				ans.push_back('Z');
+				columnNumber /= 26;
+				columnNumber -= 1;
+			}
+			else {
+				ans.push_back('A' + cur - 1);
+				columnNumber /= 26;
+			}
+		}
+		reverse(ans.begin(), ans.end());
+		return ans;
+	}
+	void testConvertToTitle() {
+		for (int i = 1; i < 701; i++) {
+			cout << i << " " << convertToTitle(i) << endl;
+		}
+	}
+};
+//169. 多数元素
+class majorityElementSolution {
+public:
+	int majorityElement1(vector<int>& nums) {
+		unordered_map<int, int>count;
+		int n = nums.size();
+		int n2 = n / 2;
+		for (int x : nums) {
+			count[x]++;
+			if (count[x] > n2)return x;
+		}
+	}
+	int majorityElement2(vector<int>& nums) {
+		sort(nums.begin(), nums.end());
+		return nums[nums.size() / 2];
+	}
 
+};
+//171. Excel 表列序号
+class titleToNumberSolution {
+public:
+	int titleToNumber(string columnTitle) {
+		int ans = 0;
+		for (char ch : columnTitle) {
+			ans *= 26;
+			ans += (ch - 'A' + 1);
+		}
+		return ans;
+	}
+};
+//172. 阶乘后的零
+class trailingZeroesSolution {
+public:
+	int trailingZeroes_fail(int n) {
+		int cnt = 0;
+		long long factorial = 1;
+		for (int i = 2; i <= n; i++) {
+			factorial *= i;
+			factorial %= 100;
+			while (factorial % 10 == 0) {
+				cnt++;
+				factorial /= 10;
+			}
+		}
+		return cnt;
+	}
+	int trailingZeroes(int n) {
+		int ans = 0;
+		for (int i = 5; i <= n; i += 5) {
+			int cur = i;
+			while (cur % 5 == 0) {
+				cur /= 5;
+				ans++;
+			}
+		}
+		return ans;
+	}
+};
+//174. 地下城游戏
+class calculateMinimumHPSolution {
+public:
+	//错误解法，从左上到右下为局部最优解，非全局最优解
+	int calculateMinimumHP_fail(vector<vector<int>>& dungeon) {
+		int n = dungeon.size(), m = dungeon[0].size();
+		vector<vector<int>>dp(n, vector<int>(m, 0));
+		//方向 1:左边 2:上边
+		vector<vector<int>>path(n, vector<int>(m, 0));
+		dp[0][0] = dungeon[0][0] > 0 ? 1 : abs(dungeon[0][0]) + 1;
+		path[0][0] = dungeon[0][0];
+		for (int i = 1; i < m; i++) {
+			path[0][i] = path[0][i - 1] + dungeon[0][i];
+			if (path[0][i] < 0) {
+				dp[0][i] = max(abs(path[0][i]) + 1, dp[0][i - 1]);
+			}
+			else {
+				dp[0][i] = dp[0][i - 1];
+			}
+		}
+		for (int i = 1; i < n; i++) {
+			path[i][0] = path[i - 1][0] + dungeon[i][0];
+			if (path[i][0] < 0) {
+				dp[i][0] = max(abs(path[i][0]) + 1, dp[i - 1][0]);
+			}
+			else {
+				dp[i][0] = dp[i - 1][0];
+			}
+		}
+		for (int i = 1; i < n; i++) {
+			for (int j = 1; j < m; j++) {
+				if (dp[i - 1][j] < dp[i][j - 1]) {
+					path[i][j] = path[i - 1][j] + dungeon[i][j];
+					if (path[i][j] < 0) {
+						dp[i][j] = max(abs(path[i][j]) + 1, dp[i - 1][j]);
+					}
+					else {
+						dp[i][j] = dp[i - 1][j];
+					}
+				}
+				else {
+					path[i][j] = path[i][j - 1] + dungeon[i][j];
+					if (path[i][j] < 0) {
+						dp[i][j] = max(abs(path[i][j]) + 1, dp[i][j - 1]);
+					}
+					else {
+						dp[i][j] = dp[i][j - 1];
+					}
+				}
 
+			}
+		}
+		return dp[n - 1][m - 1];
+	}
+	//于是我们考虑从右下往左上进行动态规划。选取右侧或下侧两者其中最少HP的值
+	//然后计算到当前值所需要的最少的HP值，逐步规划到初始位置求出对应AC解
+	int calculateMinimumHP(vector<vector<int>>& dungeon) {
+		int n = dungeon.size(), m = dungeon[0].size();
+		vector<vector<int>>dp(n + 1, vector<int>(m + 1, INT_MAX));
+		dp[n][m - 1] = dp[n - 1][m] = 1;
+		for (int i = n - 1; i >= 0; --i) {
+			for (int j = m - 1; j >= 0; --j) {
+				int minn = min(dp[i + 1][j], dp[i][j + 1]);
+				dp[i][j] = max(minn - dungeon[i][j], 1);
+			}
+		}
+		return dp[0][0];
+	}
+};
 int main() {
 	ListNode* root = nullptr, * temp = nullptr;
 	vector<int>nums1 = { 1,2,3,4,5 };
@@ -903,8 +1076,8 @@ int main() {
 		if (root == nullptr) { root = new ListNode(x); temp = root; }
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
-	vector<vector<int>>v = { {46,48,17},{12,38,14} };
-	parseBoolExprSolution bs;
-	bs.parseBoolExpr("&(|(f))");
+	vector<vector<int>>v = { {1,-3,3},{0,-2,0},{-3,-3,-3} };
+	calculateMinimumHPSolution bs;
+	bs.calculateMinimumHP(v);
 	return 0;
 }
