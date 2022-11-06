@@ -1091,20 +1091,59 @@ public:
 			return ans;
 		}
 	}
-}
 };
-int main() {
-	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 1,2,3,4,5 };
-	vector<int>nums2 = { 3,4,5,1,2 };
-	vector<string>str1 = { "abc", "d", "defg" };
-	vector<string>str2 = { "abcddefg" };
-	for (int x : nums1) {
-		if (root == nullptr) { root = new ListNode(x); temp = root; }
-		else { temp->next = new ListNode(x); temp = temp->next; }
+//1678. 设计 Goal 解析器
+class interpretSolution {
+public:
+	string interpret(string command) {
+		while (command.find("(al)") != string::npos) {
+			command = command.replace(command.find("(al)"), 4, "al");
+		}
+		while (command.find("()") != string::npos) {
+			command = command.replace(command.find("()"), 2, "o");
+		}
+		return command;
 	}
-	vector<vector<int>>v = { {1,-3,3},{0,-2,0},{-3,-3,-3} };
-	calculateMinimumHPSolution bs;
-	bs.calculateMinimumHP(v);
-	return 0;
-}
+};
+//188. 买卖股票的最佳时机 IV
+class maxProfitSolutionIV {
+public:
+	int maxProfit(int k, vector<int>& prices) {
+		int n = prices.size();
+		vector<vector<int>>dp(n, vector<int>(2, 0));
+		return -1;
+	}
+};
+//189. 轮转数组
+class rotateSolution {
+public:
+	void rotate(vector<int>& nums, int k) {
+		int n = nums.size();
+		k = k % n;
+		vector<int>ans;
+		for (int i = n - k; i < n; i++) {
+			ans.push_back(nums[i]);
+		}
+		for (int i = 0; i < n - k; i++) {
+			ans.push_back(nums[i]);
+		}
+		nums = ans;
+	}
+};
+
+
+//int main() {
+//	ListNode* root = nullptr, * temp = nullptr;
+//	vector<int>nums1 = { 1,2,3,4,5 };
+//	vector<int>nums2 = { 3,4,5,1,2 };
+//	vector<string>str1 = { "abc", "d", "defg" };
+//	vector<string>str2 = { "abcddefg" };
+//	for (int x : nums1) {
+//		if (root == nullptr) { root = new ListNode(x); temp = root; }
+//		else { temp->next = new ListNode(x); temp = temp->next; }
+//	}
+//	vector<vector<int>>v = { {1,-3,3},{0,-2,0},{-3,-3,-3} };
+//	interpretSolution bs;
+//	bs.interpret("(al)G(al)()()G");
+//	return 0;
+//}
