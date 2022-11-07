@@ -149,6 +149,10 @@
     <ClCompile Include="P1009 [NOIP1998 普及组] 阶乘之和 题解.cpp" />
     <ClCompile Include="P1009 [NOIP1998 普及组] 阶乘之和.cpp" />
     <ClCompile Include="P1010 [NOIP1998 普及组] 幂次方.cpp" />
+    <ClCompile Include="P1011 [NOIP1998 提高组] 车站.cpp" />
+    <ClCompile Include="P1012 [NOIP1998 提高组] 拼数.cpp" />
+    <ClCompile Include="P1013 [NOIP1998 提高组] 进制位.cpp" />
+    <ClCompile Include="P1015 [NOIP1999 普及组] 回文数.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />

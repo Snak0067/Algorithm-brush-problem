@@ -63,5 +63,17 @@
     <ClCompile Include="P1010 [NOIP1998 普及组] 幂次方.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1011 [NOIP1998 提高组] 车站.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1012 [NOIP1998 提高组] 拼数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1013 [NOIP1998 提高组] 进制位.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1015 [NOIP1999 普及组] 回文数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
