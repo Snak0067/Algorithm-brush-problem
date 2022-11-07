@@ -45,5 +45,23 @@
     <ClCompile Include="P1005 [NOIP2007 提高组] 矩阵取数游戏.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1007 独木桥.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1008 [NOIP1998 普及组] 三连击.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1009 [NOIP1998 普及组] 阶乘之和.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1009 [NOIP1998 普及组] 阶乘之和 题解.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1010 [NOIP1998 普及组] 幂次方.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
