@@ -1133,8 +1133,43 @@ public:
 //816. Ä£ºý×ø±ê
 class ambiguousCoordinatesSolution {
 public:
+	bool legal(string s) {
+		if (s.length() == 1)return true;
+		if (s == "0.0" || s == "00" || s == "0.00" || s == "1.0" || s == "001" || s == "00.01")return false;
+		if (s[0] == '0' && s[1] != '.')return false;
+		if (s.find('.') != string::npos && s.back() == '0')return false;
+		return true;
+	}
+	vector<string>ambiguous(string s) {
+		vector<string>ans;
+		if (legal(s))ans.push_back(s);
+		for (int i = 1; i < s.size(); i++) {
+			string temp = s.substr(0, i) + "." + s.substr(i);
+			if (legal(temp)) {
+				ans.push_back(temp);
+			}
+		}
+		return ans;
+	}
 	vector<string> ambiguousCoordinates(string s) {
-
+		s = s.substr(1, s.size() - 2);
+		vector<string>ans;
+		int n = s.length();
+		for (int i = 1; i < n; i++) {
+			string pre = s.substr(0, i);
+			string last = s.substr(i);
+			vector<string>preArray = ambiguous(pre);
+			vector<string>lastArray = ambiguous(last);
+			for (int j = 0; j < preArray.size(); j++)
+			{
+				for (int k = 0; k < lastArray.size(); k++)
+				{
+					string t = "(" + preArray[j] + ", " + lastArray[k] + ")";
+					ans.push_back(t);
+				}
+			}
+		}
+		return ans;
 	}
 };
 
@@ -1149,7 +1184,7 @@ int main() {
 		else { temp->next = new ListNode(x); temp = temp->next; }
 	}
 	vector<vector<int>>v = { {1,-3,3},{0,-2,0},{-3,-3,-3} };
-	interpretSolution bs;
-	bs.interpret("(al)G(al)()()G");
+	ambiguousCoordinatesSolution bs;
+	bs.ambiguousCoordinates("(0010)");
 	return 0;
 }
