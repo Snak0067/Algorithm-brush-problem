@@ -81,5 +81,11 @@
     <ClCompile Include="P1017 [NOIP2000 提高组] 进制转换.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1018 [NOIP2000 提高组] 乘积最大.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1019 [NOIP2000 提高组] 单词接龙.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

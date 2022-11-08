@@ -155,6 +155,8 @@
     <ClCompile Include="P1015 [NOIP1999 普及组] 回文数.cpp" />
     <ClCompile Include="P1016 [NOIP1999 提高组] 旅行家的预算.cpp" />
     <ClCompile Include="P1017 [NOIP2000 提高组] 进制转换.cpp" />
+    <ClCompile Include="P1018 [NOIP2000 提高组] 乘积最大.cpp" />
+    <ClCompile Include="P1019 [NOIP2000 提高组] 单词接龙.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />
