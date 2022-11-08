@@ -1173,18 +1173,18 @@ public:
 	}
 };
 
-int main() {
-	ListNode* root = nullptr, * temp = nullptr;
-	vector<int>nums1 = { 1,2,3,4,5 };
-	vector<int>nums2 = { 3,4,5,1,2 };
-	vector<string>str1 = { "abc", "d", "defg" };
-	vector<string>str2 = { "abcddefg" };
-	for (int x : nums1) {
-		if (root == nullptr) { root = new ListNode(x); temp = root; }
-		else { temp->next = new ListNode(x); temp = temp->next; }
-	}
-	vector<vector<int>>v = { {1,-3,3},{0,-2,0},{-3,-3,-3} };
-	ambiguousCoordinatesSolution bs;
-	bs.ambiguousCoordinates("(0010)");
-	return 0;
-}
+//int main() {
+//	ListNode* root = nullptr, * temp = nullptr;
+//	vector<int>nums1 = { 1,2,3,4,5 };
+//	vector<int>nums2 = { 3,4,5,1,2 };
+//	vector<string>str1 = { "abc", "d", "defg" };
+//	vector<string>str2 = { "abcddefg" };
+//	for (int x : nums1) {
+//		if (root == nullptr) { root = new ListNode(x); temp = root; }
+//		else { temp->next = new ListNode(x); temp = temp->next; }
+//	}
+//	vector<vector<int>>v = { {1,-3,3},{0,-2,0},{-3,-3,-3} };
+//	ambiguousCoordinatesSolution bs;
+//	bs.ambiguousCoordinates("(0010)");
+//	return 0;
+//}

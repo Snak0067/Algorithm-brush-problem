@@ -75,5 +75,11 @@
     <ClCompile Include="P1015 [NOIP1999 普及组] 回文数.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1016 [NOIP1999 提高组] 旅行家的预算.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1017 [NOIP2000 提高组] 进制转换.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
