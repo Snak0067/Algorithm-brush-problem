@@ -14,15 +14,15 @@ using namespace std;
 unordered_map<string, vector<string>>mmap;
 string ans;
 int repeatLength(string a, string b) {
-	int len = 1, maxlen = 0, alen = a.length();
+	int len = 1, alen = a.length();
 	string asub, bsub;
 	while (len < a.size() && len < b.size()) {
 		asub = a.substr(alen - len, len);
 		bsub = b.substr(0, len);
-		if (asub == bsub)maxlen = len;
+		if (asub == bsub)return len;
 		len++;
 	}
-	return maxlen;
+	return 0;
 }
 bool connect(string a, string b) {
 	if (repeatLength(a, b) != 0) {
