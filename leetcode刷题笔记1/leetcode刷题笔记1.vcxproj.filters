@@ -96,5 +96,8 @@
     <ClCompile Include="P1022 [NOIP2000 普及组] 计算器的改良.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1023 [NOIP2000 普及组] 税收与补贴问题.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
