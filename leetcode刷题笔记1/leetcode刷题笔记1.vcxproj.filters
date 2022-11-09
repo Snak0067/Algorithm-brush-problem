@@ -87,5 +87,8 @@
     <ClCompile Include="P1019 [NOIP2000 提高组] 单词接龙.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1020 [NOIP1999 普及组] 导弹拦截.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
