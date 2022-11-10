@@ -99,5 +99,8 @@
     <ClCompile Include="P1023 [NOIP2000 普及组] 税收与补贴问题.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1024 [NOIP2001 提高组] 一元三次方程求解.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
