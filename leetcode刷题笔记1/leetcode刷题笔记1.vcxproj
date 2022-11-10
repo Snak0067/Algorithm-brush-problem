@@ -162,6 +162,7 @@
     <ClCompile Include="P1022 [NOIP2000 普及组] 计算器的改良.cpp" />
     <ClCompile Include="P1023 [NOIP2000 普及组] 税收与补贴问题.cpp" />
     <ClCompile Include="P1024 [NOIP2001 提高组] 一元三次方程求解.cpp" />
+    <ClCompile Include="P1025 [NOIP2001 提高组] 数的划分.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />

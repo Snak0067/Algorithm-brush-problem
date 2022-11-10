@@ -102,5 +102,8 @@
     <ClCompile Include="P1024 [NOIP2001 提高组] 一元三次方程求解.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1025 [NOIP2001 提高组] 数的划分.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
