@@ -117,5 +117,8 @@
     <ClCompile Include="P1030 [NOIP2001 普及组] 求先序排列.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1031 [NOIP2002 提高组] 均分纸牌.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
