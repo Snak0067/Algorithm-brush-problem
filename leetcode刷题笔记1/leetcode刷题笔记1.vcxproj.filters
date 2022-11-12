@@ -114,5 +114,8 @@
     <ClCompile Include="P1029 [NOIP2001 普及组] 最大公约数和最小公倍数问题.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1030 [NOIP2001 普及组] 求先序排列.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
