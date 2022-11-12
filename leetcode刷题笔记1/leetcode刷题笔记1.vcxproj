@@ -168,6 +168,10 @@
     <ClCompile Include="P1029 [NOIP2001 普及组] 最大公约数和最小公倍数问题.cpp" />
     <ClCompile Include="P1030 [NOIP2001 普及组] 求先序排列.cpp" />
     <ClCompile Include="P1031 [NOIP2002 提高组] 均分纸牌.cpp" />
+    <ClCompile Include="P1036 [NOIP2002 普及组] 选数.cpp" />
+    <ClCompile Include="P1042 [NOIP2003 普及组] 乒乓球.cpp" />
+    <ClCompile Include="P1044 [NOIP2003 普及组] 栈.cpp" />
+    <ClCompile Include="P1048 [NOIP2005 普及组] 采药.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />

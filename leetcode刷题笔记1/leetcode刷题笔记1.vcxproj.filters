@@ -120,5 +120,17 @@
     <ClCompile Include="P1031 [NOIP2002 提高组] 均分纸牌.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1036 [NOIP2002 普及组] 选数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1042 [NOIP2003 普及组] 乒乓球.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1044 [NOIP2003 普及组] 栈.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1048 [NOIP2005 普及组] 采药.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
