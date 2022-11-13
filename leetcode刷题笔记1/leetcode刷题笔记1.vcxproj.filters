@@ -153,5 +153,8 @@
     <ClCompile Include="P1068 [NOIP2009 普及组] 分数线划定.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1071 [NOIP2009 提高组] 潜伏者.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
