@@ -180,6 +180,7 @@
     <ClCompile Include="P1067 [NOIP2009 普及组] 多项式输出.cpp" />
     <ClCompile Include="P1068 [NOIP2009 普及组] 分数线划定.cpp" />
     <ClCompile Include="P1071 [NOIP2009 提高组] 潜伏者.cpp" />
+    <ClCompile Include="P1079 [NOIP2012 提高组] Vigenère 密码.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />
