@@ -159,5 +159,17 @@
     <ClCompile Include="P1079 [NOIP2012 提高组] Vigenère 密码.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1086 [NOIP2004 普及组] 花生采摘.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1087 [NOIP2004 普及组] FBI 树.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1088 [NOIP2004 普及组] 火星人.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1033 [NOIP2002 提高组] 自由落体.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
