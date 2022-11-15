@@ -171,5 +171,11 @@
     <ClCompile Include="P1033 [NOIP2002 提高组] 自由落体.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1037 [NOIP2002 普及组] 产生数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1093 [NOIP2007 普及组] 奖学金.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
