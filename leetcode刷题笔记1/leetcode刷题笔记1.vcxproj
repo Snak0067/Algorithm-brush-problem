@@ -187,6 +187,7 @@
     <ClCompile Include="P1087 [NOIP2004 普及组] FBI 树.cpp" />
     <ClCompile Include="P1088 [NOIP2004 普及组] 火星人.cpp" />
     <ClCompile Include="P1093 [NOIP2007 普及组] 奖学金.cpp" />
+    <ClCompile Include="P1094 [NOIP2007 普及组] 纪念品分组.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />

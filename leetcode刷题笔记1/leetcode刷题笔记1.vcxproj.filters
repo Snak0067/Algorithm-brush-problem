@@ -177,5 +177,8 @@
     <ClCompile Include="P1093 [NOIP2007 普及组] 奖学金.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1094 [NOIP2007 普及组] 纪念品分组.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
