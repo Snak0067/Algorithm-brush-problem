@@ -173,6 +173,7 @@
     <ClCompile Include="P1037 [NOIP2002 普及组] 产生数.cpp" />
     <ClCompile Include="P1042 [NOIP2003 普及组] 乒乓球.cpp" />
     <ClCompile Include="P1044 [NOIP2003 普及组] 栈.cpp" />
+    <ClCompile Include="P1045 [NOIP2003 普及组] 麦森数.cpp" />
     <ClCompile Include="P1048 [NOIP2005 普及组] 采药.cpp" />
     <ClCompile Include="P1049 [NOIP2001 普及组] 装箱问题.cpp" />
     <ClCompile Include="P1051 [NOIP2005 提高组] 谁拿了最多奖学金.cpp" />

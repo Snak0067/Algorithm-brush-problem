@@ -186,5 +186,8 @@
     <ClCompile Include="P1098 [NOIP2007 提高组] 字符串的展开.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1045 [NOIP2003 普及组] 麦森数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
