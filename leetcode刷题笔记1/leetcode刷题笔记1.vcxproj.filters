@@ -180,5 +180,11 @@
     <ClCompile Include="P1094 [NOIP2007 普及组] 纪念品分组.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1097 [NOIP2007 提高组] 统计数字.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1098 [NOIP2007 提高组] 字符串的展开.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
