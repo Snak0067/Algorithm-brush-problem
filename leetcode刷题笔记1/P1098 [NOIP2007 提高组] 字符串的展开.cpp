@@ -93,6 +93,9 @@
 //			}
 //		}
 //	}
+//	if (match == true) {
+//		ans.push_back('-');
+//	}
 //	cout << ans << endl;
 //	return 0;
 //}
