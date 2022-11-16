@@ -192,5 +192,8 @@
     <ClCompile Include="P1056 [NOIP2008 普及组] 排座椅.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1057 [NOIP2008 普及组] 传球游戏.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
