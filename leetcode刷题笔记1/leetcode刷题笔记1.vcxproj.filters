@@ -189,5 +189,8 @@
     <ClCompile Include="P1045 [NOIP2003 普及组] 麦森数.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1056 [NOIP2008 普及组] 排座椅.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
