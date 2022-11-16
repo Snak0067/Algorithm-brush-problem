@@ -201,5 +201,8 @@
     <ClCompile Include="P1101 单词方阵.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1102 A-B 数对.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
