@@ -196,6 +196,7 @@
     <ClCompile Include="P1100 高低位交换.cpp" />
     <ClCompile Include="P1101 单词方阵.cpp" />
     <ClCompile Include="P1102 A-B 数对.cpp" />
+    <ClCompile Include="P1104 生日.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />

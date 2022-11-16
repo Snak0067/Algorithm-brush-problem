@@ -204,5 +204,8 @@
     <ClCompile Include="P1102 A-B 数对.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1104 生日.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
