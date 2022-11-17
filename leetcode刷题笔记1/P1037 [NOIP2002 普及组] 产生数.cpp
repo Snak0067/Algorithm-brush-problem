@@ -49,7 +49,7 @@
 ////	return 0;
 ////}
 //#include<iostream>
-//#include<unordered_map>
+//#include<cstring>
 //#include<set>
 //#include<vector>
 //#include<string>
@@ -61,9 +61,33 @@
 //#include<queue>
 //#include<limits.h>
 //using namespace std;
-//int s[33], num[33], suffix[33][16];
-//int vis[10];
+//int s[33], num[33], suffix[33][16], vis[10];
 //int cnt = 1;
+//vector<int> mul(vector<int>v, int x) {
+//	vector<int>xv;
+//	while (x != 0) {
+//		xv.push_back(x % 10);
+//		x /= 10;
+//	}
+//	vector<int>ans(v.size() + xv.size(), 0);
+//	for (size_t i = 0; i < xv.size(); i++)
+//	{
+//		int flag = 0;
+//		for (size_t j = 0; j < v.size(); j++)
+//		{
+//			int temp = v[j] * xv[i] + flag + ans[i + j];
+//			ans[i + j] = temp % 10;
+//			flag = temp / 10;
+//		}
+//		if (flag != 0) {
+//			ans[i + v.size()] = flag;
+//		}
+//	}
+//	if (ans.back() == 0) {
+//		ans.pop_back();
+//	}
+//	return ans;
+//}
 //void dfs(int x, int y) {
 //	if (vis[y])return;
 //	vis[x] = 1;
@@ -72,13 +96,13 @@
 //	{
 //		dfs(y, suffix[y][i]);
 //	}
-//	vis[x] = 0;
 //}
 //int main() {
 //	int n, k;
 //	string str;
 //	cin >> str >> k;
 //	n = str.length();
+//	vector<int>res(1, 1);
 //	for (int i = 0; i < n; i++)
 //	{
 //		s[i] = str[i] - '0';
@@ -90,7 +114,6 @@
 //		suffix[x][num[x]] = y;
 //		num[x]++;
 //	}
-//	int res = 1;
 //	for (int i = 0; i < n; i++)
 //	{
 //		cnt = 1;
@@ -98,8 +121,13 @@
 //		{
 //			dfs(s[i], suffix[s[i]][j]);
 //		}
-//		res *= cnt;
+//		memset(vis, 0, sizeof(vis));
+//		if (cnt != 1)res = mul(res, cnt);
 //	}
-//	cout << res << endl;
+//	while (res.back() == 0)res.pop_back();
+//	for (int i = res.size() - 1; i >= 0; i--)
+//	{
+//		cout << res[i];
+//	}
 //	return 0;
 //}

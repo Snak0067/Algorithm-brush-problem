@@ -207,5 +207,8 @@
     <ClCompile Include="P1104 生日.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1105 平台.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
