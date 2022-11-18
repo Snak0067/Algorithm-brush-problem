@@ -113,6 +113,7 @@ int main() {
 	{
 		int fx = find(v[i].x);
 		int fy = find(v[i].y);
+		//相当于连接两个村庄集团，最少需要合并n-1个村庄集团才可以实现联通
 		if (fx != fy) {
 			f[fx] = fy;
 			n--;
@@ -122,5 +123,6 @@ int main() {
 			return 0;
 		}
 	}
+	cout << -1 << endl;
 	return 0;
 }
