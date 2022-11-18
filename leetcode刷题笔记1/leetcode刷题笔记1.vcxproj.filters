@@ -210,5 +210,8 @@
     <ClCompile Include="P1105 平台.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1109 学生分组.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
