@@ -213,5 +213,23 @@
     <ClCompile Include="P1109 学生分组.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1111 修复公路.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1115 最大子段和.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1125 [NOIP2008 提高组] 笨小猴.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1032 [NOIP2002 提高组] 字串变换.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1020 [NOIP1999 普及组] 导弹拦截tryAgain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1058 [NOIP2008 普及组] 立体图.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
