@@ -231,5 +231,8 @@
     <ClCompile Include="P1058 [NOIP2008 普及组] 立体图.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1061 [NOIP2006 普及组] Jam 的计数法.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
