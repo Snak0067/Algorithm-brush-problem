@@ -209,6 +209,7 @@
     <ClCompile Include="P1125 [NOIP2008 提高组] 笨小猴.cpp" />
     <ClCompile Include="P1130 红牌.cpp" />
     <ClCompile Include="P1138 第 k 小整数.cpp" />
+    <ClCompile Include="P1141 01迷宫.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />

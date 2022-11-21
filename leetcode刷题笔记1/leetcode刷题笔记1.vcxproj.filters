@@ -243,5 +243,8 @@
     <ClCompile Include="P1138 第 k 小整数.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1141 01迷宫.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
