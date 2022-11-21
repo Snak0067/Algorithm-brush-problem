@@ -246,5 +246,8 @@
     <ClCompile Include="P1141 01迷宫.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1143 进制转换.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
