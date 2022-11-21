@@ -237,5 +237,11 @@
     <ClCompile Include="P1065 [NOIP2006 提高组] 作业调度方案.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1130 红牌.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1138 第 k 小整数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
