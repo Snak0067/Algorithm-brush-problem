@@ -234,5 +234,8 @@
     <ClCompile Include="P1061 [NOIP2006 普及组] Jam 的计数法.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1065 [NOIP2006 提高组] 作业调度方案.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
