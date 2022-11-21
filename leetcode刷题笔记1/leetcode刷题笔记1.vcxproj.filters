@@ -249,5 +249,8 @@
     <ClCompile Include="P1143 进制转换.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1145 约瑟夫.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
