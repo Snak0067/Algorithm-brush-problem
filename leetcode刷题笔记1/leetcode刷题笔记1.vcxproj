@@ -191,6 +191,7 @@
     <ClCompile Include="P1068 [NOIP2009 普及组] 分数线划定.cpp" />
     <ClCompile Include="P1071 [NOIP2009 提高组] 潜伏者.cpp" />
     <ClCompile Include="P1076 [NOIP2012 普及组] 寻宝.cpp" />
+    <ClCompile Include="P1077 [NOIP2012 普及组] 摆花.cpp" />
     <ClCompile Include="P1079 [NOIP2012 提高组] Vigenère 密码.cpp" />
     <ClCompile Include="P1086 [NOIP2004 普及组] 花生采摘.cpp" />
     <ClCompile Include="P1087 [NOIP2004 普及组] FBI 树.cpp" />
