@@ -196,6 +196,7 @@
     <ClCompile Include="P1086 [NOIP2004 普及组] 花生采摘.cpp" />
     <ClCompile Include="P1087 [NOIP2004 普及组] FBI 树.cpp" />
     <ClCompile Include="P1088 [NOIP2004 普及组] 火星人.cpp" />
+    <ClCompile Include="P1090 [NOIP2004 提高组] 合并果子.cpp" />
     <ClCompile Include="P1093 [NOIP2007 普及组] 奖学金.cpp" />
     <ClCompile Include="P1094 [NOIP2007 普及组] 纪念品分组.cpp" />
     <ClCompile Include="P1097 [NOIP2007 提高组] 统计数字.cpp" />
