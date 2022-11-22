@@ -261,5 +261,8 @@
     <ClCompile Include="P1090 [NOIP2004 提高组] 合并果子.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1091 [NOIP2004 提高组] 合唱队形.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
