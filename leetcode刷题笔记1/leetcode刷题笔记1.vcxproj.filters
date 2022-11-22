@@ -264,5 +264,14 @@
     <ClCompile Include="P1091 [NOIP2004 提高组] 合唱队形.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1095 [NOIP2007 普及组] 守望者的逃离.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1096 [NOIP2007 普及组] Hanoi 双塔问题.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1103 书本整理.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

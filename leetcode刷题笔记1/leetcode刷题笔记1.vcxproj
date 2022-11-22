@@ -200,11 +200,14 @@
     <ClCompile Include="P1091 [NOIP2004 提高组] 合唱队形.cpp" />
     <ClCompile Include="P1093 [NOIP2007 普及组] 奖学金.cpp" />
     <ClCompile Include="P1094 [NOIP2007 普及组] 纪念品分组.cpp" />
+    <ClCompile Include="P1095 [NOIP2007 普及组] 守望者的逃离.cpp" />
+    <ClCompile Include="P1096 [NOIP2007 普及组] Hanoi 双塔问题.cpp" />
     <ClCompile Include="P1097 [NOIP2007 提高组] 统计数字.cpp" />
     <ClCompile Include="P1098 [NOIP2007 提高组] 字符串的展开.cpp" />
     <ClCompile Include="P1100 高低位交换.cpp" />
     <ClCompile Include="P1101 单词方阵.cpp" />
     <ClCompile Include="P1102 A-B 数对.cpp" />
+    <ClCompile Include="P1103 书本整理.cpp" />
     <ClCompile Include="P1104 生日.cpp" />
     <ClCompile Include="P1105 平台.cpp" />
     <ClCompile Include="P1109 学生分组.cpp" />
