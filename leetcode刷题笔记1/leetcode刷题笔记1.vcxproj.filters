@@ -273,5 +273,11 @@
     <ClCompile Include="P1103 书本整理.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1147 连续自然数和.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1149 [NOIP2008 提高组] 火柴棒等式.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
