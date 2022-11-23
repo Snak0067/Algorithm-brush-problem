@@ -291,5 +291,8 @@
     <ClCompile Include="P1114 “非常男女”计划.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1114 “非常男女”计划 题解.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

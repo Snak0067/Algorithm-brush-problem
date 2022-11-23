@@ -215,6 +215,7 @@
     <ClCompile Include="P1111 修复公路.cpp" />
     <ClCompile Include="P1112 波浪数.cpp" />
     <ClCompile Include="P1113 杂务.cpp" />
+    <ClCompile Include="P1114 “非常男女”计划 题解.cpp" />
     <ClCompile Include="P1114 “非常男女”计划.cpp" />
     <ClCompile Include="P1115 最大子段和.cpp" />
     <ClCompile Include="P1125 [NOIP2008 提高组] 笨小猴.cpp" />
