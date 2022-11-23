@@ -282,5 +282,8 @@
     <ClCompile Include="P1106 删数问题.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1112 波浪数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
