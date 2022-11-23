@@ -210,6 +210,7 @@
     <ClCompile Include="P1103 书本整理.cpp" />
     <ClCompile Include="P1104 生日.cpp" />
     <ClCompile Include="P1105 平台.cpp" />
+    <ClCompile Include="P1106 删数问题.cpp" />
     <ClCompile Include="P1109 学生分组.cpp" />
     <ClCompile Include="P1111 修复公路.cpp" />
     <ClCompile Include="P1115 最大子段和.cpp" />

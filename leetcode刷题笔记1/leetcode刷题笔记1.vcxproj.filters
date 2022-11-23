@@ -279,5 +279,8 @@
     <ClCompile Include="P1149 [NOIP2008 提高组] 火柴棒等式.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1106 删数问题.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
