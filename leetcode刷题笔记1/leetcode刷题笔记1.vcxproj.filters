@@ -315,5 +315,8 @@
     <ClCompile Include="P1157 组合的输出.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1162 填涂颜色.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
