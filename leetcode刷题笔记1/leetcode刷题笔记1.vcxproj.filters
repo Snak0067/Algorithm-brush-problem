@@ -309,5 +309,11 @@
     <ClCompile Include="P1135 奇怪的电梯.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1140 相似基因.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1157 组合的输出.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
