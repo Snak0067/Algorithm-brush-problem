@@ -223,6 +223,7 @@
     <ClCompile Include="P1123 取数游戏.cpp" />
     <ClCompile Include="P1125 [NOIP2008 提高组] 笨小猴.cpp" />
     <ClCompile Include="P1130 红牌.cpp" />
+    <ClCompile Include="P1135 奇怪的电梯.cpp" />
     <ClCompile Include="P1138 第 k 小整数.cpp" />
     <ClCompile Include="P1141 01迷宫.cpp" />
     <ClCompile Include="P1143 进制转换.cpp" />
@@ -235,6 +236,7 @@
     <ClCompile Include="since 133.cpp" />
     <ClCompile Include="模板.cpp" />
     <ClCompile Include="源.cpp" />
+    <ClCompile Include="p1134阶乘问题.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

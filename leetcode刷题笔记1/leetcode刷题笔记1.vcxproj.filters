@@ -303,5 +303,11 @@
     <ClCompile Include="P1123 取数游戏.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="p1134阶乘问题.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1135 奇怪的电梯.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
