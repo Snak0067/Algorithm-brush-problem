@@ -297,5 +297,8 @@
     <ClCompile Include="P1118 [USACO06FEB]Backward Digit Sums.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1122 最大子树和.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
