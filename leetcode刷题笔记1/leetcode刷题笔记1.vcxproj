@@ -218,6 +218,7 @@
     <ClCompile Include="P1114 “非常男女”计划 题解.cpp" />
     <ClCompile Include="P1114 “非常男女”计划.cpp" />
     <ClCompile Include="P1115 最大子段和.cpp" />
+    <ClCompile Include="P1118 [USACO06FEB]Backward Digit Sums.cpp" />
     <ClCompile Include="P1125 [NOIP2008 提高组] 笨小猴.cpp" />
     <ClCompile Include="P1130 红牌.cpp" />
     <ClCompile Include="P1138 第 k 小整数.cpp" />
