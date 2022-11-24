@@ -300,5 +300,8 @@
     <ClCompile Include="P1122 最大子树和.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1123 取数游戏.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
