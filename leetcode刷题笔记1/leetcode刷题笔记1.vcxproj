@@ -234,8 +234,12 @@
     <ClCompile Include="P1147 连续自然数和.cpp" />
     <ClCompile Include="P1148 拱猪计分.cpp" />
     <ClCompile Include="P1149 [NOIP2008 提高组] 火柴棒等式.cpp" />
+    <ClCompile Include="P1154 奶牛分厩.cpp" />
+    <ClCompile Include="p1154 正解.cpp" />
     <ClCompile Include="P1157 组合的输出.cpp" />
+    <ClCompile Include="P1158 [NOIP2010 普及组] 导弹拦截.cpp" />
     <ClCompile Include="P1162 填涂颜色.cpp" />
+    <ClCompile Include="P1163 银行贷款.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />
