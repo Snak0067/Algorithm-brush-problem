@@ -229,6 +229,7 @@
     <ClCompile Include="P1141 01迷宫.cpp" />
     <ClCompile Include="P1142 轰炸.cpp" />
     <ClCompile Include="P1143 进制转换.cpp" />
+    <ClCompile Include="P1144 最短路计数.cpp" />
     <ClCompile Include="P1145 约瑟夫.cpp" />
     <ClCompile Include="P1147 连续自然数和.cpp" />
     <ClCompile Include="P1149 [NOIP2008 提高组] 火柴棒等式.cpp" />
