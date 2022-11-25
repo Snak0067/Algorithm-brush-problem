@@ -318,5 +318,8 @@
     <ClCompile Include="P1162 填涂颜色.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1142 轰炸.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

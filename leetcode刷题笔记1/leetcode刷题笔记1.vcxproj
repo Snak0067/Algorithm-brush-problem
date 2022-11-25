@@ -227,6 +227,7 @@
     <ClCompile Include="P1138 第 k 小整数.cpp" />
     <ClCompile Include="P1140 相似基因.cpp" />
     <ClCompile Include="P1141 01迷宫.cpp" />
+    <ClCompile Include="P1142 轰炸.cpp" />
     <ClCompile Include="P1143 进制转换.cpp" />
     <ClCompile Include="P1145 约瑟夫.cpp" />
     <ClCompile Include="P1147 连续自然数和.cpp" />
