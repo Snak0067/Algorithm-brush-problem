@@ -324,5 +324,8 @@
     <ClCompile Include="P1144 最短路计数.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1148 拱猪计分.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

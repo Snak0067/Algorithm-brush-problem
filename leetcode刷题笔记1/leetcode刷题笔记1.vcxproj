@@ -232,6 +232,7 @@
     <ClCompile Include="P1144 最短路计数.cpp" />
     <ClCompile Include="P1145 约瑟夫.cpp" />
     <ClCompile Include="P1147 连续自然数和.cpp" />
+    <ClCompile Include="P1148 拱猪计分.cpp" />
     <ClCompile Include="P1149 [NOIP2008 提高组] 火柴棒等式.cpp" />
     <ClCompile Include="P1157 组合的输出.cpp" />
     <ClCompile Include="P1162 填涂颜色.cpp" />
