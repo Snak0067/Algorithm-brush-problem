@@ -342,5 +342,8 @@
     <ClCompile Include="P1164 小A点菜.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1165 日志分析.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
