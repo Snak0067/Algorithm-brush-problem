@@ -251,6 +251,7 @@
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />
     <ClCompile Include="since 133.cpp" />
+    <ClCompile Include="P1172 安全逃离.cpp" />
     <ClCompile Include="模板.cpp" />
     <ClCompile Include="源.cpp" />
     <ClCompile Include="p1134阶乘问题.cpp" />
