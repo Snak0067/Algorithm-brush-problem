@@ -354,5 +354,11 @@
     <ClCompile Include="P1166 打保龄球.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1167 刷题.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1168 中位数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
