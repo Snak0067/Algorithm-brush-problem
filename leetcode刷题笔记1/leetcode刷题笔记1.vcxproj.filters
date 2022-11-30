@@ -369,5 +369,8 @@
     <ClCompile Include="P1180 驾车旅游.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1182 数列分段 Section II.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
