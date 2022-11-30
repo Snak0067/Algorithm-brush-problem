@@ -248,6 +248,7 @@
     <ClCompile Include="P1167 刷题.cpp" />
     <ClCompile Include="P1168 中位数.cpp" />
     <ClCompile Include="P1175 表达式的转换.cpp" />
+    <ClCompile Include="P1180 驾车旅游.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />

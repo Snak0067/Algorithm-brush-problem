@@ -363,5 +363,11 @@
     <ClCompile Include="P1172 安全逃离.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1175 表达式的转换.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1180 驾车旅游.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
