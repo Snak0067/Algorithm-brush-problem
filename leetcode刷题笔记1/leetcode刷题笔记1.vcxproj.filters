@@ -378,5 +378,8 @@
     <ClCompile Include="P1193 洛谷团队训练 VS 传统团队训练.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1194 买礼物.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
