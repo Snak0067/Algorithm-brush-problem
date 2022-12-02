@@ -11,53 +11,54 @@
 //#include<queue>
 //#include<limits.h>
 //using namespace std;
-//int a, b, minn = INT_MAX;
-//int k[505][505];
-//int discount[505];
-//void dfs(int idx, int num, int cost, vector<int>vis) {
-//	if (cost > minn)return;
-//	if (num == b) {
-//		minn = min(minn, cost);
-//		return;
-//	}
-//	int match = 0;
-//	for (int i = 0; i < b; i++)
-//	{
-//		if (vis[i] || idx == i) continue;
-//		if (k[idx][i] != 0 && k[idx][i] < a) {
-//			vis[i] = 1;
-//			match += 1;
-//			cost += k[idx][i];
-//			dfs(i, num + match, cost, vis);
-//		}
-//		else {
-//			if (discount[i] != 0)continue;
-//			vis[i] = 1;
-//			match += 1;
-//			cost += a;
-//			dfs(i, num + match, cost, vis);
-//		}
-//	}
+//int a, b, minn = 0;
+//struct nod {
+//	int x, y, w;
+//};
+//vector<nod>v;
+//int f[1005];
+//int getf(int x) {
+//	if (f[x] == x)return x;
+//	f[x] = getf(f[x]);
+//	return f[x];
+//}
+//bool cmp(nod n1, nod n2) {
+//	return n1.w < n2.w;
 //}
 //int main() {
 //	cin >> a >> b;
+//	int w;
 //	for (int i = 0; i < b; i++)
 //	{
-//
 //		for (int j = 0; j < b; j++) {
-//			scanf_s("%d", &k[i][j]);
-//			if (k[i][j] != 0) {
-//				discount[i] = min(discount[i], k[i][j]);
-//			}
+//			scanf_s("%d", &w);
+//			if (i >= j || w == 0)continue;
+//			if (w >= a)minn++;
+//			v.push_back({ i,j,w });
 //		}
 //	}
-//	vector<int>vis(b + 1);
 //	for (int i = 0; i < b; i++)
 //	{
-//		vis[i] = 1;
-//		dfs(i, 1, a, vis);
-//		vis[i] = 0;
+//		f[i] = i;
 //	}
-//	printf("%d", minn);
+//	sort(v.begin(), v.end(), cmp);
+//	int ans = 0, num = 0;
+//	for (int i = 0; i < v.size() - minn; i++)
+//	{
+//		int x = getf(v[i].x);
+//		int y = getf(v[i].y);
+//		if (x != y) {
+//			f[x] = y;
+//			ans += v[i].w;
+//			num++;
+//		}
+//	}
+//	if (num == b - 1) {
+//		ans += a;
+//	}
+//	else {
+//		ans += (b - num) * a;
+//	}
+//	printf("%d", ans);
 //	return 0;
 //}
