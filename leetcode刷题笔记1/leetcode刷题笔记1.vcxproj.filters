@@ -381,5 +381,8 @@
     <ClCompile Include="P1194 买礼物.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1195 口袋的天空.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
