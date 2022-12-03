@@ -393,5 +393,8 @@
     <ClCompile Include="p1210最长的回文.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1215.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
