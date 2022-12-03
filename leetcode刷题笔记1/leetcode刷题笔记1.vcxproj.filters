@@ -387,5 +387,8 @@
     <ClCompile Include="P1199 [NOIP2010 普及组] 三国游戏.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="p1209 修理牛棚.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
