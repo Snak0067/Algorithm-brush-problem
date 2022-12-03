@@ -254,6 +254,7 @@
     <ClCompile Include="P1193 洛谷团队训练 VS 传统团队训练.cpp" />
     <ClCompile Include="P1194 买礼物.cpp" />
     <ClCompile Include="P1195 口袋的天空.cpp" />
+    <ClCompile Include="P1199 [NOIP2010 普及组] 三国游戏.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />
