@@ -256,6 +256,7 @@
     <ClCompile Include="P1195 口袋的天空.cpp" />
     <ClCompile Include="P1199 [NOIP2010 普及组] 三国游戏.cpp" />
     <ClCompile Include="p1209 修理牛棚.cpp" />
+    <ClCompile Include="p1210最长的回文.cpp" />
     <ClCompile Include="P6461 [COCI2006-20075] TRIK.cpp" />
     <ClCompile Include="P8813 [CSP-J 2022] 乘方（民间数据）.cpp" />
     <ClCompile Include="P8814 [CSP-J 2022] 解密（民间数据）.cpp" />
