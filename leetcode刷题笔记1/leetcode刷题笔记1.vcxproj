@@ -144,6 +144,7 @@
     <ClCompile Include="P1003 [NOIP2011 提高组] 铺地毯.cpp" />
     <ClCompile Include="P1004 [NOIP2000 提高组] 方格取数.cpp" />
     <ClCompile Include="P1005 [NOIP2007 提高组] 矩阵取数游戏.cpp" />
+    <ClCompile Include="P1006 [NOIP2008 提高组] 传纸条.cpp" />
     <ClCompile Include="P1007 独木桥.cpp" />
     <ClCompile Include="P1008 [NOIP1998 普及组] 三连击.cpp" />
     <ClCompile Include="P1009 [NOIP1998 普及组] 阶乘之和 题解.cpp" />
