@@ -402,5 +402,8 @@
     <ClCompile Include="p1219 打表.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="p1219 优化中间步骤.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
