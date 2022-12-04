@@ -399,5 +399,8 @@
     <ClCompile Include="P1219.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="p1219 打表.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
