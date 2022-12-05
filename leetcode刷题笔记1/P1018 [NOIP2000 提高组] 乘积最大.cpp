@@ -71,6 +71,10 @@
 //	}
 //	return ans;
 //}
+//bool cmp(string a, string b) {
+//	if (a.length() != b.length())return a.length() > b.length();
+//	return a > b;
+//}
 //vector<vector<string>>dp;
 //int main() {
 //	int n, k;

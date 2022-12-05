@@ -408,5 +408,8 @@
     <ClCompile Include="P1006 [NOIP2008 提高组] 传纸条.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="P1227 [JSOI2008] 完美的对称.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
